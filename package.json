@@ -1,0 +1,12 @@
+{
+  "name": "nicong-blog-hugo",
+  "version": "0.1.0",
+  "description": "my personal blog built by hugo",
+  "main": "index.js",
+  "author": "liang.nc <liangningcong@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "hugo server -D",
+    "build": "hugo -D"
+  }
+}

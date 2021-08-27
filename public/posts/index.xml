@@ -1,0 +1,24 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on Hugo Hermit</title>
+		<link>https://example.com/posts/</link>
+		<description>Recent content in Posts on Hugo Hermit</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Fri, 27 Aug 2021 10:40:51 +0800</lastBuildDate>
+		<atom:link href="https://example.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>My First Post</title>
+			<link>https://example.com/posts/my-first-post/</link>
+			<pubDate>Fri, 27 Aug 2021 10:40:51 +0800</pubDate>
+			
+			<guid>https://example.com/posts/my-first-post/</guid>
+			<description>Hello Hugo </description>
+			<content type="html"><![CDATA[<h1 id="hello-hugo">Hello Hugo</h1>
+]]></content>
+		</item>
+		
+	</channel>
+</rss>
