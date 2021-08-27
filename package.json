@@ -1,7 +1,7 @@
 {
   "name": "nicong-blog-hugo",
   "version": "0.1.0",
-  "description": "my personal blog built by hugo",
+  "description": "my personal blog built with hugo",
   "main": "index.js",
   "author": "liang.nc <liangningcong@gmail.com>",
   "license": "MIT",
