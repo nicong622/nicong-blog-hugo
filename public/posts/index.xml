@@ -1,22 +1,87 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Posts on Hugo Hermit</title>
+		<title>Posts on Nicong&#39;s blog</title>
 		<link>./posts/</link>
-		<description>Recent content in Posts on Hugo Hermit</description>
+		<description>Recent content in Posts on Nicong&#39;s blog</description>
 		<generator>Hugo -- gohugo.io</generator>
-		<language>en-us</language>
+		<language>zh-CN</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 27 Aug 2021 10:40:51 +0800</lastBuildDate>
+		<lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate>
 		<atom:link href="./posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>My First Post</title>
-			<link>./posts/my-first-post/</link>
-			<pubDate>Fri, 27 Aug 2021 10:40:51 +0800</pubDate>
+			<title>Textarea 自适应高度</title>
+			<link>./posts/autosize_textarea_height/</link>
+			<pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
 			
-			<guid>./posts/my-first-post/</guid>
-			<description>Hello Hugo </description>
-			<content type="html"><![CDATA[<h1 id="hello-hugo">Hello Hugo</h1>
+			<guid>./posts/autosize_textarea_height/</guid>
+			<description>如何使 textarea 元素的高度可以根据内容自动伸缩？
+只需两行代码：
+// 当输入的时候 textarea.style.height = &amp;#39;auto&amp;#39;; textarea.style.height = textarea.scrollHeight + &amp;#39;px&amp;#39;; 第一行的作用是在删除输入的内容时候让 textarea 的高度能自动缩回去；
+在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</description>
+			<content type="html"><![CDATA[<p>如何使 <em>textarea</em> 元素的高度可以根据内容自动伸缩？</p>
+<p>只需两行代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 当输入的时候
+</span><span class="c1"></span><span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">;</span>
+<span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">textarea</span><span class="p">.</span><span class="nx">scrollHeight</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
+</code></pre></div><p>第一行的作用是在删除输入的内容时候让 <em>textarea</em> 的高度能自动缩回去；</p>
+<p>在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Vue Devtool Panel not Showing</title>
+			<link>./posts/vue_devtool_panel_not_showing/</link>
+			<pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+			
+			<guid>./posts/vue_devtool_panel_not_showing/</guid>
+			<description>Chrome 的 vue devtool 插件已经检测到当前页面使用了 Vue ，但是 Chrome 开发者工具里没有出现 Vue devtool panel，要怎么处理？
+第一步 首先检查一下项目里是否手动设置了 Vue.config.devtools 。把这个配置设为 true 的时候就能看到 Vue devtool panel 。这个配置需要在创建 Vue 实例之前。根据 Vue官方文档 的说法，Vue.config.devtools 在开发时候默认是 true 。
+设置完之后重新构建一次，然后重新打开 Chrome devtool 或者修改 Chrome devtool 的主题，就能看到 Vue devtool。
+多数情况下这一步就能解决问题。
+第二步 如果上一步还是不能解决问题，再试试在创建了 Vue 实例之后执行 window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor; 其中 app 是 Vue 的实例。
+或者直接在 Chrome devtool 里执行 window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue;。
+参考 https://github.com/vuejs/vue-devtools/issues/620#issuecomment-368948291</description>
+			<content type="html"><![CDATA[<p>Chrome 的 vue devtool 插件已经检测到当前页面使用了 Vue ，但是 Chrome 开发者工具里没有出现 Vue devtool panel，要怎么处理？</p>
+<h2 id="第一步">第一步</h2>
+<p>首先检查一下项目里是否手动设置了 <code>Vue.config.devtools</code> 。把这个配置设为 <code>true</code> 的时候就能看到 Vue devtool panel 。这个配置需要在创建 Vue 实例之前。根据 <a href="https://vuejs.org/v2/api/#devtools">Vue官方文档</a> 的说法，<code>Vue.config.devtools</code> 在开发时候默认是 <code>true</code> 。</p>
+<p>设置完之后重新构建一次，然后重新打开 Chrome devtool 或者修改 Chrome devtool 的主题，就能看到 Vue devtool。</p>
+<p>多数情况下这一步就能解决问题。</p>
+<h2 id="第二步">第二步</h2>
+<p>如果上一步还是不能解决问题，再试试在创建了 Vue 实例之后执行 <code>window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;</code> 其中 app 是 Vue 的实例。</p>
+<p>或者直接在 Chrome devtool 里执行 <code>window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue;</code>。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/vuejs/vue-devtools/issues/620#issuecomment-368948291">https://github.com/vuejs/vue-devtools/issues/620#issuecomment-368948291</a></p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>如何让 VScode 识别到你的 alias</title>
+			<link>./posts/letting_vscode_konw_your_alias/</link>
+			<pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+			
+			<guid>./posts/letting_vscode_konw_your_alias/</guid>
+			<description>假设有这样一个 alias：
+alias: { &amp;#39;@&amp;#39;: &amp;#39;./src&amp;#39; } tsconfig.json tsconfig.json 或者 jsconfig.json 中加入以下配置：
+{ &amp;#34;compilerOptions&amp;#34;: { &amp;#34;baseUrl&amp;#34;: &amp;#34;.&amp;#34;, &amp;#34;paths&amp;#34;: { &amp;#34;@/*&amp;#34;: [&amp;#34;./src/*&amp;#34;] } } } 这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示
+eslint 如果你有用 eslint ，即使 vscode 已经识别出来你的 alias，但 eslint 依然有可能会报 “找不到模块” 的错误。这时候可以使用这个模块 eslint-import-resolver-webpack 。就可以去掉 eslint 的报错</description>
+			<content type="html"><![CDATA[<p>假设有这样一个 alias：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">alias</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s1">&#39;@&#39;</span><span class="o">:</span> <span class="s1">&#39;./src&#39;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="tsconfigjson">tsconfig.json</h2>
+<p><code>tsconfig.json</code> 或者 <code>jsconfig.json</code> 中加入以下配置：</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;baseUrl&#34;</span><span class="p">:</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;paths&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;@/*&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;./src/*&#34;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示</p>
+<h2 id="eslint">eslint</h2>
+<p>如果你有用 eslint ，即使 vscode 已经识别出来你的 alias，但 eslint 依然有可能会报 “找不到模块” 的错误。这时候可以使用这个模块 <a href="https://www.npmjs.com/package/eslint-import-resolver-webpack">eslint-import-resolver-webpack</a> 。就可以去掉 eslint 的报错</p>
 ]]></content>
 		</item>
 		
