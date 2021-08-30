@@ -32,11 +32,7 @@ jobs:
       - name: build
         run: hugo -D
 
-      # Runs a set of commands using the runners shell
-      - name: commit public
-        run: |
-          git config user.email "liangningcong@gmail.com"
-          git config user.name "github action"
-          git add .
-          git commit -m 'update posts'
-          git push origin master
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v7.2.1
+        with:
+          push: origin master --force
