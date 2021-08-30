@@ -35,4 +35,4 @@ jobs:
       - name: Add & Commit
         uses: EndBug/add-and-commit@v7.2.1
         with:
-          push: origin master --force
+          push: origin HEAD:master --force
