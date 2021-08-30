@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: install hugo
-        run: snap install hugo --channel=extended
+        run: sudo snap install hugo --channel=extended
 
       - name: build
         run: hugo -D
