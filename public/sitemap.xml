@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>./tags/html/</loc>
+    <loc>https://ningco.cn/tags/html/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./</loc>
+    <loc>https://ningco.cn/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./posts/</loc>
+    <loc>https://ningco.cn/posts/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./tags/</loc>
+    <loc>https://ningco.cn/tags/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./posts/autosize_textarea_height/</loc>
+    <loc>https://ningco.cn/posts/autosize_textarea_height/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./tags/vscode/</loc>
+    <loc>https://ningco.cn/tags/vscode/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./tags/vue/</loc>
+    <loc>https://ningco.cn/tags/vue/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./posts/vue_devtool_panel_not_showing/</loc>
+    <loc>https://ningco.cn/posts/vue_devtool_panel_not_showing/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>./posts/letting_vscode_konw_your_alias/</loc>
+    <loc>https://ningco.cn/posts/letting_vscode_konw_your_alias/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url>
 </urlset>

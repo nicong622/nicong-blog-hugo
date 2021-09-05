@@ -1,4 +1,4 @@
-baseURL = ""
+baseURL = "https://ningco.cn/"
 languageCode = "zh-CN"
 defaultContentLanguage = "cn"
 title = "Nicong's blog"

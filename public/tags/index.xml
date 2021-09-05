@@ -2,36 +2,36 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Nicong&#39;s blog</title>
-    <link>./tags/</link>
+    <link>https://ningco.cn/tags/</link>
     <description>Recent content in Tags on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="./tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ningco.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>html</title>
-      <link>./tags/html/</link>
+      <link>https://ningco.cn/tags/html/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>./tags/html/</guid>
+      <guid>https://ningco.cn/tags/html/</guid>
       <description></description>
     </item>
     
     <item>
       <title>vscode</title>
-      <link>./tags/vscode/</link>
+      <link>https://ningco.cn/tags/vscode/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>./tags/vscode/</guid>
+      <guid>https://ningco.cn/tags/vscode/</guid>
       <description></description>
     </item>
     
     <item>
       <title>vue</title>
-      <link>./tags/vue/</link>
+      <link>https://ningco.cn/tags/vue/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>./tags/vue/</guid>
+      <guid>https://ningco.cn/tags/vue/</guid>
       <description></description>
     </item>
     
