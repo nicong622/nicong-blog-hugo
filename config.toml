@@ -1,4 +1,4 @@
-baseURL = "https://ningco.cn/"
+baseURL = "/"
 languageCode = "zh-CN"
 defaultContentLanguage = "cn"
 title = "Nicong's blog"
@@ -69,5 +69,5 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
 
   [[menu.main]]
     name = "About"
-    url = "about-hugo/"
+    url = "/"
     weight = 20
