@@ -28,8 +28,8 @@
 			</nav>
 		</div>
 		<div id="home-footer">
-			<a>
-				&copy; {{ now.Format "2006" }} <a href="{{ .Site.BaseURL }}">{{ .Site.Author.name }}</a><a href="https://beian.miit.gov.cn/" target="_blank">{{ .Site.Params.footerCopyright | safeHTML }}</a>
+			<>
+				&copy; {{ now.Format "2006" }} <a href="{{ .Site.BaseURL }}">{{ .Site.Author.name }}</a>{{ .Site.Params.footerCopyright | safeHTML }}
 			</p>
 		</div>
 	</div>
