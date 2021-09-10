@@ -1,8 +1,7 @@
 baseURL = "/"
-languageCode = "zh-CN"
 defaultContentLanguage = "cn"
 title = "Nicong's blog"
-theme = "hermit"
+# theme = "hermit"
 # enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true

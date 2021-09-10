@@ -2,31 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ningco.cn/tags/html/</loc>
+    <loc>/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/nuxt/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/how-do-nuxt-link-preload/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/vue/</loc>
+    <lastmod>2021-03-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/html/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ningco.cn/</loc>
+    <loc>/posts/autosize_textarea_height/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ningco.cn/posts/</loc>
+    <loc>/tags/vscode/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ningco.cn/tags/</loc>
+    <loc>/posts/vue_devtool_panel_not_showing/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ningco.cn/posts/autosize_textarea_height/</loc>
-    <lastmod>2020-10-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ningco.cn/tags/vscode/</loc>
-    <lastmod>2020-10-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ningco.cn/tags/vue/</loc>
-    <lastmod>2020-10-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ningco.cn/posts/vue_devtool_panel_not_showing/</loc>
-    <lastmod>2020-10-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ningco.cn/posts/letting_vscode_konw_your_alias/</loc>
+    <loc>/posts/letting_vscode_konw_your_alias/</loc>
     <lastmod>2020-10-07T00:00:00+00:00</lastmod>
   </url>
 </urlset>

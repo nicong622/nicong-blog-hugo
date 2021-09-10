@@ -2,18 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nicong&#39;s blog</title>
-    <link>https://ningco.cn/</link>
+    <link>/</link>
     <description>Recent content on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ningco.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>nuxt-link预加载的原理</title>
+      <link>/posts/how-do-nuxt-link-preload/</link>
+      <pubDate>Tue, 02 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/how-do-nuxt-link-preload/</guid>
+      <description>nuxt-link 是 nuxtjs 提供的一个组件，基于 vue-router 的 router-link 做了一层封装，实现了预加载的功能。本文来简单聊聊这个“预加载”的原理。
+一点准备工作 如果直接打开 nuxt 项目中 nuxt-link的源码，会发现里面使用了很多类似于 &amp;lt;%...%&amp;gt; 这样的模板语法。这其实是 lodash.template 提供的模板语法。如果觉得影响阅读，可以按照 nuxt 的文档，新建一个 nuxt 应用，然后构建一次，再找到 .nuxt/components/nuxt-link.client.js，这个就是编译过后的 nuxt-link 代码。
+前置条件 要想触发 nuxt-link 的预加载，需要同时满足以下几个条件：
+  nuxt-link 的 prefetch 属性值是 true 。
+默认值是 nuxt 配置里的 router.prefetchLinks。prefetchLinks 的默认值是 true ，所以 prefetch 的默认值也是 true。
+  nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
+  当 nuxt-link 组件出现在可见区域内。
+  nuxt-link 的 to 属性指向的页面是同一个应用的页面。
+  有网络链接并且不是 2g 网络。</description>
+    </item>
+    
     <item>
       <title>Textarea 自适应高度</title>
-      <link>https://ningco.cn/posts/autosize_textarea_height/</link>
+      <link>/posts/autosize_textarea_height/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://ningco.cn/posts/autosize_textarea_height/</guid>
+      <guid>/posts/autosize_textarea_height/</guid>
       <description>如何使 textarea 元素的高度可以根据内容自动伸缩？
 只需两行代码：
 // 当输入的时候 textarea.style.height = &amp;#39;auto&amp;#39;; textarea.style.height = textarea.scrollHeight + &amp;#39;px&amp;#39;; 第一行的作用是在删除输入的内容时候让 textarea 的高度能自动缩回去；
@@ -22,10 +39,10 @@
     
     <item>
       <title>Vue Devtool Panel not Showing</title>
-      <link>https://ningco.cn/posts/vue_devtool_panel_not_showing/</link>
+      <link>/posts/vue_devtool_panel_not_showing/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://ningco.cn/posts/vue_devtool_panel_not_showing/</guid>
+      <guid>/posts/vue_devtool_panel_not_showing/</guid>
       <description>Chrome 的 vue devtool 插件已经检测到当前页面使用了 Vue ，但是 Chrome 开发者工具里没有出现 Vue devtool panel，要怎么处理？
 第一步 首先检查一下项目里是否手动设置了 Vue.config.devtools 。把这个配置设为 true 的时候就能看到 Vue devtool panel 。这个配置需要在创建 Vue 实例之前。根据 Vue官方文档 的说法，Vue.config.devtools 在开发时候默认是 true 。
 设置完之后重新构建一次，然后重新打开 Chrome devtool 或者修改 Chrome devtool 的主题，就能看到 Vue devtool。
@@ -37,10 +54,10 @@
     
     <item>
       <title>如何让 VScode 识别到你的 alias</title>
-      <link>https://ningco.cn/posts/letting_vscode_konw_your_alias/</link>
+      <link>/posts/letting_vscode_konw_your_alias/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://ningco.cn/posts/letting_vscode_konw_your_alias/</guid>
+      <guid>/posts/letting_vscode_konw_your_alias/</guid>
       <description>假设有这样一个 alias：
 alias: { &amp;#39;@&amp;#39;: &amp;#39;./src&amp;#39; } tsconfig.json tsconfig.json 或者 jsconfig.json 中加入以下配置：
 { &amp;#34;compilerOptions&amp;#34;: { &amp;#34;baseUrl&amp;#34;: &amp;#34;.&amp;#34;, &amp;#34;paths&amp;#34;: { &amp;#34;@/*&amp;#34;: [&amp;#34;./src/*&amp;#34;] } } } 这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示
