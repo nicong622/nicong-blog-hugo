@@ -32,7 +32,7 @@ jobs:
         run: sudo snap install hugo --channel=extended
 
       - name: build
-        run: hugo -D
+        run: hugo
 
       - name: Add & Commit
         uses: EndBug/add-and-commit@v7.2.1

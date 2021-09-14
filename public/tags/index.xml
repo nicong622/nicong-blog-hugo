@@ -5,9 +5,26 @@
     <link>/tags/</link>
     <description>Recent content in Tags on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 02 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Sep 2021 18:25:55 +0800</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo</title>
+      <link>/tags/hugo/</link>
+      <pubDate>Fri, 10 Sep 2021 18:25:55 +0800</pubDate>
+      
+      <guid>/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Webify</title>
+      <link>/tags/webify/</link>
+      <pubDate>Fri, 10 Sep 2021 18:25:55 +0800</pubDate>
+      
+      <guid>/tags/webify/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Nuxt</title>
       <link>/tags/nuxt/</link>
