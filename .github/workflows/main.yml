@@ -39,3 +39,15 @@ jobs:
         with:
           add: public
           push: origin HEAD:master --force
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.TENCENT_CLOUD_SSH_PRIVARY_KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.TENCENT_CLOUD_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -avz ./public/ root@${{ secrets.TENCENT_CLOUD_HOST }}:/data/apps/nicong-blog-hugo/
