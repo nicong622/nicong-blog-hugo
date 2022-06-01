@@ -1,7 +1,8 @@
 ---
 title: 用prefetch来提升性能
 date: 2015-09-16 17:54:41
-tags: 文章翻译
+tags:
+  - 文章翻译
 ---
 最近在[css-tricks](https://css-tricks.com/)看到了一篇关于前端性能优化的文章[《Prefetching, preloading, prebrowsing》](https://css-tricks.com/prefetching-preloading-prebrowsing/)，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）
 

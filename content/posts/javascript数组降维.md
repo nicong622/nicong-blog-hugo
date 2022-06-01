@@ -1,7 +1,8 @@
 ---
 title: javascript数组降维
 date: 2016-02-19 13:08:27
-tags: JavaScript
+tags:
+ - JavaScript
 ---
 
 今天看到了一篇文章，[《优雅的数组降维——Javascript中apply方法的妙用》](http://www.cnblogs.com/front-end-ralph/p/4871332.html)。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。

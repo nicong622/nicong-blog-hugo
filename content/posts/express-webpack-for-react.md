@@ -1,7 +1,10 @@
 ---
 title: express+webpack for react
 date: 2016-05-09 15:02:19
-tags: express webpack react
+tags:
+  - express
+  - webpack
+  - react
 ---
 
 最近在做毕业设计，用到了 reactJs， express，mongoDB，然后用 webpack 作为构建工具。每次开始工作的时候都要先开启三个命令行窗口或标签页，分别用来启动 mongoDB，express 和 webpack构建命令。但是觉得每次都要开三个窗口太麻烦了，于是就想着能不能把 express 和 webpack 的启动放在一起。
@@ -50,7 +53,7 @@ app.use(WebpackDevMiddleware(compiler, {
 
 app.use(WebpackHotMiddleware(compiler));
 
-app.listen(3000)；
+app.listen(3000);
 ```
 
 

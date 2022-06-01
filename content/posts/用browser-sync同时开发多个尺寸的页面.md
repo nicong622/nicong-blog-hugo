@@ -1,7 +1,8 @@
 ---
 title: browser-sync + gulp + postcss配置文件
 date: 2015-10-24 17:37:34
-tags: 前端工具
+tags:
+  - 前端工具
 ---
 
 最近发现了一个工具[browser-sync](http://www.browsersync.io/)。使用这个工具可以同时在多个尺寸的浏览器中打开同一个页面，当在A浏览器中点击了一个按钮，在B浏览器中也会响应这个事件。另外，当你修改了本地的 HTML 文件或者 css 文件的时候，浏览器也会自动刷新网页，就像是liveEdit一样。非常cool的功能！

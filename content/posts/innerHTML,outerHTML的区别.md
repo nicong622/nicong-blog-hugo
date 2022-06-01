@@ -1,9 +1,10 @@
 ---
 title: "innerHTML, outerHTML, innerText, outerText之间的区别"
 date: 2015-03-24 23:34:43
-tags: javascript
+tags:
+  - javascript
 ---
-<span id='head'></span>
+
 之前一直迷惑`innerHTML `，`outerHTML`以及`outerText`，`innerText`之间的关系。今天自己写了一些代码然后总结一下。
 
 

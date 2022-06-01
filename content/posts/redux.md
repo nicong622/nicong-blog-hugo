@@ -1,7 +1,9 @@
 ---
 title: Redux 初探
 date: 2015-12-31 10:13:02
-tags: redux react
+tags:
+  - redux
+  - react
 ---
 最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。
 
@@ -89,7 +91,7 @@ export default function reducer(state = 'hello', action){
 
 接下来是我们的顶层组件：
 
-``` javascript
+```jsx
 // app.js
 
 import React from 'react';
@@ -124,7 +126,7 @@ export default connect(mapStateToProps)(App)
 
 最后是我们的 index 文件：
 
-``` javascript
+``` jsx
 // index.js
 
 import React from 'react';
@@ -151,13 +153,13 @@ ReactDOM.render(
 
 最后，用 webpack 之类的打包工具打包一下，并开启本地服务器，就能在浏览器中访问我们的应用了：
 
-  ![redux01](/images/redux01.png)
+  ![redux01](https://s1.ax1x.com/2022/06/01/XGhKYD.png)
 
 
 
 现在，每次点击按钮，都会产生一个随机数：
 
- ![redux02](/images/redux02.png)
+ ![redux02](https://s1.ax1x.com/2022/06/01/XGh8OI.png)
 
 
 

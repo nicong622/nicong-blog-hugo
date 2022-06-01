@@ -1,7 +1,8 @@
 ---
 title: javascript闭包工作原理
 date: 2015-10-12 20:18:55
-tags: javascript
+tags:
+ - javascript
 ---
 
 闭包是JavaScript的一个重要内容，但我以前一直没搞清楚它的工作原理，直到看到了[一篇文章](http://blog.leapoahead.com/2015/09/15/js-closure/)。

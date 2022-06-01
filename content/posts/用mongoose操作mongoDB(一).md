@@ -1,7 +1,9 @@
 ---
 title: 用mongoose操作MongoDB(一)
 date: 2016-01-06 09:58:14
-tags: mongoose, MongoDB
+tags:
+  - mongoose
+  - MongoDB
 ---
 
 
