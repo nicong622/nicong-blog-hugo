@@ -1,0 +1,36 @@
+---
+title: "获取滚动条高度"
+date: 2015-03-31 11:51:02
+tags: 获取滚动条高度
+---
+
+在开发过程中有时候我们需要判断滚动条的位置，来执行某些行为。一个典型的例子：制作‘返回顶部’的控件时，我们想控制这个控件在页面向下滚动一定高度的时候才显示，当页面的顶部出现时这个控件隐藏。下面介绍在不同浏览器中获取滚动条高度的方法。
+<!--more-->
+
+- 在所有现代浏览器中（除了IE8及更早版本），都支持`Window`对象的`pageYOffset`和`pageXOffset`属性。
+`pageYOffset`用来获取垂直方向上文档滚动的高度。
+`pageXOffset`获取水平方法都得滚动距离。
+
+- 在IE全系列中都支持`scrollTop`和`scrollLeft`属性。但他们不属于`Window`对象。这里分两种情况：
+ 1. 正常情况下，通过查询文档的根节点`document.documentElement`来获取这些属性。（在chrome中这种方法始终返回 0）
+ 2. 怪异模式下，通过body元素查询`document.body.scrollTop`。（chrome用这种方法竟然能正常工作）
+
+于是我们可以用以下的代码来实现‘返回顶部’控件的显示和隐藏：
+
+
+        window.onscroll = function(){
+            var w = window,
+                d = document,
+                scroll = w.pageYOffset || d.documentElement.scrollTop ||d.body.scrollTop;
+            if(scroll>200){
+                //显示控件
+            }else{
+                //隐藏控件
+            }
+        }
+
+[返回顶部](#header)
+
+
+
+
