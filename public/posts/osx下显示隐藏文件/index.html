@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="osx下显示隐藏文件">
+<meta itemprop="description" content="前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。
+使用终端 在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool YES 然后确定。要重启 Finder 才能生效。继续输入一下命令： killall Finder 点击确定。现在再打开 Finder ，就能看到隐藏文件了。 如果要恢复隐藏的话，在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool NO。 然后同样是重启 Finder ，就能恢复了。
+在 Finder 的服务中添加一个选项 在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到Run Shell Script（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：
+STATUS=`defaults read com.apple.finder AppleShowAllFiles` if [ $STATUS == YES ]; then defaults write com.apple.finder AppleShowAllFiles NO else defaults write com.apple.finder AppleShowAllFiles YES fi killall Finder 最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。 !"><meta itemprop="datePublished" content="2015-12-31T11:23:50+00:00" />
+<meta itemprop="dateModified" content="2015-12-31T11:23:50+00:00" />
+<meta itemprop="wordCount" content="104">
+<meta itemprop="keywords" content="osx技巧," /><meta property="og:title" content="osx下显示隐藏文件" />
+<meta property="og:description" content="前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。
+使用终端 在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool YES 然后确定。要重启 Finder 才能生效。继续输入一下命令： killall Finder 点击确定。现在再打开 Finder ，就能看到隐藏文件了。 如果要恢复隐藏的话，在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool NO。 然后同样是重启 Finder ，就能恢复了。
+在 Finder 的服务中添加一个选项 在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到Run Shell Script（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：
+STATUS=`defaults read com.apple.finder AppleShowAllFiles` if [ $STATUS == YES ]; then defaults write com.apple.finder AppleShowAllFiles NO else defaults write com.apple.finder AppleShowAllFiles YES fi killall Finder 最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。 !" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-12-31T11:23:50+00:00" />
+<meta property="article:modified_time" content="2015-12-31T11:23:50+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="osx下显示隐藏文件"/>
+<meta name="twitter:description" content="前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。
+使用终端 在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool YES 然后确定。要重启 Finder 才能生效。继续输入一下命令： killall Finder 点击确定。现在再打开 Finder ，就能看到隐藏文件了。 如果要恢复隐藏的话，在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool NO。 然后同样是重启 Finder ，就能恢复了。
+在 Finder 的服务中添加一个选项 在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到Run Shell Script（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：
+STATUS=`defaults read com.apple.finder AppleShowAllFiles` if [ $STATUS == YES ]; then defaults write com.apple.finder AppleShowAllFiles NO else defaults write com.apple.finder AppleShowAllFiles YES fi killall Finder 最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。 !"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>osx下显示隐藏文件</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Dec 31, 2015</span></div>
+				<h1>osx下显示隐藏文件</h1>
+			</header>
+			<div class="content">
+				<p>前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。</p>
+<!-- raw HTML omitted -->
+<ol>
+<li>
+<p>使用终端
+在终端输入以下命令：
+<code>defaults write com.apple.finder AppleShowAllFiles -bool YES</code>
+然后确定。要重启 Finder 才能生效。继续输入一下命令：
+<code>killall Finder</code>
+点击确定。现在再打开 Finder ，就能看到隐藏文件了。
+如果要恢复隐藏的话，在终端输入以下命令：
+<code>defaults write com.apple.finder AppleShowAllFiles -bool NO</code>。
+然后同样是重启 Finder ，就能恢复了。</p>
+</li>
+<li>
+<p>在 Finder 的服务中添加一个选项
+在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到<code>Run Shell Script</code>（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">STATUS</span><span class="o">=</span><span class="sb">`</span>defaults <span class="nb">read</span> com.apple.finder AppleShowAllFiles<span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$STATUS</span> <span class="o">==</span> YES <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl">defaults write com.apple.finder AppleShowAllFiles NO
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">defaults write com.apple.finder AppleShowAllFiles YES
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">killall Finder
+</span></span></code></pre></div><pre><code>最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。
+
+![hiddenFiles01](https://s1.ax1x.com/2022/06/01/XGfbWQ.png)
+</code></pre>
+<ol start="3">
+<li>
+<p>在右键菜单中添加一下选项</p>
+<p>上一个方法是在 Finder 的服务菜单中添加选项，这个方法是在文件夹的右键菜单的服务菜单里面添加一下选项。
+前部分跟上一个方法一样，但这次我们在 Service receives 中选择 ‘文件或文件夹’，并在右边选中 Finder 。现在，就可以在 Finder 的右键菜单的服务中找到 ‘Toggle Hidden Files’ 了。</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGfqzj.png" alt="hiddenFiles02"></p>
+</li>
+</ol>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/osx%E6%8A%80%E5%B7%A7">osx技巧</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>104 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2015-12-31 11:23</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>用mongoose操作MongoDB(一)</span>
+			</a>
+			<a class="prev-post" href="/posts/redux/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Redux 初探</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

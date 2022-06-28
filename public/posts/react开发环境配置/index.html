@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="React开发环境配置">
+<meta itemprop="description" content="自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。
+最初用 React 的时候，是用browserify来打包，后来听说webpack之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。
+目录结构 我的目录结构如下。
+Babel babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。
+$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在package.json的presets参数中，但我比较喜欢用.babelrc配置文件。
+在项目的根目录下新建一个.babelrc文件，然后添加以下配置。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;] } 在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的react-hmre这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的env参数可以帮我们完成以上工作。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;], &#34;env&#34;: { &#34;development&#34;: { &#34;presets&#34;: [&#34;react-hmre&#34;] } } } webpack webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了hjs-webpack这个工具之后，一切都变得简单很多了。"><meta itemprop="datePublished" content="2016-06-08T16:15:44+00:00" />
+<meta itemprop="dateModified" content="2016-06-08T16:15:44+00:00" />
+<meta itemprop="wordCount" content="267">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="React开发环境配置" />
+<meta property="og:description" content="自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。
+最初用 React 的时候，是用browserify来打包，后来听说webpack之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。
+目录结构 我的目录结构如下。
+Babel babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。
+$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在package.json的presets参数中，但我比较喜欢用.babelrc配置文件。
+在项目的根目录下新建一个.babelrc文件，然后添加以下配置。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;] } 在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的react-hmre这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的env参数可以帮我们完成以上工作。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;], &#34;env&#34;: { &#34;development&#34;: { &#34;presets&#34;: [&#34;react-hmre&#34;] } } } webpack webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了hjs-webpack这个工具之后，一切都变得简单很多了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/react%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-06-08T16:15:44+00:00" />
+<meta property="article:modified_time" content="2016-06-08T16:15:44+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="React开发环境配置"/>
+<meta name="twitter:description" content="自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。
+最初用 React 的时候，是用browserify来打包，后来听说webpack之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。
+目录结构 我的目录结构如下。
+Babel babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。
+$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在package.json的presets参数中，但我比较喜欢用.babelrc配置文件。
+在项目的根目录下新建一个.babelrc文件，然后添加以下配置。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;] } 在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的react-hmre这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的env参数可以帮我们完成以上工作。
+{ &#34;presets&#34;: [&#34;es2015&#34;, &#34;stage-0&#34;, &#34;react&#34;], &#34;env&#34;: { &#34;development&#34;: { &#34;presets&#34;: [&#34;react-hmre&#34;] } } } webpack webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了hjs-webpack这个工具之后，一切都变得简单很多了。"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>React开发环境配置</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jun 8, 2016</span></div>
+				<h1>React开发环境配置</h1>
+			</header>
+			<div class="content">
+				<p>自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。</p>
+<p>最初用 React 的时候，是用<a href="http://browserify.org/">browserify</a>来打包，后来听说<a href="https://webpack.github.io/">webpack</a>之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。</p>
+<h2 id="目录结构">目录结构<a href="#目录结构" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>我的目录结构如下。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/06/01/293f08803786f957.jpg" alt="目录结构"></p>
+<h2 id="babel">Babel<a href="#babel" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。</p>
+<pre tabindex="0"><code>$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0
+</code></pre><p>有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在<code>package.json</code>的<code>presets</code>参数中，但我比较喜欢用<code>.babelrc</code>配置文件。</p>
+<p>在项目的根目录下新建一个<code>.babelrc</code>文件，然后添加以下配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;es2015&#34;</span><span class="p">,</span> <span class="s2">&#34;stage-0&#34;</span><span class="p">,</span> <span class="s2">&#34;react&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的<code>react-hmre</code>这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的<code>env</code>参数可以帮我们完成以上工作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;es2015&#34;</span><span class="p">,</span> <span class="s2">&#34;stage-0&#34;</span><span class="p">,</span> <span class="s2">&#34;react&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;env&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;development&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;react-hmre&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="webpack">webpack<a href="#webpack" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了<a href="https://github.com/HenrikJoreteg/hjs-webpack">hjs-webpack</a>这个工具之后，一切都变得简单很多了。</p>
+<p><code>hjs-webpack</code>是一个配置 webpack 的工具。它对外提供了很多简单的接口，这些接口调用的结果是生成一份对应的 webpack 配置文件。最强大的地方是，<code>hjs-webpack</code>已经帮我们设置好了很多 loader 的配置，当我们需要用到的时候，只需要<code>npm install</code>一下对应的包就可以了，免去自己再写 loader 的相关配置这一步骤。具体的用法下面会介绍到。<code>hjs-webpack</code>所支持的 loader 可以在<a href="https://github.com/HenrikJoreteg/hjs-webpack">这里</a>查看。</p>
+<p>接下来，在项目的根目录下新建一个<code>webpack.config.js</code>来开始 webpack 的配置。</p>
+<p>在<code>hjs-webpack</code>中，提供了两个参数：<code>in</code>和<code>out</code>分别对应 webpack 中的<code>entry</code>和<code>output</code>。因此，最简单的配置就能像下面这样。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">getConfig</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hjs-webpack&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;src/app.js&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">out</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">clearBeforeBuild</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>其中<code>clearBeforeBuild</code>参数可以在构建新文件之前把旧文件都清除掉。</p>
+<p>有时候，有些开发者喜欢把常用的路径都存储在一些变量中，方便使用。这里就不多说了。</p>
+<p>在上面我们提到，在 development 和 production 两个环境中会分别应用不同的配置。在这里，我们有一个参数<code>isDev</code>来告诉 webpack 我们是否处于 development 环境中。另外，我们还需要根据<code>NODE_ENV</code>这个参数来判断我们所处的环境。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">NODE_ENV</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">isDev</span> <span class="o">=</span> <span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">isDev</span><span class="o">:</span> <span class="nx">isDev</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;src/app.js&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">out</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">clearBeforeBuild</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>最后，我们还需要 export 一下这个配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
+</span></span></code></pre></div><h2 id="react">React<a href="#react" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在<code>src</code>文件夹下新建一个<code>app.js</code>文件，然后写一个 React 组件。这部分不是这篇文章的重点，就不多说了。</p>
+<h2 id="构建">构建<a href="#构建" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>以前，我们会使用 webpack 提供的<code>webpack-dev-server</code>来开启一个本地服务器。在<code>hjs-webpack</code>中，提供了一个<code>hjs-dev-server</code>命令。其实最终结果跟<code>webpack-dev-server</code>差不多，只是过程简单了很多。</p>
+<p>在命令行中输入命令<code>hjs-dev-server</code>就能开始构建过程了。也可以把这个命令写在<code>package.json</code>中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="s2">&#34;scripts&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;start&#34;</span><span class="o">:</span> <span class="s2">&#34;NODE_ENV=development hjs-dev-server&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;build&#34;</span><span class="o">:</span> <span class="s2">&#34;webpack&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>运行命令<code>npm start</code>。</p>
+<p>如果没有报错的话，在浏览器中访问<code>localhost:3000</code>就能看到我们的应用了。当然，我们可以把端口改成自己喜欢的。详细配置看<a href="https://github.com/HenrikJoreteg/hjs-webpack">这里</a>。</p>
+<h2 id="css">CSS<a href="#css" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在 webpack 中，如果要应用 CSS，就要用 loader。而我们刚刚也提到，在<code>hjs-webpack</code>中已经配置了<code>css-loader</code>了，我们只需要<code>npm install</code>一下，然后在<code>app.js</code>中加载我们的 css 文件就可以了。</p>
+<pre tabindex="0"><code>npm install --save-dev css-loader style-loader
+</code></pre><p>然后在<code>app.js</code>中导入 css 文件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;./style/app.css&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="p">.....&lt;/</span><span class="nt">h1</span><span class="p">&gt;;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(&lt;</span><span class="nt">App</span> <span class="p">/&gt;,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
+</span></span></code></pre></div><p>这样我们就能应用样式了！</p>
+<p>在<code>hjs-webpack</code>中，包含了对<code>autoprefixer</code>这样的<code>postcss</code>插件的支持，但如果你想要使用其他的插件，如<code>cssnano</code>，就要自己去扩展或者说修改 webpack 配置。在上面的配置中，<code>hjs-webpack</code>会返回一个 webpack 的配置对象：<code>config</code>。我们就可以在这个对象的基础上进行修改配置。</p>
+<p>例如我们需要使用<code>cssnano</code>和<code>precss</code>这两个 postcss 的插件，可以这么配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">config</span><span class="p">.</span><span class="nx">postcss</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">concat</span><span class="p">([</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;precss&#39;</span><span class="p">)({}),</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cssnano&#39;</span><span class="p">)({})]);</span>
+</span></span></code></pre></div><p>到此，我们的开发环境的配置已经基本完成了。如果想了解更多用法，可以参考<a href="https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/">这里</a>。</p>
+<h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>本文主要是介绍了 React + webpack 的开发环境的配置方法，过程中使用了<code>hjs-webpack</code>这个工具来简化了 webpack 的配置。</p>
+<h2 id="参考">参考<a href="#参考" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p><a href="https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/">React Tutorial: Cloning Yelp</a></p>
+<p><a href="https://github.com/HenrikJoreteg/hjs-webpack">hjs-webpack</a></p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>267 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-06-08 16:15</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/letting_vscode_konw_your_alias/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>如何让 VScode 识别到你的 alias</span>
+			</a>
+			<a class="prev-post" href="/posts/express-webpack-for-react/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>express&#43;webpack for react</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

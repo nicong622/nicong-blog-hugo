@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on Nicong&#39;s blog</title>
+    <link>/tags/javascript/</link>
+    <description>Recent content in javascript on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 15 Dec 2021 10:10:51 +0800</lastBuildDate><atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 web 环境中获取 uuid 的简单方法</title>
+      <link>/posts/web-create-uuid/</link>
+      <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
+      
+      <guid>/posts/web-create-uuid/</guid>
+      <description>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&amp;#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&amp;#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString </description>
+    </item>
+    
+    <item>
+      <title>javascript数组降维</title>
+      <link>/posts/javascript%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4/</link>
+      <pubDate>Fri, 19 Feb 2016 13:08:27 +0000</pubDate>
+      
+      <guid>/posts/javascript%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4/</guid>
+      <description>今天看到了一篇文章，《优雅的数组降维——Javascript中apply方法的妙用》。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。
+下面以二维数组转一维数组为例来说明。
+1、一般的转换 看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &amp;lt; arr.length; i++) { for (var j = 0; j &amp;lt; arr[i].length; j++) { reduced.push(arr[i][j]); } } return reduced; } 这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。
+2、利用 concat() js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &amp;lt; arr.length; i++){ reduced = reduced.concat(arr[i]); } return reduced; } 3、利用 concat() 和 apply() concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。</description>
+    </item>
+    
+    <item>
+      <title>javascript闭包工作原理</title>
+      <link>/posts/javascript%E9%97%AD%E5%8C%85%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Mon, 12 Oct 2015 20:18:55 +0000</pubDate>
+      
+      <guid>/posts/javascript%E9%97%AD%E5%8C%85%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</guid>
+      <description>闭包是JavaScript的一个重要内容，但我以前一直没搞清楚它的工作原理，直到看到了一篇文章。
+下面就简单的概括一下。
+作用域链（scope chain） 在JavaScript中，每一个function都有一个对应的作用域对象，用来保存function中的局部变量以及参数。你可以把这个作用域对象想象成一个普通的JavaScript对象，但你不能直接获取这个对象，你只能修改它的属性（也就是修改局部变量）。当你在函数外部定义变量时，这些变量就会添加到全局对象中，这些变量就是我们平常说的全局变量。显然，全局变量的作用域就是全局对象。
+当在function中嵌套另一个function的时候，就会出现父级作用域。把所有的作用域对象像链条一样一个一个的链接起来就形成了一个作用域链。作用域的顶部是一个全局对象。当JavaScript中的function需要查找（或者叫做变量解析）某一个变量x的时候，它首先会在当前函数的作用域对象里面查找，如果没有找到，就会在它的父级作用域对象中一级一级的往上查找。如果到最后还是没有找到，就会抛出一个错误：ReferenceError。
+在这里可以引出一个关于JavaScript性能优化的小tips：当你需要在一个函数中多次的引用一个外部变量时，可以先把它保存在一个局部变量中，再对这个局部变量进行操作。这样就可以省去在父级作用域中多次查找变量的时间。
+对作用域的引用 有一下一段代码：
+var foo = 1; var myfunc = function(){ var bar = 2; var innerfunc(){ console.log(foo); } innerfunc(); } myfunc(); 当函数被定义时，这个函数的标识符就会被添加到当前作用域中（在上面的代码中就是全局作用域），标识符所引用的是一个函数对象，这个函数对象包含了函数的源代码和一些内部属性，其中一个我们关心的就是[[scope]]。[[scope]]所引用的是这个函数在定义时所能直接访问的作用域（这里是全局作用域）。如果函数是嵌套在另外一个函数中，那么它的[[scope]]就是指向外层函数的作用域。这一点对于理解闭包很重要！
+我们知道，在myfunc被调用的时候会创建一个新的作用域，用来保存局部变量和参数，这个作用域的父级作用域就是定义myfunc时所处的作用域，也就是 myfunc 的[[scope]]所指向的作用域。
+调用myfunc时,会在内部调用innerfunc，这时JavaScript需要在innerfunc的作用域中查找foo,没找到，于是在innerfunc的[[scope]]所指向的作用域（也就是myfunc的作用域）中查找，还是没找到，继续在myfunc的[[scope]]所指向的作用域（全局作用域）中查找，找到了foo = 1，查找结束。
+当函数执行完并返回的时候，再也没有一个对象会引用它的作用域，这个作用域就可以被垃圾回收器回收，因此也就不能继续访问函数内部的变量了。上面的代码中，当myfunc执行完毕并返回后，就不能再访问它内部的bar了。
+返回引用 上面讨论到了，在函数调用结束并返回之后，由于它的作用域会被回收而不能继续访问它的局部变量。假设我们把函数作用域的引用返回，并保存在一个外部的变量里，是不是就意味着可以继续访问函数的局部变量呢？答案是肯定的，这也就是我们平常说的闭包所做的事情了。
+var counter = function(){ var a = 1; var add = function(){ a++; console.log(a); } return add; } var myCounter = counter(); myCounter() //2 myCounter() //3 myCounter() //4 上面是一个简单的闭包。调用counter的时候counter函数返回了一个add函数并赋值给myCounter，使得myCounter指向了add。同时，由于add的[[scope]]保存了对counter作用域的引用，所以即使在counter调用结束了，myCounter依然可以访问到counter中的变量a。
+需要注意的是作用域链是不会被复制的，每次函数调用只会往作用域链下面新增一个作用域对象。
+有一个经典的闭包例子：
+var arr = []; for(var i=0;i&amp;lt;3;i++){ arr[i] = function(){return i}; } 当依次调用arr[0](),arr[1](),arr[2]()的时候会得到什么结果呢？</description>
+    </item>
+    
+    <item>
+      <title>innerHTML, outerHTML, innerText, outerText之间的区别</title>
+      <link>/posts/innerhtmlouterhtml%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Tue, 24 Mar 2015 23:34:43 +0000</pubDate>
+      
+      <guid>/posts/innerhtmlouterhtml%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>&lt;p&gt;之前一直迷惑&lt;code&gt;innerHTML &lt;/code&gt;，&lt;code&gt;outerHTML&lt;/code&gt;以及&lt;code&gt;outerText&lt;/code&gt;，&lt;code&gt;innerText&lt;/code&gt;之间的关系。今天自己写了一些代码然后总结一下。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

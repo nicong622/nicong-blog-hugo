@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>文章翻译 on Nicong&#39;s blog</title>
+    <link>/tags/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91/</link>
+    <description>Recent content in 文章翻译 on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 16 Sep 2015 17:54:41 +0000</lastBuildDate><atom:link href="/tags/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用prefetch来提升性能</title>
+      <link>/posts/prefetch/</link>
+      <pubDate>Wed, 16 Sep 2015 17:54:41 +0000</pubDate>
+      
+      <guid>/posts/prefetch/</guid>
+      <description>&lt;p&gt;最近在&lt;a href=&#34;https://css-tricks.com/&#34;&gt;css-tricks&lt;/a&gt;看到了一篇关于前端性能优化的文章&lt;a href=&#34;https://css-tricks.com/prefetching-preloading-prebrowsing/&#34;&gt;《Prefetching, preloading, prebrowsing》&lt;/a&gt;，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

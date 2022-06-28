@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mongoose on Nicong&#39;s blog</title>
+    <link>/tags/mongoose/</link>
+    <description>Recent content in mongoose on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 06 Jan 2016 09:58:14 +0000</lastBuildDate><atom:link href="/tags/mongoose/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用mongoose操作MongoDB(一)</title>
+      <link>/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/</link>
+      <pubDate>Wed, 06 Jan 2016 09:58:14 +0000</pubDate>
+      
+      <guid>/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/</guid>
+      <description>最近在做一个课程设计，想做一个单页应用。但我是学前端的，后端知识比较缺乏，所以有点苦恼后端要怎么实现。正好前阵子看到了一本书，《单页 web 应用 javascript 从前端到后端》(写得挺详细的一本书，推荐一下)，受到了启发，于是决定用 nodejs 做后端。
+这篇文章主要是讲一下在数据库方面的使用。其实我自己对于数据库是不太懂，这次的设计算是我第一次真正意义上的使用数据库，而且还是我自己一步一步摸索（瞎搞）出来的，有不对的地方请多多指教。
+数据库我是用 MongoDB 。因为 mongoDB 的存储格式是 JSON ，比较适合单页应用。在 MongoDb 的驱动方面，我选择了一个 ODM( Object Docunemt Mapper) ：mongoose。
+注意 我是用 OSX 的，其他系统的操作可能会有些不同。
+安装 MongoDB 安装 在 osx 下，推荐用 homebrew 来安装：
+brew install mongodb 如果 homebrew 安装失败的话，可以直接从官网下载对应的二进制文件。
+其他平台的安装可以看官方文档。
+mongoose 安装 mongoose 的安装也非常简单：
+npm install --save mongoose 安装之前先确保你已经正确安装了 nodejs 。
+启动数据库 默认路径下启动 启动 MongoDB 最简单的方法就是在命令行输入：
+mongod 这时候，数据库就会在默认的路径 &amp;lsquo;data/db&amp;rsquo; 下启动数据库。
+特定路径下启动 如果你想在自己定义的项目目录下启动的话可以这样：
+//假设你在当前目录下有一个叫做 &amp;#39;test&amp;#39; 的目录 mongod --dbpath test 如果数据库正确启动了，test 目录里面就会多出一些文件。</description>
+    </item>
+    
+  </channel>
+</rss>

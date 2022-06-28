@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="用prefetch来提升性能">
+<meta itemprop="description" content="最近在css-tricks看到了一篇关于前端性能优化的文章《Prefetching, preloading, prebrowsing》，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）"><meta itemprop="datePublished" content="2015-09-16T17:54:41+00:00" />
+<meta itemprop="dateModified" content="2015-09-16T17:54:41+00:00" />
+<meta itemprop="wordCount" content="79">
+<meta itemprop="keywords" content="文章翻译," /><meta property="og:title" content="用prefetch来提升性能" />
+<meta property="og:description" content="最近在css-tricks看到了一篇关于前端性能优化的文章《Prefetching, preloading, prebrowsing》，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/prefetch/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-09-16T17:54:41+00:00" />
+<meta property="article:modified_time" content="2015-09-16T17:54:41+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用prefetch来提升性能"/>
+<meta name="twitter:description" content="最近在css-tricks看到了一篇关于前端性能优化的文章《Prefetching, preloading, prebrowsing》，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>用prefetch来提升性能</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Sep 16, 2015</span></div>
+				<h1>用prefetch来提升性能</h1>
+			</header>
+			<div class="content">
+				<p>最近在<a href="https://css-tricks.com/">css-tricks</a>看到了一篇关于前端性能优化的文章<a href="https://css-tricks.com/prefetching-preloading-prebrowsing/">《Prefetching, preloading, prebrowsing》</a>，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）</p>
+<p>当我们谈论到前端性能的时候我们会想到这样的一些东西：级联、最小化、缓存、或者压缩服务器上的资源，这样页面就可以加载得更快而且用户也可以尽快的完成他们的目的。</p>
+<p>资源预抓取（prefetching）是另一个提升性能的技术。我们可以用这个技术来告诉浏览器，用户将来可能会需要哪些资源。（在用户还没用到这些资源之前）。</p>
+<p><em>Patrick Hamann</em> :</p>
+<blockquote>
+<p>预抓取是一种用来提示浏览器哪些资源在将来一定会或者可能会用到的方法，有些提示应用在当前的页面，其他的用在将来可能打开的页面。</p>
+</blockquote>
+<blockquote>
+<p>作为开发者，我们比浏览器更加清楚我们的应用。我们可以利用这些信息来告诉浏览器那些核心的资源。</p>
+</blockquote>
+<p>这种在用户需要之前就猜测用户需要什么的实践已经被叫做‘预浏览（prebrowsing）’，但这并不是单一的一种技术，它分成了很多不同的技术：DNS预抓取，子资源，标准的预抓取，预连接，和预渲染。</p>
+<h2 id="dns预抓取">DNS预抓取<a href="#dns预抓取" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>这个方法会通知客户端有一些来自特定URL的资源我们在以后会用到，这样浏览器就能尽快解析这个DNS。假设我们需要一个来自<code>example.com</code>这个URL的资源，例如一张图片或者一段音频。这文档的<code>&lt;head&gt;</code>里面我们这样写：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;dns-prefetch&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;//example.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>这样，当我们需要从这个URL请求一个文件的时候就不用再等待DNS查找。当我们需要用到第三方库的代码或者来自网络中的其他资源。</p>
+<p>在<em>Harry Roberts</em>的‘史诗级’的关于<a href="http://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-front-end-developers/#section:dns-prefetching">前端性能优化的文章</a>中，他建议用这个技术：</p>
+<blockquote>
+<p>这行简单的代码会告诉那些支持它的浏览器在真正需要之前就开始预抓取这个域名的DNS。这就意味着‘DNS查询’的这个过程在浏览器遇到真正需要请求这个组件的<code>&lt;script&gt;</code>元素的时候就已经在进行。这就给了浏览器一个小小的提前。</p>
+</blockquote>
+<p>这看上去可能会是一个微乎其微的不怎么重要的性能优化，但其实并不是那么一回事——Chrome浏览器一直都在做类似的事情。当你在地址栏输入域名的一部分的时候，它（Chrome）就会自动的与解析对应的DNS（有的时候甚至会提前渲染页面），这就会在每次请求的时候减少那关键的几毫秒。</p>
+<h2 id="预连接">预连接<a href="#预连接" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>跟DNS预抓取很相似，预连接也会解析DNS，但它也会同时执行TCP握手和可选的TLS协商。它可以这样用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;preconnect&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://css-tricks.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>想要更多的信息的话，<em>Ilya Grigorik</em>写了一篇关于这个方便的资源提示的<a href="https://www.igvita.com/2015/08/17/eliminating-roundtrips-with-preconnect/">文章</a>：</p>
+<blockquote>
+<p>现代浏览器会尽它们最大的能力在网站发起真正的请求之前就去预测这个网站将会需要哪些连接。通过提前开始“预连接”，浏览器可以提前建立sockets并且消除DNS，TCP和TLS等在实际请求过程中的艰难道路上昂贵的往返时间。也就是说，就算浏览器很聪明，它们也不能可靠的预测每一个网站的所有预连接目标。</p>
+</blockquote>
+<blockquote>
+<p>但值得高兴的是我们可以帮助浏览器。通过在<em>Firefox 39</em>和<em>Chrome 46</em>中引入的新的预连接提示，我们可以在真正的请求开始之前就告诉浏览器我们需要哪些sockets。</p>
+</blockquote>
+<h2 id="预抓取">预抓取<a href="#预抓取" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>如果我们确定一个特定的资源在将来会被用到，我们就可以叫浏览器去请求这个资源并把它存储在缓存中以便之后的引用。例如一张图片或者一段脚本，或者其他任何可以被浏览器缓存的东西：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;prefetch&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;image.png&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>与DNS预抓取不同，我们真的是在请求并下载这个资源，并且把它存储在缓存中。但是这要依赖很多的条件，因为预抓取可以被浏览器忽略。例如，在一个网速慢的环境中，客户端可能会放弃请求一个很大的字体文件。FireFox只会在“浏览器空闲”的时候预抓取资源。</p>
+<p>就像<em>Bram Stein</em>在他的<a href="http://www.bramstein.com/writing/preload-hints-for-web-fonts.html">文章</a>中对这个问题的解析一样，对于webfonts，预抓取会有巨大的性能提升。在目前，字体文件必须要等到DOM和CSSOM被构造之后才开始下载。但如果我们预抓取这些文件，就可以轻松地解决这个瓶颈。</p>
+<blockquote>
+<p><strong>注意</strong> 虽然以前测试资源的预抓取有点困难，但是Chrome和Firefox现在可以在网络面板中显示预抓取的资源。同时应当记得对于资源预抓取是没有同源限制的。</p>
+</blockquote>
+<h2 id="子资源">子资源<a href="#子资源" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>这是另一个预抓取技术，它可以用来标识那些具有优先级并且在预抓取文件之前就应该被请求。例如，在Chrome和Opera中我们在文档的<code>head</code>标签里加入以下代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;subresource&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>根据<a href="https://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource">Chromium文档</a>，它的工作原理是这样的：</p>
+<blockquote>
+<p><code>LINK rel=subresource</code>提供了一个与<code>LINK rel=prefetch</code>具有不同语意的链接关系类型。<code>LINK rel=prefetch</code>为在随后的页面中用到的资源提供一个低优先级的下载，但<code>LINK rel=subresource</code>使得资源能在当前页面中提前下载。</p>
+</blockquote>
+<p>所以，如果某个资源是要在当前前面中使用，或者需求比较急迫，那么最好是用<code>subresource</code>，否则就用<code>prefetch</code>。</p>
+<h2 id="页面预渲染">页面预渲染<a href="#页面预渲染" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>这是一个核弹般的选择，因为<code>prerender</code>给予我们一种可以先发制人地下载一个特定文档的所有资源，就像这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;prerender&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://css-tricks.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p><em>Steve Souders</em>写了一篇关于这个技术的<a href="http://www.stevesouders.com/blog/2013/11/07/prebrowsing/">解析</a>：</p>
+<blockquote>
+<p>这就像在一个隐藏的tab中打开这个URL，所有的资源都会被下载，DOM会被创建，页面会被展示，CSS会被应用，JavaScript会被执行，等等。如果用户导航到了这个特定的<code>href</code>，这个隐藏的页面就会被换进视口中，看起来就像是在瞬间加载一样。谷歌搜索拥有这个特性已经很多年了，并且把它叫做“瞬时页面”。微软最近也宣布他们打算在IE11平台上的Bing同样的使用预渲染。</p>
+</blockquote>
+<p>但是小心！你应该要确定用户有可能会点击这个链接，否则浏览器就会不需要任何理由地下载所有用来渲染这个页面的资源。</p>
+<p><em>Steve Souders</em>继续说道：</p>
+<blockquote>
+<p>与任何预想性的工作一样，这个预测有一定的风险会出错。如果这个预测工作是昂贵的（例如：从其他进程偷取CPU，耗电，或者浪费带宽）那么就要慎重考虑。预测用户下一步会去哪一个页面会看起来比较困难，但一些比较高几率的情况还是存在的：</p>
+</blockquote>
+<ul>
+<li>如果用户已经用一个明显的结果进行了搜索，这个搜索页面就很有可能在下一步被加载；</li>
+<li>如果用户导航到了一个登陆页面，那么登陆后的页面就有可能跟着被加载；</li>
+<li>如果用户正在阅读一篇多页的文章或者一些分页的结果，当前页面的下一个页面就很有可能在下一步被加载。</li>
+</ul>
+<p>最后，<a href="http://www.w3.org/TR/page-visibility/">页面可见性API</a>可以被用来防止脚本在被渲染到用户页面之前就被触发。</p>
+<p>现在，先撇开规范和这些设计上的考虑，我们来谈一些对未来有意义的事情。</p>
+<h2 id="未来的选择预加载">未来的选择：预加载<a href="#未来的选择预加载" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>一篇叫做<a href="https://w3c.github.io/preload/">预加载</a>的文档建议有时候最好总把所有的资源都下载，不管浏览器是否认为这是一个好主意。与可以被忽略的资源预抓取不同，资源的预加载必须被浏览器请求。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;preload&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;image.png&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>所以，即使预加载在当前还没有被任何浏览器支持，但它背后的想法是还是很有意义的。</p>
+<h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>预测我们的用户下一步要做什么是很困难的，并且需要很多的计划和测试。但对性能的追求是绝对值得的。如果我们愿意去尝试这些预抓取技术，那么我们肯定可以明显的提升用户体验。</p>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/%E6%96%87%E7%AB%A0%E7%BF%BB%E8%AF%91">文章翻译</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>79 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2015-09-16 17:54</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/javascript%E9%97%AD%E5%8C%85%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>javascript闭包工作原理</span>
+			</a>
+			<a class="prev-post" href="/posts/%E9%A1%B5%E9%9D%A2%E6%8B%A5%E6%9C%89id%E7%9A%84%E5%85%83%E7%B4%A0%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>页面拥有ID的元素会创建全局变量</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

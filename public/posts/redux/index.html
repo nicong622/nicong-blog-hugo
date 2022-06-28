@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Redux 初探">
+<meta itemprop="description" content="最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。"><meta itemprop="datePublished" content="2015-12-31T10:13:02+00:00" />
+<meta itemprop="dateModified" content="2015-12-31T10:13:02+00:00" />
+<meta itemprop="wordCount" content="472">
+<meta itemprop="keywords" content="redux,react," /><meta property="og:title" content="Redux 初探" />
+<meta property="og:description" content="最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/redux/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-12-31T10:13:02+00:00" />
+<meta property="article:modified_time" content="2015-12-31T10:13:02+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redux 初探"/>
+<meta name="twitter:description" content="最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Redux 初探</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Dec 31, 2015</span></div>
+				<h1>Redux 初探</h1>
+			</header>
+			<div class="content">
+				<p>最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。</p>
+<h2 id="文档">文档<a href="#文档" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>
+<p><a href="http://camsong.github.io/redux-in-chinese/index.html">中文文档</a></p>
+</li>
+<li>
+<p><a href="http://rackt.org/redux/index.html">英文文档</a></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="redux-的三个原则">Redux 的三个原则<a href="#redux-的三个原则" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="1-只有一个store">1. 只有一个store<a href="#1-只有一个store" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>​	在 redux 中，你只有一个 store ，这个 store 中有一棵 object tree ，它维护着整个引用的 state 。这样就保证了数据的单一来源。在 flux 中，由于你可以有多个 store ，导致你有时候分不清你的 state 是在哪里发生变化的，这样就导致了一些莫名其妙的 bug ，特别是对于初学者来说。</p>
+<h3 id="2-state-是只读的">2. state 是只读的<a href="#2-state-是只读的" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>​	在你的应用中，你只能通过 action 来改变 state 。无论是视图还是网络请求，都不能直接改变 state ，只能通过 dispatch 一个 action 来表达想要改变 state 的意图。其实这也是保证了单一的数据源。</p>
+<h3 id="3-使用纯函数来修改数据">3. 使用纯函数来修改数据<a href="#3-使用纯函数来修改数据" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>​	在 redux 中，我们通过 reducer 来接受 action 和旧的 state ，然后返回新的 state ，从而改变整个应用的 state tree。reducer 只是一些纯函数（不产生副作用，不发出网络请求）。你可以有多个 reducer ，并按照需要把 reducers 写在不同的文件中，最后通过 redux 的一个函数 combineReducers 把他们合并在一起。</p>
+<h2 id="一个非常简单的例子">一个非常简单的例子<a href="#一个非常简单的例子" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>​	我们来做一个非常简单的例子，有一个按钮，点击一下分成一个随机数，并显示在屏幕上。真的非常简单！但是为了学习 redux 我还是稍微做的复杂了一点。</p>
+<p>首先安装一下 redux ，由于我们是和 react 一起用，所以还有装一个 react 绑定库。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">npm</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">save</span> <span class="nx">redux</span> <span class="nx">react</span><span class="o">-</span><span class="nx">redux</span>
+</span></span></code></pre></div><p>然后添加一个 action：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">//actions.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">CHANGE</span> <span class="o">=</span> <span class="s1">&#39;change&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这里我们返回了一个事件(action)，每次我们想要改变 state tree
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 的时候就调用这个函数。在这里，我们只返回一个 action ，不做其他
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 的事情，不产生任何的副作用。这样的函数我们叫做 action creater
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">newRandom</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">type</span><span class="o">:</span> <span class="nx">CHANGE</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接着我们有一个 reducer：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">//reduder.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">CHANGE</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../actions/actions&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> reducer 从 store 中接收两个参数：state 和 action ，你也可以为 state 加上默认值。
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 根据 aciton.type 来改变应用的 state tree (返回新的 state)。
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 建议默认返回原来的 state ，避免出现问题。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">reducer</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">CHANGE</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">text</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="p">};</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接下来是我们的顶层组件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// app.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">newRandom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./actions/actions&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">connect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">bindActionCreators</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">App</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="p">{</span> <span class="nx">dispatch</span> <span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">text</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()=&gt;</span><span class="nx">dispatch</span><span class="p">(</span><span class="nx">newRandom</span><span class="p">())}&gt;</span><span class="nx">click</span> <span class="nx">me</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这个函数能接收到应用的 state tree ，并且返回我们需要的数据，也就是 props
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">mapStateToProps</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">text</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">text</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//使用 connect 函数之后，App 组件就会被注入全局的 state 和一个 dispatch 函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">mapStateToProps</span><span class="p">)(</span><span class="nx">App</span><span class="p">)</span>
+</span></span></code></pre></div><p>最后是我们的 index 文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// index.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">reducer</span> <span class="nx">from</span> <span class="s1">&#39;./reducers/reducer&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./app&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//实例化一个 store
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">reducer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 用 Provider 把我们的顶级组件 App 包裹其中，并传入 store 实例，
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这样在 App 中我们就能访问到 store 了。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="nt">Provider</span> <span class="na">store</span><span class="o">=</span><span class="p">{</span><span class="nx">store</span><span class="p">}&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="nt">App</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="nt">Provider</span><span class="p">&gt;,</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></div><p>最后，用 webpack 之类的打包工具打包一下，并开启本地服务器，就能在浏览器中访问我们的应用了：</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGhKYD.png" alt="redux01"></p>
+<p>现在，每次点击按钮，都会产生一个随机数：</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGh8OI.png" alt="redux02"></p>
+<p>great！我们已经用 react ＋ redux 做出了一个应用！现在来解释一下数据流。</p>
+<ol>
+<li>
+<p>调用<code>store.dispatch(action)</code></p>
+<p>用 dispatch 函数来派发一个 action ，一个 action 就是一个简单的对象。一个 action 至少要有一个表示事件类型的属性，例如 <code>type</code> 。然后，你可以添加任何你需要的属性，就像这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;click&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;banana&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>你可以在任何你需要的地方调用 dispatch ，可以在一个 ajax 的回调函数中，或者一个 setInterval 中。</p>
+</li>
+<li>
+<p>store 调用 reducer</p>
+<p>还记得我们在实例化 store 的时候传进来了一个 reducer 了吗？我们的 store 会在这个时候调用这个 reducer ，同时传入两个参数：当前的 state tree 和 上一步的 action 。</p>
+<p><strong>强调一下</strong> ：我们的 reducer 只是一个纯函数，它只会计算新的 state 。同时它的行为是可以预测的：同样的输入，每次都会得到同样的输出。它不应该执行任何会有副作用的动作，例如调用API ，路由，网络请求等，这些行为都应该在 dispatch( action ) 之前执行。</p>
+</li>
+<li>
+<p>root reducer 把多个 reducer 的返回值合并成一棵单一的 state tree</p>
+<p>也许你的应用中只有一个 reducer ，但当应用的规模变大的时候，就会需要多个 reducer 来处理不同的逻辑，这时候，你可以用 <code>combineReducers( )</code> 来把多个 <code>reducer</code> 合并成一个 <code>rootReducer</code> 。就像下面这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">todos</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Somehow calculate it...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">return</span> <span class="nx">nextState</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">function</span> <span class="nx">visibleTodoFilter</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="s1">&#39;SHOW_ALL&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Somehow calculate it...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">return</span> <span class="nx">nextState</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">let</span> <span class="nx">todoApp</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">todos</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">visibleTodoFilter</span>
+</span></span><span class="line"><span class="cl"> <span class="p">})</span>
+</span></span></code></pre></div><p>当你派发来一个事件的时候，<code>todoApp</code> 就会调用传进来的所有 <code>reducers</code> ，在这里就是 <code>todos()</code> 和 <code>visibleTodoFilter()</code> ，然后把各个 <code>reducer</code> 返回的新的 state 组合成 state tree 。</p>
+</li>
+<li>
+<p>store 把 root reducer 返回的整棵 state tree 保存起来</p>
+<p>来到这里，你的 app 中就有了一棵新的 state tree 了。这时候，所有用 <code>store.subscribe( listener )</code> 注册的 <code>listener</code> 函数都会被调用，在 <code>listener</code> 函数中，可以调用 <code>store.getState()</code> 来获取到当前的 state ，也就是最新的 state 了。最后，我们的 UI 就会更新，在 react 中，就相当于自动调用了 <code>component.setState()</code>。</p>
+</li>
+</ol>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/redux">redux</a></span><span class="tag"><a href="/tags/react">react</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>472 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2015-12-31 10:13</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>osx下显示隐藏文件</span>
+			</a>
+			<a class="prev-post" href="/posts/iscroll%E5%AF%BC%E8%87%B4%E5%85%83%E7%B4%A0%E6%97%A0%E6%B3%95%E7%82%B9%E5%87%BB/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>iScroll导致元素无法点击</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

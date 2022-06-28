@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redux on Nicong&#39;s blog</title>
+    <link>/tags/redux/</link>
+    <description>Recent content in redux on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 31 Dec 2015 10:13:02 +0000</lastBuildDate><atom:link href="/tags/redux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redux 初探</title>
+      <link>/posts/redux/</link>
+      <pubDate>Thu, 31 Dec 2015 10:13:02 +0000</pubDate>
+      
+      <guid>/posts/redux/</guid>
+      <description>&lt;p&gt;最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

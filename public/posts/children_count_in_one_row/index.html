@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="获取一行中子元素的个数">
+<meta itemprop="description" content="有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
+如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
+对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
+遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 "><meta itemprop="datePublished" content="2021-10-25T19:15:32+08:00" />
+<meta itemprop="dateModified" content="2021-10-25T19:15:32+08:00" />
+<meta itemprop="wordCount" content="15">
+<meta itemprop="keywords" content="js,html," /><meta property="og:title" content="获取一行中子元素的个数" />
+<meta property="og:description" content="有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
+如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
+对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
+遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/children_count_in_one_row/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-25T19:15:32+08:00" />
+<meta property="article:modified_time" content="2021-10-25T19:15:32+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="获取一行中子元素的个数"/>
+<meta name="twitter:description" content="有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
+如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
+对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
+遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 "/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>获取一行中子元素的个数</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="目录"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Oct 25, 2021</span></div>
+				<h1>获取一行中子元素的个数</h1>
+			</header>
+			<div class="content">
+				<p>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？</p>
+<p><img src="https://i.loli.net/2021/10/25/wTQo8ym6USK43xq.png" alt="wTQo8ym6USK43xq"></p>
+<p>如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？</p>
+<p>对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：</p>
+<ol>
+<li>遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行；</li>
+<li>还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。</li>
+</ol>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/js">js</a></span><span class="tag"><a href="/tags/html">html</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>15 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021-10-25 11:15</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title">目录</div>
+			<nav id="TableOfContents"></nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/web-create-uuid/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>在 web 环境中获取 uuid 的简单方法</span>
+			</a>
+			<a class="prev-post" href="/posts/custom_keyboard_attention/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>入坑客制化键盘的一些建议</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

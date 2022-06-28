@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>uuid on Nicong&#39;s blog</title>
+    <link>/tags/uuid/</link>
+    <description>Recent content in uuid on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 15 Dec 2021 10:10:51 +0800</lastBuildDate><atom:link href="/tags/uuid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 web 环境中获取 uuid 的简单方法</title>
+      <link>/posts/web-create-uuid/</link>
+      <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
+      
+      <guid>/posts/web-create-uuid/</guid>
+      <description>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&amp;#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&amp;#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString </description>
+    </item>
+    
+  </channel>
+</rss>

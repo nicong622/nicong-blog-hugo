@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="一个基于 Systemjs 的组件动态加载方案">
+<meta itemprop="description" content="背景 在低代码平台的设计中，通常需要动态地加载一个组件。
+Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
+为了解决上述问题，可以使用 systemjs。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。
+Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于在浏览器中实现动态 import()、import.meta (包括 import.meta.url and import.meta.resolve) 等功能。更多的功能请参考 systemjs 的文档。
+例如以下例子：
+使用 使用的时候，需要提前添加以下 script 标签：
+&lt;script src=&#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&#34;&gt;&lt;/script&gt; &lt;script type=&#34;systemjs-importmap&#34;&gt; // 定义 importmap { &#34;imports&#34;: { &#34;lodash&#34;: &#34;https://unpkg.com/lodash@4.17.10/lodash.js&#34; // 或者其他需要动态加载的模块 } } &lt;/script&gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
+window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&#39;lodash&#39;) .then(lodash =&gt; lodash."><meta itemprop="datePublished" content="2022-01-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-01-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="304">
+<meta itemprop="keywords" content="systemjs," /><meta property="og:title" content="一个基于 Systemjs 的组件动态加载方案" />
+<meta property="og:description" content="背景 在低代码平台的设计中，通常需要动态地加载一个组件。
+Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
+为了解决上述问题，可以使用 systemjs。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。
+Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于在浏览器中实现动态 import()、import.meta (包括 import.meta.url and import.meta.resolve) 等功能。更多的功能请参考 systemjs 的文档。
+例如以下例子：
+使用 使用的时候，需要提前添加以下 script 标签：
+&lt;script src=&#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&#34;&gt;&lt;/script&gt; &lt;script type=&#34;systemjs-importmap&#34;&gt; // 定义 importmap { &#34;imports&#34;: { &#34;lodash&#34;: &#34;https://unpkg.com/lodash@4.17.10/lodash.js&#34; // 或者其他需要动态加载的模块 } } &lt;/script&gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
+window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&#39;lodash&#39;) .then(lodash =&gt; lodash." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/loading_compoents_dynamically_by_systemjs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-01-09T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一个基于 Systemjs 的组件动态加载方案"/>
+<meta name="twitter:description" content="背景 在低代码平台的设计中，通常需要动态地加载一个组件。
+Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
+为了解决上述问题，可以使用 systemjs。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。
+Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于在浏览器中实现动态 import()、import.meta (包括 import.meta.url and import.meta.resolve) 等功能。更多的功能请参考 systemjs 的文档。
+例如以下例子：
+使用 使用的时候，需要提前添加以下 script 标签：
+&lt;script src=&#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&#34;&gt;&lt;/script&gt; &lt;script type=&#34;systemjs-importmap&#34;&gt; // 定义 importmap { &#34;imports&#34;: { &#34;lodash&#34;: &#34;https://unpkg.com/lodash@4.17.10/lodash.js&#34; // 或者其他需要动态加载的模块 } } &lt;/script&gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
+window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&#39;lodash&#39;) .then(lodash =&gt; lodash."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>一个基于 Systemjs 的组件动态加载方案</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jan 9, 2022</span></div>
+				<h1>一个基于 Systemjs 的组件动态加载方案</h1>
+			</header>
+			<div class="content">
+				<h2 id="背景">背景<a href="#背景" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在低代码平台的设计中，通常需要动态地加载一个组件。</p>
+<p>Bigo 的活动配置平台 raptor 使用 <a href="https://requirejs.org/">requirejs</a> 来实现动态加载。requirejs 要求加载的是 <a href="https://requirejs.org/docs/whyamd.html#amd">AMD</a> 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。</p>
+<p>为了解决上述问题，可以使用 <a href="https://github.com/systemjs/systemjs">systemjs</a>。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。</p>
+<h2 id="systemjs">Systemjs<a href="#systemjs" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>systemjs 实现了一个叫做 <a href="https://github.com/systemjs/systemjs/blob/main/docs/system-register.md">System.register</a> 的模块格式，用于在浏览器中实现动态 <code>import()</code>、<code>import.meta</code> (包括 <code>import.meta.url</code> and <code>import.meta.resolve</code>) 等功能。更多的功能请参考 <a href="https://github.com/systemjs/systemjs">systemjs 的文档</a>。</p>
+<p>例如以下例子：</p>
+<!-- raw HTML omitted -->
+<h3 id="使用">使用<a href="#使用" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>使用的时候，需要提前添加以下 script 标签：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;systemjs-importmap&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义 importmap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;imports&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;lodash&#34;</span><span class="o">:</span> <span class="s2">&#34;https://unpkg.com/lodash@4.17.10/lodash.js&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 或者其他需要动态加载的模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。</p>
+<ul>
+<li>window.System.import</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// window.System.import 返回的是一个 Promise 对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">window</span><span class="p">.</span><span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;lodash&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">lodash</span> <span class="p">=&gt;</span> <span class="nx">lodash</span><span class="p">.</span><span class="nx">partition</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">))</span>
+</span></span></code></pre></div><ul>
+<li><code>&lt;script /&gt;</code> 标签</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 下面的标签会加载模块并挂载到 window 对象上 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;systemjs-module&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;import:lodash&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">window</span><span class="p">.</span><span class="nx">lodash</span><span class="p">.</span><span class="nx">partition</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h2 id="实战">实战<a href="#实战" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>下面的例子中，我们通过点击按钮来动态加载一个组件 <a href="https://github.com/zpao/qrcode.react">qrcode.react</a> 。完整代码如下，后面会有相关解析。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">imports</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">classnames</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:classnames@2.3.1/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;qrcode.react&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;https://ga.system.jspm.io/npm:qrcode.react@1.0.1/lib/index.js&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">scopes</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://ga.system.jspm.io/&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;object-assign&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:object-assign@4.1.1/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;prop-types&#34;</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:prop-types@15.8.0/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;qr.js/lib/ErrorCorrectLevel&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:qr.js@0.0.0/lib/ErrorCorrectLevel.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;qr.js/lib/QRCode&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:qr.js@0.0.0/lib/QRCode.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">react</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:react@17.0.2/index.js&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App() {</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">El</span><span class="p">,</span> <span class="nx">setEl</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">async</span> <span class="kd">function</span> <span class="nx">loadQrcode() {</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">importMap</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">module</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s2">&#34;qrcode.react&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">setEl</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="kr">module</span><span class="nx">.default</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">importMap() {</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="kr">type</span> <span class="o">=</span> <span class="s2">&#34;systemjs-importmap&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">loadQrcode</span><span class="p">}&gt;</span><span class="err">添加二维码</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">{</span><span class="nx">El</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nt">El</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;https://www.baidu.com&#34;</span> <span class="p">/&gt;}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在点击「添加二维码」按钮时，会首先调用 <code>importMap()</code>，作用是在 html 里添加一个 script 标签，里面包含了一份 importMap 配置。</p>
+<p>接着在调用 <code>window.System.import(&quot;qrcode.react&quot;)</code> 的时候会从刚刚添加的 importMap 里找到 <code>qrcode.react</code> 这个模块对应的 url，以及它的依赖的 url，然后下载这些模块。</p>
+<p>之后就可以使用 <code>qrcode.react</code> 这个组件了。</p>
+<p>示例中 importMap 中模块的 url 可以通过 <a href="https://jspm.org/">jspm</a> 获取。</p>
+<h2 id="未解决的问题">未解决的问题<a href="#未解决的问题" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>如果动态引入的组件里使用了 react-hook，在使用这个组件的时候会报以下错误：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Unhandled</span> <span class="nx">Runtime</span> <span class="nb">Error</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Error</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">hook</span> <span class="nx">call</span><span class="p">.</span> <span class="nx">Hooks</span> <span class="nx">can</span> <span class="nx">only</span> <span class="nx">be</span> <span class="nx">called</span> <span class="nx">inside</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">body</span> <span class="k">of</span> <span class="nx">a</span> <span class="kd">function</span> <span class="nx">component</span><span class="p">.</span> <span class="nx">This</span> <span class="nx">could</span> <span class="nx">happen</span> <span class="k">for</span> <span class="nx">one</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">reasons</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">have</span> <span class="nx">mismatching</span> <span class="nx">versions</span> <span class="k">of</span> <span class="nx">React</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">renderer</span> <span class="p">(</span><span class="nx">such</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">DOM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">be</span> <span class="nx">breaking</span> <span class="nx">the</span> <span class="nx">Rules</span> <span class="k">of</span> <span class="nx">Hooks</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">have</span> <span class="nx">more</span> <span class="nx">than</span> <span class="nx">one</span> <span class="nx">copy</span> <span class="k">of</span> <span class="nx">React</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">same</span> <span class="nx">app</span>
+</span></span><span class="line"><span class="cl"><span class="nx">See</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
+</span></span></span></code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/systemjs">systemjs</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>304 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-01-09 00:00</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/remove-antd-compatible/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>移除项目中的 @ant-design/compatible 依赖</span>
+			</a>
+			<a class="prev-post" href="/posts/web-create-uuid/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>在 web 环境中获取 uuid 的简单方法</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

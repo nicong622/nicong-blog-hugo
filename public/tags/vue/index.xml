@@ -16,12 +16,14 @@
       <description>nuxt-link 是 nuxtjs 提供的一个组件，基于 vue-router 的 router-link 做了一层封装，实现了预加载的功能。本文来简单聊聊这个“预加载”的原理。
 一点准备工作 如果直接打开 nuxt 项目中 nuxt-link的源码，会发现里面使用了很多类似于 &amp;lt;%...%&amp;gt; 这样的模板语法。这其实是 lodash.template 提供的模板语法。如果觉得影响阅读，可以按照 nuxt 的文档，新建一个 nuxt 应用，然后构建一次，再找到 .nuxt/components/nuxt-link.client.js，这个就是编译过后的 nuxt-link 代码。
 前置条件 要想触发 nuxt-link 的预加载，需要同时满足以下几个条件：
-  nuxt-link 的 prefetch 属性值是 true 。
+nuxt-link 的 prefetch 属性值是 true 。
 默认值是 nuxt 配置里的 router.prefetchLinks。prefetchLinks 的默认值是 true ，所以 prefetch 的默认值也是 true。
-  nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
-  当 nuxt-link 组件出现在可见区域内。
-  nuxt-link 的 to 属性指向的页面是同一个应用的页面。
-  有网络链接并且不是 2g 网络。</description>
+nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
+当 nuxt-link 组件出现在可见区域内。
+nuxt-link 的 to 属性指向的页面是同一个应用的页面。
+有网络链接并且不是 2g 网络。
+1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。
+原理 接下来梳理一下预加载的大致流程。为了说明原理，nuxt-link 源码里有些条件分支会省略，但不影响理解。下面会以 /cart 这个链接作为 nuxt-link 的跳转地址来做说明。/cart 页面对应的文件路径是 /pages/cart/index.</description>
     </item>
     
     <item>

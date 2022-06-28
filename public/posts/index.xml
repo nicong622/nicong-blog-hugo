@@ -5,40 +5,507 @@
 		<description>Recent content in Posts on Nicong&#39;s blog</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Fri, 10 Sep 2021 18:25:55 +0800</lastBuildDate>
+		<lastBuildDate>Tue, 28 Jun 2022 15:00:11 +0800</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>Webify &#43; Hugo 搭建个人博客</title>
-			<link>/posts/webify_hugo/</link>
-			<pubDate>Fri, 10 Sep 2021 18:25:55 +0800</pubDate>
+			<title>Object.hasOwn vs Object.hasOwnProperty</title>
+			<link>/posts/hasown_vs_hasownproperty/</link>
+			<pubDate>Tue, 28 Jun 2022 15:00:11 +0800</pubDate>
 			
-			<guid>/posts/webify_hugo/</guid>
-			<description>一些废话 以前试过用不同方案搞过自己的博客，最开始是直接用 GitHub Pages。后来趁着活动买过腾讯云的服务器，然后分别用 Hexo 和 Gatsby 在上面搭建过博客。一开始只是为了想了解一下如何搭建一个个人网站，同时有个看起来比较有个性的地方来放自己的笔记或技术文章（虽然一年也写不了几篇）。并且一开始学前端开发的时候总觉得个人网站是一个前端开发者的标配。
-后来也是因为各种原因（主要是懒）没有坚持更新，甚至买来的服务器一年也没登录过几次，一直到过期了就没再续费。所以虽然已经工作了几年，bug 写了不少，但博客文章却没写过几篇。
-前段时间在朋友圈看到有人转发有关腾讯云开发 Webify 的介绍文章，感觉使用起来还挺方便的，而且是免费，那就去搞个博客吧，反正以前的访问不了了，万一以后找工作面试官问起的时候，你说没有博客那就尴尬了。
-技术方案 应用托管的话就是用 Webify，还差一个博客系统。现在常用的应该就几个：Hexo、Gatsby、Hugo、Vuepress。
- Hexo 几年前用过，感觉还不错，但是不知道现在还有没有再维护； Gatsby 稍微用过一下，感觉功能还是挺全面的，用来做这种小型的个人博客可以说是卓卓有余，甚至有点大材小用了； Vuepress 我没用过，貌似相对小众一点，而且能用的主题貌似也不多； Hugo 貌似已经发布有一段时间了，也是没有用过，不过之前在 v2ex 看到有人推荐。大概看了一下上手还挺简单，而且找到了自己一个喜欢的免费主题（这是重点）。那就决定是你了，Hugo！  于是，大致的技术方案就是 Webify 负责应用托管，Hugo 负责生成静态文件。OK，开搞。
-网站搭建 大致浏览一下 Webify 的文档 ，发现需要我们的静态文件不能直接部署到 Webify，而是要先把静态文件推送到自己的代码托管平台，然后 Webify 去你的代码托管平台拉取文件，并部署到 CDN。
-大概原来就是在 Webify 上新建项目的时候需要你授权去关联代码托管平台上的某个项目（或者新建一个项目），然后在这个项目里添加一个 webhook，当在特定分支（默认是 master）触发了特定事件（默认是 push），Webify 就会去拉取项目的最新文件并且部署。
-Webify 和 Hugo 的 quickstart 文档都有，没什么好说的。</description>
-			<content type="html"><![CDATA[<h2 id="一些废话">一些废话</h2>
-<p>以前试过用不同方案搞过自己的博客，最开始是直接用 <a href="https://pages.github.com/">GitHub Pages</a>。后来趁着活动买过腾讯云的服务器，然后分别用 <a href="https://hexo.io/">Hexo</a> 和 <a href="https://www.gatsbyjs.com/">Gatsby</a> 在上面搭建过博客。一开始只是为了想了解一下如何搭建一个个人网站，同时有个看起来比较有个性的地方来放自己的笔记或技术文章（虽然一年也写不了几篇）。并且一开始学前端开发的时候总觉得个人网站是一个前端开发者的标配。</p>
-<p>后来也是因为各种原因（主要是懒）没有坚持更新，甚至买来的服务器一年也没登录过几次，一直到过期了就没再续费。所以虽然已经工作了几年，bug 写了不少，但博客文章却没写过几篇。</p>
-<p>前段时间在朋友圈看到有人转发有关腾讯云开发 <a href="https://webify.cloudbase.net/">Webify</a> 的介绍文章，感觉使用起来还挺方便的，而且是免费，那就去搞个博客吧，反正以前的访问不了了，万一以后找工作面试官问起的时候，你说没有博客那就尴尬了。</p>
-<h2 id="技术方案">技术方案</h2>
-<p>应用托管的话就是用 Webify，还差一个博客系统。现在常用的应该就几个：Hexo、Gatsby、Hugo、Vuepress。</p>
+			<guid>/posts/hasown_vs_hasownproperty/</guid>
+			<description>Object.hasOwn() 是 ES2022 中的新特性，他它是一个静态方法，作用是提供一种安全的方法来检查某个对象是否自主拥有（不是继承而来的）某个属性。看起来作用跟 Object.hasOwnProperty() 一样，那为什么还要提出 Object.hasOwn() 呢？
+原因有以下几个：
+由于 Object.hasOwnProperty() 方法是从对象的原型 Object.prototype 上继承而来的，如果用户在对象上定义了一个同名的方法，就会出现意料之外的结果，即所谓的“原型污染”。 对于用 Object.create(null) 创建出来的对象，由于对象的原型就是 null ，所以对象本身没有 hasOwnProperty() 方法。虽然可以用 Object.prototype.hasOwnProperty.call() ，但是这样看起来就比较笨重了，并且 Eslint 的内置规则是禁止直接使用 Object.prototype 上的方法的。 Object.hasOwn() 就是为了解决上面的问题而提出的，所以应该用这个方法来代替 Object.hasOwnProperty()。
+注意：不过需要注意的是，你依然可以重新定义 Object.hasOwn() 方法。</description>
+			<content type="html"><![CDATA[<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn"><code>Object.hasOwn()</code></a> 是 ES2022 中的新特性，他它是一个<strong>静态</strong>方法，作用是提供一种安全的方法来检查某个对象是否自主拥有（不是继承而来的）某个属性。看起来作用跟 <code>Object.hasOwnProperty()</code> 一样，那为什么还要提出 <code>Object.hasOwn()</code> 呢？</p>
+<p>原因有以下几个：</p>
 <ol>
-<li>Hexo 几年前用过，感觉还不错，但是不知道现在还有没有再维护；</li>
-<li>Gatsby 稍微用过一下，感觉功能还是挺全面的，用来做这种小型的个人博客可以说是卓卓有余，甚至有点大材小用了；</li>
-<li>Vuepress 我没用过，貌似相对小众一点，而且能用的主题貌似也不多；</li>
-<li>Hugo 貌似已经发布有一段时间了，也是没有用过，不过之前在 v2ex 看到有人推荐。大概看了一下上手还挺简单，而且找到了自己一个喜欢的免费主题（这是重点）。那就决定是你了，Hugo！</li>
+<li>由于 <code>Object.hasOwnProperty()</code> 方法是从对象的原型 <code>Object.prototype</code> 上继承而来的，如果用户在对象上定义了一个同名的方法，就会出现意料之外的结果，即所谓的“原型污染”。</li>
+<li>对于用 <code>Object.create(null)</code> 创建出来的对象，由于对象的原型就是 <code>null</code> ，所以对象本身没有 <code>hasOwnProperty()</code> 方法。虽然可以用 <code>Object.prototype.hasOwnProperty.call()</code> ，但是这样看起来就比较笨重了，并且 Eslint 的内置规则是禁止直接使用 <code>Object.prototype</code> 上的方法的。</li>
 </ol>
-<p>于是，大致的技术方案就是 Webify 负责应用托管，Hugo 负责生成静态文件。OK，开搞。</p>
-<h2 id="网站搭建">网站搭建</h2>
-<p>大致浏览一下 <a href="https://webify.cloudbase.net/">Webify 的文档</a> ，发现需要我们的静态文件不能直接部署到 Webify，而是要先把静态文件推送到自己的代码托管平台，然后 Webify 去你的代码托管平台拉取文件，并部署到 CDN。</p>
-<p>大概原来就是在 Webify 上新建项目的时候需要你授权去关联代码托管平台上的某个项目（或者新建一个项目），然后在这个项目里添加一个 webhook，当在特定分支（默认是 master）触发了特定事件（默认是 push），Webify 就会去拉取项目的最新文件并且部署。</p>
-<p>Webify 和 Hugo 的 quickstart 文档都有，没什么好说的。</p>
+<p><code>Object.hasOwn()</code> 就是为了解决上面的问题而提出的，所以应该用这个方法来代替 <code>Object.hasOwnProperty()</code>。</p>
+<p><strong>注意</strong>：不过需要注意的是，你依然可以重新定义 <code>Object.hasOwn()</code> 方法。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>移除项目中的 @ant-design/compatible 依赖</title>
+			<link>/posts/remove-antd-compatible/</link>
+			<pubDate>Tue, 21 Jun 2022 07:33:46 +0000</pubDate>
+			
+			<guid>/posts/remove-antd-compatible/</guid>
+			<description>Ant Design 第4版发布之后不久，我就按照 antd 官方的指引利用迁移工具帮项目做了升级。由于迁移工具实际上是通过引入 @ant-design/compatible 来使那些不兼容的组件能继续运行，所以这样升级完之后实际上项目里就会同时存在 v3 和 v4 两个版本的 antd，不仅代码体积有冗余，还会有两套 Form 组件的写法，不利用后期维护。于是最近花时间移除了对 @ant-design/compatible 的依赖，实现了“完全”的升级。
+这篇文章主要讲述我如何使用 AST 转换工具来帮助我完成升级。
+修改范围与整体思路 需要做的迁移工作可以参考 antd 官方的说明。
+对于我的项目，由于使用到 @ant-design/compatible 的基本上只有 v3 版本的 Form 组件， 所以要修改的范围主要有这些：
+移除 Form.create({})(Component) 写法； 把 getFieldDecorator 的写法改成用 &amp;lt;Form.Item&amp;gt;； 移除 @ant-design/compatible 相关的 import 语句； 修改表单实体方法的调用方式。 第 1 点基本上可以通过编辑器的字符串替换功能加上正则表达式完成。
+第 2、3 点可以我用一个 AST 转换工具来辅助修改。这是本文的重点，后面会展开说。
+第 4 点理论上也可以用刚刚提到的工具来修改，但是项目里调用的方法不统一，例如有 this.props.form.setFieldsValue 也有 const { setFieldsValue } from this.props.form 等等，工具里需要的判断比较多。而且项目里使用到的实体方法不算很多，修改起来工作量比 getFieldDecorator 少很多。所以我打算手动修改，刚好可以边自测边修改。
+确认范围之后就可以开干了。
+代码修改工具 下面主要说说上面提到的 “代码修改工具”。</description>
+			<content type="html"><![CDATA[<p>Ant Design 第4版发布之后不久，我就按照 antd 官方的指引利用迁移工具帮项目做了升级。由于迁移工具实际上是通过引入 <code>@ant-design/compatible</code> 来使那些不兼容的组件能继续运行，所以这样升级完之后实际上项目里就会同时存在 v3 和 v4 两个版本的 antd，不仅代码体积有冗余，还会有两套 Form 组件的写法，不利用后期维护。于是最近花时间移除了对 <code>@ant-design/compatible</code> 的依赖，实现了“完全”的升级。</p>
+<p>这篇文章主要讲述我如何使用 AST 转换工具来帮助我完成升级。</p>
+<h2 id="修改范围与整体思路">修改范围与整体思路</h2>
+<p>需要做的迁移工作可以参考 <a href="https://ant.design/components/form/v3-cn/">antd 官方的说明</a>。</p>
+<p>对于我的项目，由于使用到 <code>@ant-design/compatible</code> 的基本上只有 v3 版本的 Form 组件， 所以要修改的范围主要有这些：</p>
+<ol>
+<li>移除 <code>Form.create({})(Component)</code> 写法；</li>
+<li>把 <code>getFieldDecorator</code> 的写法改成用 <code>&lt;Form.Item&gt;</code>；</li>
+<li>移除 <code>@ant-design/compatible</code> 相关的 <code>import</code> 语句；</li>
+<li>修改表单实体方法的调用方式。</li>
+</ol>
+<p>第 1 点基本上可以通过编辑器的字符串替换功能加上正则表达式完成。</p>
+<p>第 2、3 点可以我用一个 AST 转换工具来辅助修改。这是本文的重点，后面会展开说。</p>
+<p>第 4 点理论上也可以用刚刚提到的工具来修改，但是项目里调用的方法不统一，例如有 <code>this.props.form.setFieldsValue</code> 也有 <code>const { setFieldsValue } from this.props.form</code> 等等，工具里需要的判断比较多。而且项目里使用到的实体方法不算很多，修改起来工作量比 <code>getFieldDecorator</code> 少很多。所以我打算手动修改，刚好可以边自测边修改。</p>
+<p>确认范围之后就可以开干了。</p>
+<h2 id="代码修改工具">代码修改工具</h2>
+<p>下面主要说说上面提到的 “代码修改工具”。</p>
+<h3 id="准备知识">准备知识</h3>
+<ul>
+<li>babel 插件开发：可以看看 <a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md">babel-handbook</a>；</li>
+<li>AST 相关：上面的 babel-handbook 也有说明。但是感觉 <a href="https://github.com/facebook/jscodeshift#core-concepts">jscodeshift</a> 这里说得简单直白一点；</li>
+</ul>
+<h3 id="ast--babel">AST &amp; babel</h3>
+<p>提到 “代码修改”，我第一时间想到的就是利用 AST。把原始代码解析成 AST，然后修改与 <code>getFieldDecorator</code> 调用相关的节点，最后生成代码。一说这个流程，估计大多数人都会首先想到 babel。写一个 babel 插件，然后对代码做一次编译，就能完成 <code>getFieldDecorator</code> 的迁移。</p>
+<p>关于 AST 节点操作的思路，下面会展开说。</p>
+<p>开发之前有一点要注意，为了能解析 jsx 语法，通常我们会直接使用 <code>@babel/preset-react</code>，但是这样编译完之后得到的是 jsx 的编译产物，即 <code>React.createElement()</code> 这样的代码。而实际上我们想要的依然是 jsx 代码，仅仅是把 <code>getFieldDecorator</code> 去掉！这时候我们可以使用 <a href="https://babeljs.io/docs/en/babel-plugin-syntax-jsx"><code>@babel/plugin-syntax-jsx</code></a> 这个插件。这其实是包含在 <code>@babel/preset-react</code> 中的一个插件，它的作用仅仅是使得 babel 可以解析 jsx 语法，最后生成的代码依然是 jsx 代码。</p>
+<p>代码不放了，具体开发思路可以参考<a href="https://github.com/nicong622/antd-upgrade-tool/blob/babel/plugins/index.js">这里</a>。</p>
+<p>下面是实际效果，左边是原始代码，右边是编译后的代码：</p>
+<p><img src="https://i.imgur.com/EdgtTd3.jpg" alt="Xnip2022-06-20_15-21-45"></p>
+<p>看起来没什么问题。但是如果你细心的话就会发现注释的位置变了！第9行用来描述 <code>onChange</code> 函数的注释现在跑到上面的 <code>const</code> 语句后面了，这是我不能容忍的！由于我们的代码里没有动过注释相关的节点，所以这应该就是 babel 在生成代码时候的问题。</p>
+<p>不过回想一下，为什么 antd 官方提供的代码迁移工具就没出现这样的问题？原来 antd 的迁移工具 <a href="https://github.com/ant-design/codemod-v4">@ant-design/codemod-v4</a> 是基于另一个叫做 <a href="https://github.com/facebook/jscodeshift">jscodeshift</a> 的工具开发的。<code>jscodeshift</code> 的其中一个功能就是在做 AST 转换的时候尽可能保持原来的代码样式！这似乎就能解决上面遇到的注释移位的问题了。</p>
+<h3 id="jscodeshift">jscodeshift</h3>
+<p>虽然换了一个开发的工具，但本质上思路是一样的，都是对 AST 节点的增删改，只不过使用的 API 或者说是开发风格不一样了。jscodeshift 可以说就是用来操作 AST 节点的‘jQuery’，因为它提供了一系列的链式 API。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * This replaces every occurrence of variable &#34;foo&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fileInfo</span><span class="p">,</span> <span class="nx">api</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">api</span><span class="p">.</span><span class="nx">jscodeshift</span><span class="p">(</span><span class="nx">fileInfo</span><span class="p">.</span><span class="nx">source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">findVariableDeclarators</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">renameTo</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">toSource</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>由于已经用 babel 实现了想要的功能，理论上只要把相关的逻辑用 jscodeshift 的 API 再实现一次就可以了。具体代码实现参考<a href="https://github.com/nicong622/antd-upgrade-tool/blob/jscodeshift/transform.js">这里</a>。</p>
+<h2 id="ast-转换的流程">AST 转换的流程</h2>
+<p>上面只说了两个可以实现 AST 转换的工具，现在我们来讲一下 AST 转换的基本思路，以 <code>getFieldDecorator</code> 的迁移为例。首先明确一下我们最终的目标是：</p>
+<ol>
+<li>把 <code>getFieldDecorator()</code> 的参数转换成 <code>&lt;Form.Item&gt;</code> 元素上的属性；</li>
+<li>把 <code>&lt;Cascader onChange={onChange} placeholder='Please select' /&gt;</code> 这个组件改成直接用 <code>&lt;Form.Item&gt;</code> 元素包裹；</li>
+<li>最后移除 <code>getFieldDecorator</code> 的引入。</li>
+</ol>
+<p>以这段代码为例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">LinkType</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">{</span> <span class="nx">getFieldDecorator</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">props</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">Form.Item</span> <span class="na">label</span><span class="o">=</span><span class="s">&#39;跳转页类型&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="nx">getFieldDecorator</span><span class="p">(</span><span class="s1">&#39;linkType&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">rules</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">initialValue</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})(&lt;</span><span class="nt">Cascader</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">onChange</span><span class="p">}</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#39;Please select&#39;</span> <span class="p">/&gt;)}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">Form.Item</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="找到需要修改的节点">找到需要修改的节点</h3>
+<p>然后我们要找到需要修改的 AST 节点。</p>
+<p>我们可以把原始代码复制到 <a href="https://astexplorer.net/">AST Explorer</a> ，然后看看解析出来的 AST 是什么结构。在开启 <code>autofocus</code> 功能之后，就可以通过点击原始代码中的关键字，自动定位到 AST 中对应的节点。</p>
+<p>对于示例代码中，第 7 到第 10 行对应的 AST 节点是：</p>
+<p><img src="https://i.imgur.com/7p6Nigy.png" alt="image-20220621112848136"></p>
+<p>由于这几行代码外面有一对大括号包裹，所以是一个 JSX 表达式，对应的 AST 节点类型就是 <code>JSXExpressionContainer</code> 。<code>JSXExpressionContainer</code> 的 <code>expression</code> 属性是一个函数调用表达式 <code>CallExpression</code>，即原始代码中的这一块</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">getFieldDecorator</span><span class="p">(</span><span class="s1">&#39;linkType&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rules</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">initialValue</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})(</span><span class="o">&lt;</span><span class="nx">Cascader</span> <span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">onChange</span><span class="p">}</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s1">&#39;Please select&#39;</span> <span class="o">/&gt;</span><span class="p">)</span>
+</span></span></code></pre></div><p>可以看出来这里其实是两次函数调用，调用 <code>getFieldDecorator()</code> 之后会返回另一个函数，返回的函数用来修饰传入的组件。所以，这一个 <code>CallExpression</code> 的 <code>arguments</code> 就是我们传进去的 <code>JSXElement</code> 组件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">Cascader</span> <span class="na">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">onChange</span><span class="p">}</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#39;Please select&#39;</span> <span class="p">/&gt;</span>
+</span></span></code></pre></div><p>而 <code>callee</code> 就是原始代码中的：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">getFieldDecorator</span><span class="p">(</span><span class="s1">&#39;linkType&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rules</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}],</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">initialValue</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div><p>这一块代码虽然是另一个函数调用的 <code>callee</code> ，但它本身也是一次函数调用，所以它也是一个 <code>CallExpression</code> 类型的节点。这个节点的 <code>callee</code> 就是我们要找到 <code>getFieldDecorator</code> 关键词了。再看看这个<code>CallExpression</code> 的参数，即 <code>arguments</code>，里面有两个元素，第一个是 <code>StringLiteral</code> 类型，值是 <code>linkType</code> ；第二个是 <code>ObjectExpression</code> 类型，对应的是 <code>{ rules: [{ required: true }], initialValue: '1' }</code> 。</p>
+<p>用同样的方式，可以找到引入 <code>getFieldDecorator</code> 的语句对应的 AST 节点。</p>
+<p>节点都找到了，接下来就是做转换。</p>
+<h3 id="节点转换">节点转换</h3>
+<p>节点的转换说简单点其实就是对节点进行增删改的操作。所以对于某个节点，我们首先要知道需要转换成什么样的节点。</p>
+<p>例如我们需要把上面例子中 <code>getFieldDecorator()</code>  的第一个参数 <code>linkType</code> 转成 <code>&lt;Form.Item&gt;</code> 元素中的一个属性，属性名是 <code>name</code> ，即 <code>&lt;Form.Item name='linkType'&gt;</code>。所以可以先观察一下 <code>&lt;Form.Item name='linkType'&gt;</code> 这一行代码的 AST 结构。如下：</p>
+<p><img src="https://i.imgur.com/0X73n4U.png" alt="image-20220621143743887"></p>
+<p>可以看到，某个元素的属性是放在一个类型是 <code>JSXOpeningElement</code> 的节点的 <code>attributes</code> 属性中，且 <code>attributes</code> 属性是一个数组。数组中的元素是类型为 <code>JSXAttribute</code> 的节点，代表元素中的一个属性。 <code>JSXAttribute</code>  节点中的 <code>name</code> 和 <code>value</code> 分别对应这个属性的 key 和 value，并且分别是不同类型的节点。</p>
+<p>接下来我们要做的就是为 <code>name='linkType'</code> 这个属性创建一个 <code>JSXAttribute</code> 节点，然后添加到 <code>attributes</code> 数组中。</p>
+<p>虽然 AST 的节点看起来就是一个个的对象，但是创建的时候需要用到 AST 中的 Builder 这个概念，你可以简单理解成就是 AST 节点的构造函数。对于每一种 AST 节点，都会有一个与之对应的 Builder，一般是与节点的 type 同名，但是以小写字母开头。例如，<code>JSXAttribute</code> 节点的 builder 就是 <code>jsxAttribute</code> 。在 <a href="https://github.com/facebook/jscodeshift#local-documentation-server">jscodeshift</a> 的文档可以找到用法。顺便吐槽一下，它竟然没有在线的文档，需要自己在本地启动一个服务或者 fork 一下，然后配置一个 github pages 。</p>
+<p>调用 <code>JSXAttribute()</code> 创建节点的时候需要注意，它的参数也是 AST 节点，所以要先调用对应的 builder ，然后把返回值传给  <code>JSXAttribute()</code> 。即：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// j 就是 jscodeshift 的一个引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">j</span><span class="p">.</span><span class="nx">jsxAttribute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">j</span><span class="p">.</span><span class="nx">jsxIdentifier</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;linkType&#39;</span> <span class="c1">// 由于 &#39;linkType&#39; 对应的节点是类型是 StringLiteral，所以可以直接把字符串 &#39;linkType&#39; 作为参数。如果是其他类型的节点，需要用对应的 builder 创建一个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">)</span>
+</span></span></code></pre></div><p>以此类推，很容易就能完成其他节点的转换。</p>
+<h2 id="结尾">结尾</h2>
+<p>至此，代码修改工具的核心逻辑就完成了， 后面的工作就是手动修改一些特殊情况以及测试了。理论上用 AST 转换的方式能处理绝大部分的代码迁移工作，主要就是看是“自己手动改”还是“用工具来辅助”比较省事。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>一个基于 Systemjs 的组件动态加载方案</title>
+			<link>/posts/loading_compoents_dynamically_by_systemjs/</link>
+			<pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
+			
+			<guid>/posts/loading_compoents_dynamically_by_systemjs/</guid>
+			<description>背景 在低代码平台的设计中，通常需要动态地加载一个组件。
+Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
+为了解决上述问题，可以使用 systemjs。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。
+Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于在浏览器中实现动态 import()、import.meta (包括 import.meta.url and import.meta.resolve) 等功能。更多的功能请参考 systemjs 的文档。
+例如以下例子：
+使用 使用的时候，需要提前添加以下 script 标签：
+&amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script type=&amp;#34;systemjs-importmap&amp;#34;&amp;gt; // 定义 importmap { &amp;#34;imports&amp;#34;: { &amp;#34;lodash&amp;#34;: &amp;#34;https://unpkg.com/lodash@4.17.10/lodash.js&amp;#34; // 或者其他需要动态加载的模块 } } &amp;lt;/script&amp;gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
+window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&amp;#39;lodash&amp;#39;) .then(lodash =&amp;gt; lodash.</description>
+			<content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>在低代码平台的设计中，通常需要动态地加载一个组件。</p>
+<p>Bigo 的活动配置平台 raptor 使用 <a href="https://requirejs.org/">requirejs</a> 来实现动态加载。requirejs 要求加载的是 <a href="https://requirejs.org/docs/whyamd.html#amd">AMD</a> 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。</p>
+<p>为了解决上述问题，可以使用 <a href="https://github.com/systemjs/systemjs">systemjs</a>。利用 systemjs ，可以通过动态加载的方式加载一个远程的 ESM 模块，并且运行在不支持 ESM 格式的浏览器中。</p>
+<h2 id="systemjs">Systemjs</h2>
+<p>systemjs 实现了一个叫做 <a href="https://github.com/systemjs/systemjs/blob/main/docs/system-register.md">System.register</a> 的模块格式，用于在浏览器中实现动态 <code>import()</code>、<code>import.meta</code> (包括 <code>import.meta.url</code> and <code>import.meta.resolve</code>) 等功能。更多的功能请参考 <a href="https://github.com/systemjs/systemjs">systemjs 的文档</a>。</p>
+<p>例如以下例子：</p>
+<!-- raw HTML omitted -->
+<h3 id="使用">使用</h3>
+<p>使用的时候，需要提前添加以下 script 标签：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;systemjs-importmap&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义 importmap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;imports&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;lodash&#34;</span><span class="o">:</span> <span class="s2">&#34;https://unpkg.com/lodash@4.17.10/lodash.js&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 或者其他需要动态加载的模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。</p>
+<ul>
+<li>window.System.import</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// window.System.import 返回的是一个 Promise 对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">window</span><span class="p">.</span><span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;lodash&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">lodash</span> <span class="p">=&gt;</span> <span class="nx">lodash</span><span class="p">.</span><span class="nx">partition</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">))</span>
+</span></span></code></pre></div><ul>
+<li><code>&lt;script /&gt;</code> 标签</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 下面的标签会加载模块并挂载到 window 对象上 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;systemjs-module&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;import:lodash&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">window</span><span class="p">.</span><span class="nx">lodash</span><span class="p">.</span><span class="nx">partition</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h2 id="实战">实战</h2>
+<p>下面的例子中，我们通过点击按钮来动态加载一个组件 <a href="https://github.com/zpao/qrcode.react">qrcode.react</a> 。完整代码如下，后面会有相关解析。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&#34;react&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">imports</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">classnames</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:classnames@2.3.1/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;qrcode.react&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;https://ga.system.jspm.io/npm:qrcode.react@1.0.1/lib/index.js&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">scopes</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://ga.system.jspm.io/&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;object-assign&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:object-assign@4.1.1/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;prop-types&#34;</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:prop-types@15.8.0/index.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;qr.js/lib/ErrorCorrectLevel&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:qr.js@0.0.0/lib/ErrorCorrectLevel.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;qr.js/lib/QRCode&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;https://ga.system.jspm.io/npm:qr.js@0.0.0/lib/QRCode.js&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">react</span><span class="o">:</span> <span class="s2">&#34;https://ga.system.jspm.io/npm:react@17.0.2/index.js&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App() {</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">El</span><span class="p">,</span> <span class="nx">setEl</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">async</span> <span class="kd">function</span> <span class="nx">loadQrcode() {</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">importMap</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">module</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">System</span><span class="p">.</span><span class="kr">import</span><span class="p">(</span><span class="s2">&#34;qrcode.react&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">setEl</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="kr">module</span><span class="nx">.default</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">importMap() {</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;script&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="kr">type</span> <span class="o">=</span> <span class="s2">&#34;systemjs-importmap&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="o">=</span><span class="s">&#34;App&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">loadQrcode</span><span class="p">}&gt;</span><span class="err">添加二维码</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">{</span><span class="nx">El</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nt">El</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;https://www.baidu.com&#34;</span> <span class="p">/&gt;}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在点击「添加二维码」按钮时，会首先调用 <code>importMap()</code>，作用是在 html 里添加一个 script 标签，里面包含了一份 importMap 配置。</p>
+<p>接着在调用 <code>window.System.import(&quot;qrcode.react&quot;)</code> 的时候会从刚刚添加的 importMap 里找到 <code>qrcode.react</code> 这个模块对应的 url，以及它的依赖的 url，然后下载这些模块。</p>
+<p>之后就可以使用 <code>qrcode.react</code> 这个组件了。</p>
+<p>示例中 importMap 中模块的 url 可以通过 <a href="https://jspm.org/">jspm</a> 获取。</p>
+<h2 id="未解决的问题">未解决的问题</h2>
+<ul>
+<li>如果动态引入的组件里使用了 react-hook，在使用这个组件的时候会报以下错误：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Unhandled</span> <span class="nx">Runtime</span> <span class="nb">Error</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Error</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">hook</span> <span class="nx">call</span><span class="p">.</span> <span class="nx">Hooks</span> <span class="nx">can</span> <span class="nx">only</span> <span class="nx">be</span> <span class="nx">called</span> <span class="nx">inside</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">body</span> <span class="k">of</span> <span class="nx">a</span> <span class="kd">function</span> <span class="nx">component</span><span class="p">.</span> <span class="nx">This</span> <span class="nx">could</span> <span class="nx">happen</span> <span class="k">for</span> <span class="nx">one</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">reasons</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">have</span> <span class="nx">mismatching</span> <span class="nx">versions</span> <span class="k">of</span> <span class="nx">React</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">renderer</span> <span class="p">(</span><span class="nx">such</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">DOM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">be</span> <span class="nx">breaking</span> <span class="nx">the</span> <span class="nx">Rules</span> <span class="k">of</span> <span class="nx">Hooks</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="nx">You</span> <span class="nx">might</span> <span class="nx">have</span> <span class="nx">more</span> <span class="nx">than</span> <span class="nx">one</span> <span class="nx">copy</span> <span class="k">of</span> <span class="nx">React</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">same</span> <span class="nx">app</span>
+</span></span><span class="line"><span class="cl"><span class="nx">See</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem.
+</span></span></span></code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>在 web 环境中获取 uuid 的简单方法</title>
+			<link>/posts/web-create-uuid/</link>
+			<pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
+			
+			<guid>/posts/web-create-uuid/</guid>
+			<description>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&amp;#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&amp;#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString </description>
+			<content type="html"><![CDATA[<p>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自<a href="https://juejin.cn/post/7039960318897815565">这篇文章</a>的评论区。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="k">new</span> <span class="nx">Blob</span><span class="p">()).</span><span class="nx">substr</span><span class="p">(</span><span class="o">-</span><span class="mi">36</span><span class="p">);</span>
+</span></span></code></pre></div><h2 id="解析">解析</h2>
+<p>下面稍微解析一下这行代码。</p>
+<p><code>URL.createObjectURL()</code> 接收一个类型是 <code>File</code>, <code>Blob</code>, 或者 <code>MediaSource</code> 的对象作为参数，然后返回一个 <code>DOMString</code>。这个 <code>DOMString</code> 指向作为参数传入的对象。然后就可以通过这个 <code>DOMString</code> 访问到对应的对象。</p>
+<p>即使传入的是同一个对象，每次调用 <code>URL.createObjectURL()</code> 都会返回一个新的 <code>DOMString</code> 。留意返回的 <code>DOMString</code>，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 <code>DOMString</code> 。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="s1">&#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&#39;</span>
+</span></span></code></pre></div><p>所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。</p>
+<p>另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 <code>URL.createObjectURL()</code> 创建的 <code>object URL</code>，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 <code>URL.revokeObjectURL()</code> 来释放 <code>object URL</code>。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">createObjectURL</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</a></li>
+</ul>
+]]></content>
+		</item>
+		
+		<item>
+			<title>获取一行中子元素的个数</title>
+			<link>/posts/children_count_in_one_row/</link>
+			<pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
+			
+			<guid>/posts/children_count_in_one_row/</guid>
+			<description>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
+如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
+对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
+遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 </description>
+			<content type="html"><![CDATA[<p>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？</p>
+<p><img src="https://i.loli.net/2021/10/25/wTQo8ym6USK43xq.png" alt="wTQo8ym6USK43xq"></p>
+<p>如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？</p>
+<p>对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：</p>
+<ol>
+<li>遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行；</li>
+<li>还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。</li>
+</ol>
+]]></content>
+		</item>
+		
+		<item>
+			<title>入坑客制化键盘的一些建议</title>
+			<link>/posts/custom_keyboard_attention/</link>
+			<pubDate>Sat, 16 Oct 2021 11:48:50 +0800</pubDate>
+			
+			<guid>/posts/custom_keyboard_attention/</guid>
+			<description>进入客制化键盘圈子有一段时间了，我发现这个圈子虽然相对小众，但是不乏优秀的作品。不过跟其他圈子一样，新入门的时候很容易走弯路，花钱买了自己不喜欢或者不合适的东西，最后只能搁置或者亏钱转卖。于是我总结了一下这段时间里自己的体会，希望能帮助客制化键盘的新手们少走一些弯路，多省点钱。
+在哪里获取新动态 首先说说在哪里能了解到最新的客制化键盘相关的资讯。
+装备前线 我最常去的是 zFrontier 装备前线 的「机械键盘」板块。这里是我知道的国内最活跃的客制化键盘论坛了。里面还有 pc 装机、摄影、模型等等的其他板块，但我基本只看键盘相关的。
+里面除了会有键圈的朋友们晒自己的装备，还会有键盘相关产品的作者发布最新的产品消息等等。通过某些贴子里网友们的讨论，还能学到很多客制化键盘相关的知识。有空逛一逛，就能在短时间内了解到很多键圈最新的动态。
+各种聊天群 如果想要在第一时间了解到最新的产品消息，应该就要加入各种聊天群了，通常是 QQ 群。群号能在装备前线的一些贴子里找到，如果是新产品的贴子，一般能在贴子顶部找到；有时候还能在底下的评论里找到。
+这些群通常是某个新产品的作者建立的，用来沟通新产品的各种细节，包括前期的设计、购买渠道/时间、发货时间、售后情况等等。很多时候还会发布下一个新产品的信息。
+B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇总。比较知名的有键盘侠赤瞳妖，KeyboardDaily，Ayb爱莹宝 等等。
+购买方式 团购 新发布的套件、键帽等通常是限量团购的形式，比较少有现货。
+团购多数是先款团购，也就是先付款（全款和定金都有）再生产，然后再发货，而且生产时间通常都比较久，有些人可能收到货的时候才想起来自己曾经下单买过。如果是套件的话一般都要两三个月。键帽可能会快一点，一个月左右，但也有例外，说的就是 GMK。现在（2021年10月）下单，都要等到 2023 年第一季度才能发货，中间还有可能会因为客观因素而导致延期或流产。除了客观因素，还可能在等待期间你就喜欢上了别的套件/键帽甚至退坑了。但多数时候上了团购的车就不能退款了，只能自己想办法转单，装备前线里就有很多键帽转单的。
+其实这个过程跟「期货」有点像，都是花钱买未来的产品。
+你可能会觉得这种形式有点坑，中间的变数太多。但实际上很多套件/键帽的作者都是个人或者小团队，没有自己的生产设备，只能找代工厂。而工厂都是要先付一部分钱才能生产，但小团队通常也没有这么多的资金，所以只能先款团购，这也无可厚非。如果你实在不放心，可以看看以下其他的购买方式。
+现货 有些产品如果在前期的设计阶段（或者叫 IC，Interest Check）已经有比较好的反响，有购买意愿的人数比较多，就会在团购订单之外额外多生产一些，用作现货售卖。当然数量不会很多而且价钱会比团购贵一点。好处就是不用等太久，而且能看看前期团购用户的真是反馈再决定买不买。
+还有一些一开始是限量团购，发货后发现用户反馈比较热烈，就会再生产一批现货出售。像我之前买的一套 2021 流行色键帽就是团购结束后再放出现货，团购的时候我还没入坑客制化，所以是在现货阶段买的。
+在哪里买 对于新出的产品，如果你能了解到有这款产品，一般也就能知道在哪里买。因为发布新产品的贴子里通常都会有注明购买渠道，这些渠道一般包括作者自己的网站或小程序、淘宝店、还有第三方的代理商，例如装备前线、KBDFans、米可维外设等等，还会有一些国外的网站。
+如果是已经截团的产品，可以先到闲鱼找找，除了二手有时候还能找到全新未拆封的。因为有些人专门做这种倒卖，或者单纯只是因为收到货后就不想要了。
+不过要注意在闲鱼里很多时候都会有一定程度的溢价，不要看到喜欢的就直接买。最好先尽可能找找这个套件/键帽相关的资料，包括开团价、配置里具体有哪些东西、各类评测，再看看网友们的晒图，看看自己是不是真的喜欢，溢价是否合理或者自己能否承受得了。除非你不在乎钱，否则我还是建议你先考虑清楚再买。
+套件 配列 如果要买套件，我首先会考虑的是配列。关于配列，可以参考一下这里客制化键盘配列 - by ^elvis^ - 来自 zFrontier.com。
+在考虑配列的时候，我一般会从实用性和占用空间两方面考虑。
+对于大尺寸的配列，虽然功能区和数字键都有，但你可能极少会用到。没必要为了这些不经常用到的功能而占用过多的桌面空间，除非你就是喜欢它的外观。还有一点就是多了一个数字键盘，就会使得字母区和鼠标之间的距离变长，继而导致右手在字母区与鼠标之间切换的距离变长，导致右手更容易累。当然更极致一点的就是完全用键盘组合键来代替鼠标操作。还有一些奇怪的配列会把字母区或者 F 区放在键盘左侧。
+对于小尺寸配列，要小心不要被它小巧精致的外观而迷惑。首先要考虑一下有哪些功能键是你比较依赖的，如果配列里没有，你是否能接受通过组合键来触发。其次还要考虑一下键盘尺寸变小之后带来的输入习惯的变化。比较明显的就是方向键的位置变化，有可能变成与其他按钮放在一起而导致容易误触，以及左移 64 配列里右 shift 键变小的问题。
+我之前也曾经有过一把左移 64 的 prism60，类似于下图，这是来自“装备前线 键盘葫芦forkrere60 by elvis”的照片。
+虽然它能基本满足我日常工作需求，但是右 shift 键只有 1U 宽度，并且与方向键挨在一起，导致很容易误触，很不爽。所以最后我还是放弃了它。</description>
+			<content type="html"><![CDATA[<p>进入客制化键盘圈子有一段时间了，我发现这个圈子虽然相对小众，但是不乏优秀的作品。不过跟其他圈子一样，新入门的时候很容易走弯路，花钱买了自己不喜欢或者不合适的东西，最后只能搁置或者亏钱转卖。于是我总结了一下这段时间里自己的体会，希望能帮助客制化键盘的新手们少走一些弯路，多省点钱。</p>
+<h2 id="在哪里获取新动态">在哪里获取新动态</h2>
+<p>首先说说在哪里能了解到最新的客制化键盘相关的资讯。</p>
+<h3 id="装备前线">装备前线</h3>
+<p>我最常去的是 <a href="https://www.zfrontier.com/app/circle/1#9999">zFrontier 装备前线</a> 的「机械键盘」板块。这里是我知道的国内最活跃的客制化键盘论坛了。里面还有 pc 装机、摄影、模型等等的其他板块，但我基本只看键盘相关的。</p>
+<p>里面除了会有键圈的朋友们晒自己的装备，还会有键盘相关产品的作者发布最新的产品消息等等。通过某些贴子里网友们的讨论，还能学到很多客制化键盘相关的知识。有空逛一逛，就能在短时间内了解到很多键圈最新的动态。</p>
+<h3 id="各种聊天群">各种聊天群</h3>
+<p>如果想要在第一时间了解到最新的产品消息，应该就要加入各种聊天群了，通常是 QQ 群。群号能在装备前线的一些贴子里找到，如果是新产品的贴子，一般能在贴子顶部找到；有时候还能在底下的评论里找到。</p>
+<p>这些群通常是某个新产品的作者建立的，用来沟通新产品的各种细节，包括前期的设计、购买渠道/时间、发货时间、售后情况等等。很多时候还会发布下一个新产品的信息。</p>
+<h3 id="b站">B站</h3>
+<p>在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇总。比较知名的有<a href="https://space.bilibili.com/14636150/">键盘侠赤瞳妖</a>，<a href="https://space.bilibili.com/436659663/">KeyboardDaily</a>，<a href="https://space.bilibili.com/57276677">Ayb爱莹宝</a> 等等。</p>
+<h2 id="购买方式">购买方式</h2>
+<h3 id="团购">团购</h3>
+<p>新发布的套件、键帽等通常是限量团购的形式，比较少有现货。</p>
+<p>团购多数是先款团购，也就是先付款（全款和定金都有）再生产，然后再发货，而且生产时间通常都比较久，有些人可能收到货的时候才想起来自己曾经下单买过。如果是套件的话一般都要两三个月。键帽可能会快一点，一个月左右，但也有例外，说的就是 GMK。现在（2021年10月）下单，都要等到 2023 年第一季度才能发货，中间还有可能会因为客观因素而导致延期或流产。除了客观因素，还可能在等待期间你就喜欢上了别的套件/键帽甚至退坑了。但多数时候上了团购的车就不能退款了，只能自己想办法转单，装备前线里就有很多键帽转单的。</p>
+<p>其实这个过程跟「期货」有点像，都是花钱买未来的产品。</p>
+<p>你可能会觉得这种形式有点坑，中间的变数太多。但实际上很多套件/键帽的作者都是个人或者小团队，没有自己的生产设备，只能找代工厂。而工厂都是要先付一部分钱才能生产，但小团队通常也没有这么多的资金，所以只能先款团购，这也无可厚非。如果你实在不放心，可以看看以下其他的购买方式。</p>
+<h3 id="现货">现货</h3>
+<p>有些产品如果在前期的设计阶段（或者叫 IC，Interest Check）已经有比较好的反响，有购买意愿的人数比较多，就会在团购订单之外额外多生产一些，用作现货售卖。当然数量不会很多而且价钱会比团购贵一点。好处就是不用等太久，而且能看看前期团购用户的真是反馈再决定买不买。</p>
+<p>还有一些一开始是限量团购，发货后发现用户反馈比较热烈，就会再生产一批现货出售。像我之前买的一套 2021 流行色键帽就是团购结束后再放出现货，团购的时候我还没入坑客制化，所以是在现货阶段买的。</p>
+<p><img src="https://i.loli.net/2021/10/15/AdBF6te4WQ3Xxo7.jpg" alt="AdBF6te4WQ3Xxo7"></p>
+<h3 id="在哪里买">在哪里买</h3>
+<p>对于新出的产品，如果你能了解到有这款产品，一般也就能知道在哪里买。因为发布新产品的贴子里通常都会有注明购买渠道，这些渠道一般包括作者自己的网站或小程序、淘宝店、还有第三方的代理商，例如装备前线、KBDFans、米可维外设等等，还会有一些国外的网站。</p>
+<p>如果是已经截团的产品，可以先到闲鱼找找，除了二手有时候还能找到全新未拆封的。因为有些人专门做这种倒卖，或者单纯只是因为收到货后就不想要了。</p>
+<p>不过要注意在闲鱼里很多时候都会有一定程度的溢价，不要看到喜欢的就直接买。最好先尽可能找找这个套件/键帽相关的资料，包括开团价、配置里具体有哪些东西、各类评测，再看看网友们的晒图，看看自己是不是真的喜欢，溢价是否合理或者自己能否承受得了。除非你不在乎钱，否则我还是建议你先考虑清楚再买。</p>
+<h2 id="套件">套件</h2>
+<h3 id="配列">配列</h3>
+<p>如果要买套件，我首先会考虑的是配列。关于配列，可以参考一下这里<a href="https://www.zfrontier.com/app/flow/2ggZvx9YZYRy?*utm_source*=copyLink">客制化键盘配列 -  by ^elvis^ - 来自 zFrontier.com</a>。</p>
+<p>在考虑配列的时候，我一般会从实用性和占用空间两方面考虑。</p>
+<p>对于大尺寸的配列，虽然功能区和数字键都有，但你可能极少会用到。没必要为了这些不经常用到的功能而占用过多的桌面空间，除非你就是喜欢它的外观。还有一点就是多了一个数字键盘，就会使得字母区和鼠标之间的距离变长，继而导致右手在字母区与鼠标之间切换的距离变长，导致右手更容易累。当然更极致一点的就是完全用键盘组合键来代替鼠标操作。还有一些奇怪的配列会把字母区或者 F 区放在键盘左侧。</p>
+<p>对于小尺寸配列，要小心不要被它小巧精致的外观而迷惑。首先要考虑一下有哪些功能键是你比较依赖的，如果配列里没有，你是否能接受通过组合键来触发。其次还要考虑一下键盘尺寸变小之后带来的输入习惯的变化。比较明显的就是方向键的位置变化，有可能变成与其他按钮放在一起而导致容易误触，以及左移 64 配列里右 shift 键变小的问题。</p>
+<p>我之前也曾经有过一把左移 64 的 prism60，类似于下图，这是来自“装备前线 键盘葫芦forkrere60 by elvis”的照片。</p>
+<p><img src="https://i.loli.net/2021/10/15/E1lFHsaJCwVQqbK.png" alt="E1lFHsaJCwVQqbK"></p>
+<p>虽然它能基本满足我日常工作需求，但是右 shift 键只有 1U 宽度，并且与方向键挨在一起，导致很容易误触，很不爽。所以最后我还是放弃了它。</p>
+<p>后来换成了65% 配列的 think6.5 v2，算是找到了尺寸与实用性的平衡。而且在左方向键左边还有还会有一点空位（俗称门牙），还能减少误触的可能性。</p>
+<p><img src="https://i.loli.net/2021/10/15/pvAjFnkTOwgxqa5.jpg" alt="pvAjFnkTOwgxqa5"></p>
+<h3 id="其他">其他</h3>
+<p>除了配列，你可能还要考虑一下其他方面：</p>
+<ul>
+<li>灯光：是否轴灯和底灯，某些键盘在铭牌的位置还好有灯光，例如我的 think6.5 v2。灯光是白光还是 RGB；</li>
+<li>有线与无线：即使是一些比较贵的套件也不一定会有无线模式。貌似现在很多套件都只提供有线版本，可能是因为 pcb 上的蓝牙模块会影响 pcb 的设计，导致手感受到影响（纯属个人想法）。而且还要预留电池区域。</li>
+<li>结构：简单来说就是 pcb 安装在外壳上的方式，会对按键的手感和声音都会有影响，也是客制化键盘圈子里讨论得比较多的一个话题。</li>
+<li>焊接与热插拔：焊接的 pcb 听起来比热插拔麻烦点，要懂焊接而且换轴不方便。但仔细想想你真的需要经常换轴吗，而且焊接轴体也许比你想象中容易很多。另外，焊接的 pcb 貌似手感更好？我也不太清楚。反正很多资深一点的玩家都优先选择焊接版本的 pcb。</li>
+<li>定位板：定位板按材质分有钢、铝、铜、PC、玻璃纤维、碳纤维、POM 等等。不同材质对敲击的手感和声音都有一定影响。现在还有在定位板里开槽的，是为了改善敲击手感。</li>
+</ul>
+<h2 id="键帽">键帽</h2>
+<p>买键帽的时候除了外观，还要考虑两个方面：材质/工艺，高度。</p>
+<p>关于键帽的对比，前段时间在 zf 上有网友总结了几篇文章，写得不错，大家可以看看<a href="https://www.zfrontier.com/app/flow/4xJb7RQWRBmM?utm_source=copyLink">[好像WIKI]中秋水三贴-键帽工艺篇 -  by GladosXiao - 来自 zFrontier.com</a></p>
+<h3 id="材质工艺">材质/工艺</h3>
+<p>常见的材质有两种：ABS 和 PBT。ABS 的加工工艺一般是二色成形，PBT 一般是热升华。这两种材料和加工工艺具体的区别我其实不太了解，大家可以自己搜索，网上资料比较多。但是大家在提到这两种材料的时候，更加注重的可能是耐磨的问题。一般来说 ABS 键帽没有 PBT 的耐磨，用的时间稍长就会看到键帽表面开始变得光滑、有油光，俗称打油。但是 PBT 没有这个问题，所以很多人都比较倾向于 PBT。</p>
+<p>但是我个人不太在意这一点。因为键帽打油也是一种使用痕迹，就跟皮质、木质用具一样，用久了都会有一些使用痕迹，这些使用痕迹有时候反而会使得物件本身更有质感、更有意义。同时 ABS 的造价也比 PBT 更低，所以很多量产键盘都会选择配套 ABS 键帽。</p>
+<h3 id="高度">高度</h3>
+<p>键帽高度要细说的话其实有很多，量产机械键盘一般是 cherry 原厂高度或 oem 高度，因为这个高度对绝大数人来说都比较适合。客制化圈子里还有 SA，PGA，XDA，MDA 等等，它们除了高度不一样，键帽表面的凹陷程度也不一样。对于不同键帽高度对比，大家可以看看这篇文章，写得比较全 <a href="https://www.zfrontier.com/app/flow/DGpVGrXnnP7Y?utm_source=copyLink">[好像WIKI]中秋水三贴-键帽高度篇 -  by GladosXiao - 来自 zFrontier.com</a></p>
+<h3 id="购买建议">购买建议</h3>
+<p>新手在买键帽的时候可能会容易忽略高度的问题。前面提到过，对于大多数人来说，原厂高度都是比较合适的高度，而像 SA 或类 SA 高度的键帽，由于比较高，很多人在刚开始使用的时候都不习惯，导致手指会更累。我自己刚入坑的时候就是没有注意到这个问题，买了一套我认为挺好看的键帽，就是下面这套。（图片来自 <a href="https://www.zfrontier.com/app/flow/2qWnk7aJZgQx?utm_source=copyLink">想要生活过得去，怎么也得带点绿 -  by muni® - 来自 zFrontier.com</a>）</p>
+<p><img src="https://i.loli.net/2021/10/16/kLMzhQYl53dZFVe.jpg" alt="kLMzhQYl53dZFVe"></p>
+<p>这是 MG 高度的键帽，我第一次在网上看到的时候就很喜欢，然后就在闲鱼收了一套，实物也确实很好看。但是在我正常使用了一天之后就发现手指比平常要累，这时候我才注意到键帽高度其实是会影响到输入体验的。虽然很喜欢，但我还是换回了原厂高度的键帽，也是比较无奈。</p>
+<p>话虽如此，大家也不用对这类键帽望而退却。因为这种键帽一般都比较好看，特别是在拍照的时候。而且他们标志性的大字符也是很多人喜欢的点。下面再放几张我觉得比较好看的图：</p>
+<p>分别是来自<a href="https://www.zfrontier.com/app/user/4vGlrzqq9lv0">排骨</a>的<a href="https://www.zfrontier.com/app/flow/2dqPm0qovp3m">黑白PGA</a>、来自<a href="https://www.zfrontier.com/app/user/jnLq0xawvvnEJ">GLOVE</a>的<a href="https://www.zfrontier.com/app/flow/2vddZxM0J1NB">寅虎生肖主题</a>、来自<a href="https://www.zfrontier.com/app/user/3ZzGZrAJJL23">muni®</a>的<a href="https://www.zfrontier.com/app/flow/286MrxLwEOXm">MG怪兽</a></p>
+<p><img src="https://i.loli.net/2021/10/16/3GMrDhpZbWalCAF.jpg" alt="3GMrDhpZbWalCAF"></p>
+<p><img src="https://i.loli.net/2021/10/16/z2QKRPO89fUVGhg.jpg" alt="z2QKRPO89fUVGhg"></p>
+<p><img src="https://i.loli.net/2021/10/16/HdRhcr2W3XvgLFl.jpg" alt="HdRhcr2W3XvgLFl"></p>
+<h2 id="轴体">轴体</h2>
+<p>除了键帽，估计大家最常买的就是轴体了。以前量产的机械键盘基本都是用 cherry 的轴体（现在慢慢开始使用其他牌子的轴体），但是客制化圈子了却比较少用到，因为其他厂商五花八门的轴体是在太多了。稍微列举一下就能有一堆，有佳达隆的G白Pro、G银Pro、Cap黄，有 TTC 的快银、金粉，凯华的 Box Cream、Box Jade 等等。还有一些联名款，例如 B 站 up 主与 TTC 联名的赤瞳轴。</p>
+<h3 id="购买建议-1">购买建议</h3>
+<p>对于一般玩家来说，买轴体的时候可以主要考虑一下这几个方面：</p>
+<ul>
+<li>段落轴和线性轴。段落轴又分有声段落轴和静音段落轴（宿舍友好轴）；</li>
+<li>力度。一般轴体的介绍里都会有；</li>
+<li>价钱。单颗轴体从 1 块到 4 块，或者更高都有。</li>
+</ul>
+<p>如果你比较有追求，还可以看看润滑度、回弹力度、灯孔设计、颜色等等。</p>
+<p>这样一说好像还要考虑挺多东西的，特别是你可能不清楚自己到底是喜欢段落轴还是线性轴，或者到底喜欢什么下压力度。这时候你可以先不同类型的轴体都分别只买几颗，自己试试手感，合适了再多买一些。甚至一把键盘里同时使用几种不同的轴体。</p>
+<h3 id="卫星轴">卫星轴</h3>
+<p>卫星轴就不想轴体那么麻烦了。买的时候注意一下是要定位板卫星轴还是 PCB 卫星轴。定位板卫星轴就是安装的时候要卡在定位板上， PCB 卫星轴就是要用螺丝固定在 PCB 上。不要搞混了，不然就白花钱了。</p>
+<p>我之前是在买定位板的时候才发现了这两种卫星轴的区别。我当时套件里的是定位板卫星轴，但是我买的定位板没有卫星轴的卡槽，所以这个定位板只适合与 PCB 卫星轴搭配使用！</p>
+<h2 id="最后一点体会">最后一点体会</h2>
+<p>虽然上面说了一些我自己踩过的坑，但想要真正体验客制化键盘的乐趣还是要自己多实践一下，才能找到适合自己的。</p>
+<p>所以如果你想入门客制化键盘同时能力有限，我建议你可以先买一个便宜的带有热插拔功能的键盘，然后再买一些不同的轴体，自己先体会一下，然后再扩散开来慢慢研究一下其他方面的知识，有能力的就再慢慢添置一些装备。多尝试，同时尽量控制试错成本。但如果你不在乎钱，也可以一上来就直接买几把几千块钱一把的 Matrix，每天换着用，甚至放在架子里欣赏。反正就是富有富的玩法，穷也有穷的玩法。</p>
+<p>很多键帽、套件的作者都只是个人或者小团队，设计然后卖一套键帽或者套件并不是只在电脑上画个图那么简单。特别是刚起步的作者，除了要跟其他玩家沟通然后不断修改，还要与生产厂家沟通成本、材料、加工时间等等很多细节，来回折腾。时间精力都花进去了，最后可能还赚不了多少钱。但他们依然热衷于设计各种优秀的产品，并不断地打磨细节。除了是对广大玩家的负责，更是出于自己的热爱。</p>
+<p>有人因为精力有限而退坑，同时也有人因为看种了某款键帽而入坑。既然大家都是出于兴趣爱好而认识，就彼此多一些理解、信任，这个圈子才能继续更好地发展。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>关于客制化键盘</title>
+			<link>/posts/custom_keyboard_review/</link>
+			<pubDate>Tue, 28 Sep 2021 11:48:50 +0800</pubDate>
+			
+			<guid>/posts/custom_keyboard_review/</guid>
+			<description>前段时间因为一个偶然的机会入坑了客制化键盘。在坑里摸爬了一段时间之后，逐渐有了一些自己的想法。回想一下感觉整个过程就像是谈恋爱一样，从相识进入热恋，然后逐渐趋于冷静平淡最后或相伴一生或形同陌路。
+缘由 2021年中旬，我女朋友换了新工作，没做多久就跟我抱怨新公司配的手提电脑键盘不好用，敲起来像钢板一样，而且按键小，反正就是不爽。然后就故意问我：“你要不要换新键盘啊~”。其实就是想从我这里白嫖一把键盘，然后让我自己再买一把新的。
+我当时手上有两把机械键盘：
+一把在公司用，是大概 6 年前买的酷冷至尊烈焰枪，侧刻，cherry 红轴。这把键盘一直用到现在，除了键帽和外壳有明显的使用痕迹之外，没有其他问题，6 年来一直是我的主力键盘，帮助我写了很多 bug 🐞。也是它让我认识到了“机械键盘”这种东西；
+另外一把是杜伽K320，也是cherry 红轴，前两年买的。主要是为了在家里做外包。
+对于这两把键盘，其实我没有更偏爱哪个，所以我当时让我女朋友自己随便选一个。最后是决定把酷冷至尊给她。
+至于新的键盘，我买了 Keychron 的 K2。一来是因为那段时间 Keychron 貌似挺火的，二来是想换个小一点的键盘，免得右手在键盘字母区和鼠标之间切换的时候距离太长。买的时候我还特意选了有热插拔功能的，当时的想法仅仅是可以换个青轴试试所谓的段落手感。而就是这个“热插拔”把我带入了客制化的大坑。
+初识客制化 Keychron 用的是佳达隆的轴体，当时还不知道佳达隆，就上网搜了一下佳达隆和它生产的轴体。其中一条搜索结果把我带到了zFrontier 装备前线这个网站（简称 zf），结果我就打开了客制化键盘的大门。
+之前虽然也有偶尔在其他地方看到过“客制化键盘”这个名词，但一直没引起我太多注意，以为只是一些造型比较奇特或者键帽比较好看的键盘而已（事实上有些键帽还真是挺好看的）。
+在 zf ，我第一次发现原来有这么多好看的键帽。有朴素简单的黑白，也有精心设计的字体和图案，目不暇接，一下子就把我吸引住了。那种感觉就像一个小孩子走进了一个玩具店，被琳琅满目、各式各样的玩具包围了一样。每一件玩具都想靠近仔细地观摩，摸摸它的棱角、看看它的颜色、再找找一些精致的设计，似乎想把每一个细节都刻在心里，然后在晚上睡觉前在脑海里像电影一样一帧一帧地回放。离开的时候还意犹未尽，打算第二天放学的时候再来看看其他未发现的玩具。这是一种简单的快乐。
+对于当时的我来说，客制化键盘又何尝不是这样一件仅仅是看到图片就让我忘乎所以、不愿离开的玩具呢。以致于每天只要我一有时间就会想去看看网友们的晒图，看看其他人写的客制化键盘的入门指南，还在 B 站搜索客制化键盘相关的视频。渐渐地发现，客制化键盘不仅是好看的键帽，还有其他好玩的地方，例如不同结构的套件、不同材质的定位板、再配合上不同的轴体，就能碰撞出不同的敲击手感和声音。
+买买买&amp;amp;卖卖卖 天天去看，难免就会有剁手的想法。所以很自然地就进入了买买买的阶段。
+我剁手的第一件东西是一套键帽，MG 的微光。我拍照技术不行，所以这里放几张在 zf 看到的照片，侵删。
+由于我入坑的时候这套键帽的团购已经截止了，所以只能在闲鱼上找，并且都比团购价贵一截。我当时就收藏了几件商品，价钱都是 700+ 。其他人可能会觉得花 700+ 的价钱买一套键帽（注意是只有键帽）肯定是人傻钱多，连我自己都觉得有点不理智。但人们常说“恋爱使人盲目”，热恋期的人更是容易头脑发热。于是在犹豫了几天之后，终于还是狠下心来买了一套。
+收到快递之后就迫不及待第拆开了快递，并第一时间把 K2 的原装键帽换成了这套微光键帽。实物的效果确实挺好看（当时忘记拍照了）。可是在使用了一天后就发现有点不对劲，觉得手指很累。以前敲一整天代码都没这种感觉，但是换了新键帽才半天就感觉累。这时候就想到是不是跟键帽的高度有关。
+这套微光是 MG 高度的球帽设计，一般的球帽都会比原厂高度的键帽高，（关于键帽的高度这里就不展开说了），而且 MG 高度貌似比常见的 SA 高度还要高一丢丢。高键帽带来的一个缺点就是初次使用的话会觉得比较累，对于用惯原厂高度的人来说感觉更加明显。
+虽然外观很好看，但键盘还是每天都要重度使用的工具，还是舒适比较重要，所以我又换成原装的键帽了（K2原装的键帽是 OEM 高度的）。然后这套键帽的下场就是被放在了一边，最后在闲鱼等到了另一个有缘人。
+第二个剁手的东西是套件。准确地来说是好几样东西。
+首先我在 zf 的某个贴子中看到了一个外壳，prism60。它的主要亮点是 4 个角的设计，不是普通的直角，而是一个多面体。配合电泳白的配色，有一种冷峻、硬朗的感觉。而且后面拿到手的时候发现还挺重的，挺有质感。
+（已下图片来自 zf，侵删）
+在我发现这个外壳的时候已经结束团购了，但是 zf 上还有现货。于是我就下单了。另外还在淘宝上买了一套 gk64xs 的 pcb 套件。买 pcb 的时候还有个小插曲。本来 zf 的客服给我推荐了一个配套的 pcb，但只支持 61 键的配列，不支持左移 64。但我平常对方向键比较依赖，不想通过组合键来实现方向键的切换。所以只能去淘宝上买支持左移 64 的 pcb。关于左移 64 的概念大家可以上网搜一下，这里不展开说明。</description>
+			<content type="html"><![CDATA[<p>前段时间因为一个偶然的机会入坑了客制化键盘。在坑里摸爬了一段时间之后，逐渐有了一些自己的想法。回想一下感觉整个过程就像是谈恋爱一样，从相识进入热恋，然后逐渐趋于冷静平淡最后或相伴一生或形同陌路。</p>
+<h2 id="缘由">缘由</h2>
+<p>2021年中旬，我女朋友换了新工作，没做多久就跟我抱怨新公司配的手提电脑键盘不好用，敲起来像钢板一样，而且按键小，反正就是不爽。然后就故意问我：“你要不要换新键盘啊~”。其实就是想从我这里白嫖一把键盘，然后让我自己再买一把新的。</p>
+<p>我当时手上有两把机械键盘：</p>
+<p>一把在公司用，是大概 6 年前买的酷冷至尊烈焰枪，侧刻，cherry 红轴。这把键盘一直用到现在，除了键帽和外壳有明显的使用痕迹之外，没有其他问题，6 年来一直是我的主力键盘，帮助我写了很多 bug 🐞。也是它让我认识到了“机械键盘”这种东西；</p>
+<p>另外一把是杜伽K320，也是cherry 红轴，前两年买的。主要是为了在家里做外包。</p>
+<p>对于这两把键盘，其实我没有更偏爱哪个，所以我当时让我女朋友自己随便选一个。最后是决定把酷冷至尊给她。</p>
+<p>至于新的键盘，我买了 Keychron 的 K2。一来是因为那段时间 Keychron 貌似挺火的，二来是想换个小一点的键盘，免得右手在键盘字母区和鼠标之间切换的时候距离太长。买的时候我还特意选了有热插拔功能的，当时的想法仅仅是可以换个青轴试试所谓的段落手感。而就是这个“热插拔”把我带入了客制化的大坑。</p>
+<h2 id="初识客制化">初识客制化</h2>
+<p>Keychron 用的是佳达隆的轴体，当时还不知道佳达隆，就上网搜了一下佳达隆和它生产的轴体。其中一条搜索结果把我带到了<a href="https://www.zfrontier.com/app/circle/1#9999">zFrontier 装备前线</a>这个网站（简称 zf），结果我就打开了客制化键盘的大门。</p>
+<p>之前虽然也有偶尔在其他地方看到过“客制化键盘”这个名词，但一直没引起我太多注意，以为只是一些造型比较奇特或者键帽比较好看的键盘而已（事实上有些键帽还真是挺好看的）。</p>
+<p>在 zf ，我第一次发现原来有这么多好看的键帽。有朴素简单的黑白，也有精心设计的字体和图案，目不暇接，一下子就把我吸引住了。那种感觉就像一个小孩子走进了一个玩具店，被琳琅满目、各式各样的玩具包围了一样。每一件玩具都想靠近仔细地观摩，摸摸它的棱角、看看它的颜色、再找找一些精致的设计，似乎想把每一个细节都刻在心里，然后在晚上睡觉前在脑海里像电影一样一帧一帧地回放。离开的时候还意犹未尽，打算第二天放学的时候再来看看其他未发现的玩具。这是一种简单的快乐。</p>
+<p>对于当时的我来说，客制化键盘又何尝不是这样一件仅仅是看到图片就让我忘乎所以、不愿离开的玩具呢。以致于每天只要我一有时间就会想去看看网友们的晒图，看看其他人写的客制化键盘的入门指南，还在 B 站搜索客制化键盘相关的视频。渐渐地发现，客制化键盘不仅是好看的键帽，还有其他好玩的地方，例如不同结构的套件、不同材质的定位板、再配合上不同的轴体，就能碰撞出不同的敲击手感和声音。</p>
+<h2 id="买买买卖卖卖">买买买&amp;卖卖卖</h2>
+<p>天天去看，难免就会有剁手的想法。所以很自然地就进入了买买买的阶段。</p>
+<p>我剁手的第一件东西是一套键帽，MG 的微光。我拍照技术不行，所以这里放几张在 zf 看到的照片，侵删。</p>
+<p><img src="https://img.zfrontier.com/post/20210805/FnpW35WR-Tg0iO3hoWFrP-SjkECo?imageView2/2/format/webp/w/700/q/85!" alt="MG 微光 Aurora" title="by muni® from zf"></p>
+<p><img src="https://img.zfrontier.com/post/20210918/FpB2ewreWssM_v0D21_-0iMczDVh?imageView2/2/format/webp/w/700/q/85!" alt="MG 微光 Dusk" title="by 毁天&amp;灭地 from zf"></p>
+<p>由于我入坑的时候这套键帽的团购已经截止了，所以只能在闲鱼上找，并且都比团购价贵一截。我当时就收藏了几件商品，价钱都是 700+ 。其他人可能会觉得花 700+ 的价钱买一套键帽（注意是只有键帽）肯定是人傻钱多，连我自己都觉得有点不理智。但人们常说“恋爱使人盲目”，热恋期的人更是容易头脑发热。于是在犹豫了几天之后，终于还是狠下心来买了一套。</p>
+<p>收到快递之后就迫不及待第拆开了快递，并第一时间把 K2 的原装键帽换成了这套微光键帽。实物的效果确实挺好看（当时忘记拍照了）。可是在使用了一天后就发现有点不对劲，觉得手指很累。以前敲一整天代码都没这种感觉，但是换了新键帽才半天就感觉累。这时候就想到是不是跟键帽的高度有关。</p>
+<p>这套微光是 MG 高度的球帽设计，一般的球帽都会比原厂高度的键帽高，（关于键帽的高度这里就不展开说了），而且 MG 高度貌似比常见的 SA 高度还要高一丢丢。高键帽带来的一个缺点就是初次使用的话会觉得比较累，对于用惯原厂高度的人来说感觉更加明显。</p>
+<p>虽然外观很好看，但键盘还是每天都要重度使用的工具，还是舒适比较重要，所以我又换成原装的键帽了（K2原装的键帽是 OEM 高度的）。然后这套键帽的下场就是被放在了一边，最后在闲鱼等到了另一个有缘人。</p>
+<p>第二个剁手的东西是套件。准确地来说是好几样东西。</p>
+<p>首先我在 zf 的某个贴子中看到了一个外壳，prism60。它的主要亮点是 4 个角的设计，不是普通的直角，而是一个多面体。配合电泳白的配色，有一种冷峻、硬朗的感觉。而且后面拿到手的时候发现还挺重的，挺有质感。</p>
+<p>（已下图片来自 zf，侵删）</p>
+<p><img src="https://img.zfrontier.com/post/20200418/FtkKiKbb59Ddg_SuGpp6h6T86hVc?imageView2/2/format/webp/w/700/q/85!" alt="prism60"></p>
+<p>在我发现这个外壳的时候已经结束团购了，但是 zf 上还有现货。于是我就下单了。另外还在淘宝上买了一套 gk64xs 的 pcb 套件。买 pcb 的时候还有个小插曲。本来 zf 的客服给我推荐了一个配套的 pcb，但只支持 61 键的配列，不支持左移 64。但我平常对方向键比较依赖，不想通过组合键来实现方向键的切换。所以只能去淘宝上买支持左移 64 的 pcb。关于左移 64 的概念大家可以上网搜一下，这里不展开说明。</p>
+<p>外壳和套件都有了，还差轴体和键帽。那段时间佳达隆的拾光白刚出，所以就买了一盒回来试试，同时还买了一盒佳达隆的银 Pro 搭配着使用，键帽是买了一套复刻的黛粉。原版的黛粉截图了，而且闲鱼的价格也有点贵。</p>
+<p>最终效果就是这样，水平一般，凑合着看：</p>
+<p><img src="https://img.zfrontier.com/flow/wtmk/a1013d803f3566dbefba942a29d32181?imageView2/0/format/webp/w/360/q/85!" alt=""></p>
+<p><img src="https://img.zfrontier.com/flow/wtmk/1faffcd6c51563e3f070ff3af95ff564?imageView2/0/format/webp/w/360/q/85!" alt=""></p>
+<p>白色的外壳和键帽非常搭，同时佳达隆的这两个轴体不管是力度还是润滑程度个人觉得还是不错的，性价比很高。本以为我的买买买会暂时告一段落。但这时候我又注意到了键圈里的一个重要话题，也是大家经常用来评价一款键盘和轴体的角度：手感和声音。</p>
+<p>这两个其实都是很玄学的概念，是相对主观的个人感受。有的人喜欢 pc 定位板带来的软弹手感以及雨落地般的声音，有的人却喜欢钢板硬朗、铿锵有力的感觉。但貌似现在多数人都是比较前者，甚至会用 “HIFI”来形容这类键盘。</p>
+<p>只从了解到“键盘声学”之后，我才发现我的 prism60 确实是有明显的空腔声，其实就是敲键盘的时候，轴心触底，与定位板、pcb、外壳产生了共振，并且通过外壳把声音放大。为了解决这个问题，我又上淘宝买了一套 Poron 的消音棉，以及最近比较流行的 fr4 定位板，用来解决敲击手感硬的问题。</p>
+<p>装上消音棉后发现空腔声确实改善了很多。但装定位板的时候才发现了一个严重的问题，就是我买的套件里的卫星轴是定位板卫星轴，但新买来的 fr4 定位板只适用于 pcb 卫星轴。如果硬是把新定位板装上去的话，由于定位板上没有用于固定卫星轴的开孔，导致大键会很晃。也不是不能用，只是每次按压大键都会觉得很不爽。于是还是用回了旧的定位板。这个 fr4 定位板最终也是在闲鱼上以低价卖出去了，又是一个惨痛的教训。不过也正是因为这个教训，我才学习到原来卫星轴也有 pcb 和定位板的区别！</p>
+<p>人的欲望是会不断膨胀的。说得通俗点就是有钱就手痒。</p>
+<p>偶然在网上看到了 graystudio 的 think6.5 v2 这款键盘之后，就开始关注它。首先它的外观是我喜欢的，是 65 的配列，不像 60 配列那样紧凑，同时又能很好地兼顾日常工作使用。再加上它的右侧有一个带有灯光效果的铭牌，不像其他 rgb 轴灯那么“杀马特”，只是一个点缀，一个闷骚的点睛之笔，这种感觉真是直击我心，无法自拔。于是我就开始从各种渠道了解这款键盘的各种细节：外观、手感、声音、灯光、二手价格等等，心里一直蠢蠢欲动。但无奈这款键盘在闲鱼上的价格都有不同程度的溢价，基本都是 3000 左右，大大地超出了我的心理预期，一直不舍得买。</p>
+<p>“得不到的永远在骚动”。那段时间我也是一有时间就去看看 think6.5 v2 的各种图片、测评，关注闲鱼上的价格变动。就像当初关注那套微光键帽时候的那种感觉。慢慢地，我发现我在闲鱼上收藏的 think6.5 v2 开始逐渐被人买走，我心里开始有点着急。于是我终于还是决定买下收藏夹里的一款奶白色的 think6.5 v2。刚好那段时间，另一套我比较喜欢的键帽“2021流行色”有现货开卖，于是我就买了一套，用来搭我这个新键盘，轴体方面选了 TTC 的快银。</p>
+<p>果然贵是有贵的道理，这把 think6.5 v2 无论是外观、配列、手感、声音都是我用过的键盘里最好的（但其实我也没用过多少键盘）。然后我在一个阳光正好的早上，拍了几张照片，并且发了出来与键圈的小伙伴们分享一下我的喜悦，<a href="https://www.zfrontier.com/app/flow/4x3wAZglQJOw">详情看这里</a>。</p>
+<p>至此，我的买买买就暂时告一段落了（虽然我觉得很快就会有新的产品来诱惑我）。现在，我手上还留着的键盘就剩下 think6.5 v2 和 Keychron K2 了，一把在公司用，一把在家里用。prism60 和 gk64xs 套件都已经卖出去了，算是为之前的买买买回了点血。</p>
+<h2 id="经验分享">经验分享</h2>
+<h3 id="一些名词">一些名词</h3>
+<h3 id="怎么买">怎么买</h3>
+<ol>
+<li>团购</li>
+<li>现货</li>
+<li>闲鱼</li>
+</ol>
+<h3 id="实践出真知">实践出真知</h3>
+<p>回想我入门客制化键盘的这段经历，我深刻地体会到了什么叫“实践出真知”。有很多的道理或者概念也许你很早就听过，但不到真正需要用到的时候你都不会知道它存在的意义。也许你早就听说过“pcb 卫星轴”，但知道发现自己买错了的时候才发现没有留意自己需要的到底是 pcb 卫星轴还是定位板卫星轴；也许你已经听过很多人说 pc 定位板能带来软弹的手感，但你不试过又怎么知道你喜欢的是到底是软弹还是硬朗，还是介乎这两者之间的手感呢？</p>
+<h2 id="重新思考">重新思考</h2>
 ]]></content>
 		</item>
 		
@@ -51,12 +518,14 @@ Webify 和 Hugo 的 quickstart 文档都有，没什么好说的。</description
 			<description>nuxt-link 是 nuxtjs 提供的一个组件，基于 vue-router 的 router-link 做了一层封装，实现了预加载的功能。本文来简单聊聊这个“预加载”的原理。
 一点准备工作 如果直接打开 nuxt 项目中 nuxt-link的源码，会发现里面使用了很多类似于 &amp;lt;%...%&amp;gt; 这样的模板语法。这其实是 lodash.template 提供的模板语法。如果觉得影响阅读，可以按照 nuxt 的文档，新建一个 nuxt 应用，然后构建一次，再找到 .nuxt/components/nuxt-link.client.js，这个就是编译过后的 nuxt-link 代码。
 前置条件 要想触发 nuxt-link 的预加载，需要同时满足以下几个条件：
-  nuxt-link 的 prefetch 属性值是 true 。
+nuxt-link 的 prefetch 属性值是 true 。
 默认值是 nuxt 配置里的 router.prefetchLinks。prefetchLinks 的默认值是 true ，所以 prefetch 的默认值也是 true。
-  nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
-  当 nuxt-link 组件出现在可见区域内。
-  nuxt-link 的 to 属性指向的页面是同一个应用的页面。
-  有网络链接并且不是 2g 网络。</description>
+nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
+当 nuxt-link 组件出现在可见区域内。
+nuxt-link 的 to 属性指向的页面是同一个应用的页面。
+有网络链接并且不是 2g 网络。
+1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。
+原理 接下来梳理一下预加载的大致流程。为了说明原理，nuxt-link 源码里有些条件分支会省略，但不影响理解。下面会以 /cart 这个链接作为 nuxt-link 的跳转地址来做说明。/cart 页面对应的文件路径是 /pages/cart/index.</description>
 			<content type="html"><![CDATA[<p><code>nuxt-link</code> 是 <a href="https://nuxtjs.org/">nuxtjs</a> 提供的一个组件，基于 <a href="https://router.vuejs.org/">vue-router</a> 的 <code>router-link</code> 做了一层封装，实现了<a href="https://nuxtjs.org/blog/introducing-smart-prefetching#introducing-smart-prefetching-%EF%B8%8F">预加载</a>的功能。本文来简单聊聊这个“预加载”的原理。</p>
 <h2 id="一点准备工作">一点准备工作</h2>
 <p>如果直接打开 <code>nuxt</code> 项目中 <a href="https://github.com/nuxt/nuxt.js/blob/dev/packages/vue-app/template/components/nuxt-link.client.js">nuxt-link的源码</a>，会发现里面使用了很多类似于 <code>&lt;%...%&gt;</code> 这样的模板语法。这其实是 <a href="https://lodash.com/docs/4.17.15#template">lodash.template</a> 提供的模板语法。如果觉得影响阅读，可以按照 <code>nuxt</code> 的文档，新建一个 nuxt 应用，然后构建一次，再找到 <code>.nuxt/components/nuxt-link.client.js</code>，这个就是编译过后的 <code>nuxt-link</code> 代码。</p>
@@ -83,66 +552,66 @@ Webify 和 Hugo 的 quickstart 文档都有，没什么好说的。</description
 <p>1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。</p>
 <h2 id="原理">原理</h2>
 <p>接下来梳理一下预加载的大致流程。为了说明原理，<code>nuxt-link</code> 源码里有些条件分支会省略，但不影响理解。下面会以 <code>/cart</code> 这个链接作为 <code>nuxt-link</code> 的跳转地址来做说明。<code>/cart</code> 页面对应的文件路径是 <code>/pages/cart/index.vue</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">nuxt-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/cart&#34;</span><span class="p">&gt;</span>购物车<span class="p">&lt;/</span><span class="nt">nuxt-link</span><span class="p">&gt;</span>
-</code></pre></div><h3 id="事件监听">事件监听</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">nuxt-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/cart&#34;</span><span class="p">&gt;</span>购物车<span class="p">&lt;/</span><span class="nt">nuxt-link</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h3 id="事件监听">事件监听</h3>
 <p>在 <code>nuxt-link</code> 的 <code>mounted</code> 阶段，如果设置了开启预加载，即 <code>this.prefetch &amp;&amp; !this.noPrefetch</code>，就会开始监听 <code>nuxt-link</code> 元素是否进入了可视区域。</p>
 <p>当元素进入了可视区域，就会调用 <code>prefetchLink</code> 方法进行预加载。</p>
 <p>监听过程中使用了 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback">window.requestIdleCallback</a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">window.IntersectionObserver</a> 这两个 API。</p>
 <h3 id="预加载">预加载</h3>
 <p>核心的逻辑在 <code>prefetchLink()</code> 函数里：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">prefetchLink</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">canPrefetch</span><span class="p">())</span> <span class="p">{</span>
-    <span class="k">return</span>
-  <span class="p">}</span>
-  <span class="c1">// Stop observing this link (in case of internet connection changes)
-</span><span class="c1"></span>  <span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getPrefetchComponents</span><span class="p">()</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">Component</span> <span class="k">of</span> <span class="nx">Components</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">componentOrPromise</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">()</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">componentOrPromise</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">componentOrPromise</span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{})</span>
-    <span class="p">}</span>
-    <span class="nx">Component</span><span class="p">.</span><span class="mi">__</span><span class="nx">prefetched</span> <span class="o">=</span> <span class="kc">true</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>首先要获取需要预加载的组件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">prefetchLink</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">canPrefetch</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// Stop observing this link (in case of internet connection changes)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">observer</span><span class="p">.</span><span class="nx">unobserve</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getPrefetchComponents</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">Component</span> <span class="k">of</span> <span class="nx">Components</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">componentOrPromise</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">componentOrPromise</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">componentOrPromise</span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Component</span><span class="p">.</span><span class="nx">__prefetched</span> <span class="o">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>首先要获取需要预加载的组件。</p>
 <p>在 <code>getPrefetchComponents()</code> 方法里，使用了 <code>vue-router</code> 的 <code>router.resolve</code> 方法，找到将要跳转的页面对应的页面入口，即 <code>Components</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">getPrefetchComponents</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">ref</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">to</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$route</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">append</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">resolved</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="k">default</span><span class="p">)</span>
-
-  <span class="k">return</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">Component</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">Component</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="mi">__</span><span class="nx">prefetched</span><span class="p">)</span>
-<span class="p">},</span>
-</code></pre></div><p>在浏览器开发工具里打印一下 <code>Components</code>，看到以下信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">getPrefetchComponents</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">ref</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">to</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$route</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">append</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">resolved</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="k">default</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">Component</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">Component</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">__prefetched</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span>
+</span></span></code></pre></div><p>在浏览器开发工具里打印一下 <code>Components</code>，看到以下信息：</p>
 <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ecc70c999a4f45e98e4f5b30e4dca864~tplv-k3u1fbpfcp-watermark.image" alt=""></p>
 <p>可以看到 <code>Components</code> 里的每个元素都是一个函数，点击 <code>[[FunctionLocation]]</code> 的值，<code>router.js</code>，可以跳到函数定义的位置。然后你就会发现打开的这个 <code>router.js</code> 其实就是我们的项目构建完之后得到的 <code>.nuxt/router.js</code> 。</p>
 <p>通过 <code>_30f4c240()</code>  这个函数的定义可以发现它的核心功能其实就是引入了 <code>/cart</code> 对应的页面文件。如果调用这个方法，就会在浏览器开发者工具的 network 面板看到浏览器请求了 <code>/_nuxt/pages/cart/index.js</code> 这个文件，即加载了 <code>/cart</code>  这个页面对应的代码。具体的加载过程属于 <code>webpack</code> 的功能，这里不做说明。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// .nuxt/router.js
-</span><span class="c1"></span><span class="kr">const</span> <span class="mi">_30</span><span class="nx">f4c240</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">interopDefault</span><span class="p">(</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;../src/pages/cart/index.vue&#39;</span> <span class="cm">/* webpackChunkName: &#34;pages/cart/index&#34; */</span><span class="p">))</span>
-</code></pre></div><p>在获取到上面的加载函数之后，<code>prefetchLink</code> 就会调用这些函数，达到预加载的效果。之后，还会设置一个 <code>__prefetch</code> 的标识，防止重复加载。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// .nuxt/router.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">_30f4c240</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">interopDefault</span><span class="p">(</span><span class="kr">import</span><span class="p">(</span><span class="s1">&#39;../src/pages/cart/index.vue&#39;</span> <span class="cm">/* webpackChunkName: &#34;pages/cart/index&#34; */</span><span class="p">))</span>
+</span></span></code></pre></div><p>在获取到上面的加载函数之后，<code>prefetchLink</code> 就会调用这些函数，达到预加载的效果。之后，还会设置一个 <code>__prefetch</code> 的标识，防止重复加载。</p>
 <p>以上就是 <code>nuxt-link</code> 预加载的大致过程。</p>
 <h2 id="延伸">延伸</h2>
 <p>在 <code>nuxt-link</code> 的源码里，还能找到一些有趣的点：</p>
 <h3 id="自定义预加载">自定义预加载</h3>
 <p>有些时候我们没有使用 <code>nuxt-link</code> 来做页面跳转，但又想预加载这个页面，就可以这样做：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">myPrefetch</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">ref</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$route</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">resolved</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="k">default</span><span class="p">);</span>
-
-  <span class="nx">Components</span>
-    <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">Component</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">Component</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="mi">__</span><span class="nx">prefetched</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">Component</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">componentOrPromise</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">();</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">componentOrPromise</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">componentOrPromise</span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{});</span>
-      <span class="p">}</span>
-      <span class="nx">Component</span><span class="p">.</span><span class="mi">__</span><span class="nx">prefetched</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">});</span>
-<span class="p">},</span>
-</code></pre></div><p>可以使用以下方法简化一下 <code>Components</code> 的获取：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">getMatchedComponents</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
-</code></pre></div><h3 id="navigatorconnection">navigator.connection</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">myPrefetch</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">ref</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">$route</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">resolved</span><span class="p">.</span><span class="nx">matched</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">components</span><span class="p">.</span><span class="k">default</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">Components</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">Component</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">typeof</span> <span class="nx">Component</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">options</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">Component</span><span class="p">.</span><span class="nx">__prefetched</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">Component</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">componentOrPromise</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">componentOrPromise</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">componentOrPromise</span><span class="p">.</span><span class="k">catch</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{});</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">Component</span><span class="p">.</span><span class="nx">__prefetched</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span>
+</span></span></code></pre></div><p>可以使用以下方法简化一下 <code>Components</code> 的获取：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Components</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">getMatchedComponents</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="navigatorconnection">navigator.connection</h3>
 <p>可以使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection">navigator.connection</a> 来判断网络状态，但是要注意兼容性。</p>
 <h3 id="quicklink">quicklink</h3>
 <p>在 <code>react</code> 项目里，可以使用 <a href="https://github.com/GoogleChromeLabs/quicklink">quicklink</a> 实现预加载的功能。</p>
@@ -161,10 +630,10 @@ Webify 和 Hugo 的 quickstart 文档都有，没什么好说的。</description
 在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</description>
 			<content type="html"><![CDATA[<p>如何使 <em>textarea</em> 元素的高度可以根据内容自动伸缩？</p>
 <p>只需两行代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">// 当输入的时候
-</span><span class="c1"></span><span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">;</span>
-<span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">textarea</span><span class="p">.</span><span class="nx">scrollHeight</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
-</code></pre></div><p>第一行的作用是在删除输入的内容时候让 <em>textarea</em> 的高度能自动缩回去；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 当输入的时候
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">textarea</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">textarea</span><span class="p">.</span><span class="nx">scrollHeight</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>第一行的作用是在删除输入的内容时候让 <em>textarea</em> 的高度能自动缩回去；</p>
 <p>在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</p>
 ]]></content>
 		</item>
@@ -206,23 +675,1017 @@ alias: { &amp;#39;@&amp;#39;: &amp;#39;./src&amp;#39; } tsconfig.json tsconfig.j
 { &amp;#34;compilerOptions&amp;#34;: { &amp;#34;baseUrl&amp;#34;: &amp;#34;.&amp;#34;, &amp;#34;paths&amp;#34;: { &amp;#34;@/*&amp;#34;: [&amp;#34;./src/*&amp;#34;] } } } 这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示
 eslint 如果你有用 eslint ，即使 vscode 已经识别出来你的 alias，但 eslint 依然有可能会报 “找不到模块” 的错误。这时候可以使用这个模块 eslint-import-resolver-webpack 。就可以去掉 eslint 的报错</description>
 			<content type="html"><![CDATA[<p>假设有这样一个 alias：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="nx">alias</span><span class="o">:</span> <span class="p">{</span>
-  <span class="s1">&#39;@&#39;</span><span class="o">:</span> <span class="s1">&#39;./src&#39;</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="tsconfigjson">tsconfig.json</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">alias</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;@&#39;</span><span class="o">:</span> <span class="s1">&#39;./src&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="tsconfigjson">tsconfig.json</h2>
 <p><code>tsconfig.json</code> 或者 <code>jsconfig.json</code> 中加入以下配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-  <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;baseUrl&#34;</span><span class="p">:</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;paths&#34;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&#34;@/*&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;./src/*&#34;</span><span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;baseUrl&#34;</span><span class="p">:</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;paths&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;@/*&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;./src/*&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这时候 vscode 就能识别到你的 alias ，也就是可以在输入路径的时候出现提示</p>
 <h2 id="eslint">eslint</h2>
 <p>如果你有用 eslint ，即使 vscode 已经识别出来你的 alias，但 eslint 依然有可能会报 “找不到模块” 的错误。这时候可以使用这个模块 <a href="https://www.npmjs.com/package/eslint-import-resolver-webpack">eslint-import-resolver-webpack</a> 。就可以去掉 eslint 的报错</p>
 ]]></content>
+		</item>
+		
+		<item>
+			<title>React开发环境配置</title>
+			<link>/posts/react%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</link>
+			<pubDate>Wed, 08 Jun 2016 16:15:44 +0000</pubDate>
+			
+			<guid>/posts/react%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</guid>
+			<description>自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。
+最初用 React 的时候，是用browserify来打包，后来听说webpack之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。
+目录结构 我的目录结构如下。
+Babel babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。
+$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0 有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在package.json的presets参数中，但我比较喜欢用.babelrc配置文件。
+在项目的根目录下新建一个.babelrc文件，然后添加以下配置。
+{ &amp;#34;presets&amp;#34;: [&amp;#34;es2015&amp;#34;, &amp;#34;stage-0&amp;#34;, &amp;#34;react&amp;#34;] } 在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的react-hmre这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的env参数可以帮我们完成以上工作。
+{ &amp;#34;presets&amp;#34;: [&amp;#34;es2015&amp;#34;, &amp;#34;stage-0&amp;#34;, &amp;#34;react&amp;#34;], &amp;#34;env&amp;#34;: { &amp;#34;development&amp;#34;: { &amp;#34;presets&amp;#34;: [&amp;#34;react-hmre&amp;#34;] } } } webpack webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了hjs-webpack这个工具之后，一切都变得简单很多了。</description>
+			<content type="html"><![CDATA[<p>自从 2015 年开始接触 ReactJS 以后，就爱上了 React。不过这篇文章不是要介绍 React，而是介绍 React 开发环境的配置。</p>
+<p>最初用 React 的时候，是用<a href="http://browserify.org/">browserify</a>来打包，后来听说<a href="https://webpack.github.io/">webpack</a>之后，就果断转向 webpack。以下是我配置 react 开发环境的过程。</p>
+<h2 id="目录结构">目录结构</h2>
+<p>我的目录结构如下。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/06/01/293f08803786f957.jpg" alt="目录结构"></p>
+<h2 id="babel">Babel</h2>
+<p>babel 是一个优秀 JavaScript 编译工具。能够把多种 JavaScript 衍生语言（coffeeScript，TypeScript 等）和下一代的 JavaScript（ES6）编译成能够直接运行的原生 js。在 React 的项目中，我们一般需要以下几个 babel presets。</p>
+<pre tabindex="0"><code>$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel-preset-react-hmre babel-preset-stage-0
+</code></pre><p>有了所需要的包以后，还要有相应的配置，以启用上面安装的包。babel 的配置可以直接写在<code>package.json</code>的<code>presets</code>参数中，但我比较喜欢用<code>.babelrc</code>配置文件。</p>
+<p>在项目的根目录下新建一个<code>.babelrc</code>文件，然后添加以下配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;es2015&#34;</span><span class="p">,</span> <span class="s2">&#34;stage-0&#34;</span><span class="p">,</span> <span class="s2">&#34;react&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在开发的过程中，我们需要用到 react 的模块热加载功能来提高开发效率，也就是要启用 babel 的<code>react-hmre</code>这个 preset。但如果在开发完成，进行部署的时候启用了这个 preset，就会报错。于是我们就要根据当前所处的环境（开发或者部署）来觉得是否启用这个 preset。babel 中的<code>env</code>参数可以帮我们完成以上工作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;es2015&#34;</span><span class="p">,</span> <span class="s2">&#34;stage-0&#34;</span><span class="p">,</span> <span class="s2">&#34;react&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;env&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;development&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;presets&#34;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;react-hmre&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="webpack">webpack</h2>
+<p>webpack 是一个很好用的工具，但不得不承认，它的配置是一件很痛苦的事情。但是有了<a href="https://github.com/HenrikJoreteg/hjs-webpack">hjs-webpack</a>这个工具之后，一切都变得简单很多了。</p>
+<p><code>hjs-webpack</code>是一个配置 webpack 的工具。它对外提供了很多简单的接口，这些接口调用的结果是生成一份对应的 webpack 配置文件。最强大的地方是，<code>hjs-webpack</code>已经帮我们设置好了很多 loader 的配置，当我们需要用到的时候，只需要<code>npm install</code>一下对应的包就可以了，免去自己再写 loader 的相关配置这一步骤。具体的用法下面会介绍到。<code>hjs-webpack</code>所支持的 loader 可以在<a href="https://github.com/HenrikJoreteg/hjs-webpack">这里</a>查看。</p>
+<p>接下来，在项目的根目录下新建一个<code>webpack.config.js</code>来开始 webpack 的配置。</p>
+<p>在<code>hjs-webpack</code>中，提供了两个参数：<code>in</code>和<code>out</code>分别对应 webpack 中的<code>entry</code>和<code>output</code>。因此，最简单的配置就能像下面这样。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">getConfig</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hjs-webpack&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;src/app.js&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">out</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">clearBeforeBuild</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>其中<code>clearBeforeBuild</code>参数可以在构建新文件之前把旧文件都清除掉。</p>
+<p>有时候，有些开发者喜欢把常用的路径都存储在一些变量中，方便使用。这里就不多说了。</p>
+<p>在上面我们提到，在 development 和 production 两个环境中会分别应用不同的配置。在这里，我们有一个参数<code>isDev</code>来告诉 webpack 我们是否处于 development 环境中。另外，我们还需要根据<code>NODE_ENV</code>这个参数来判断我们所处的环境。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">NODE_ENV</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">isDev</span> <span class="o">=</span> <span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">isDev</span><span class="o">:</span> <span class="nx">isDev</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;src/app.js&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">out</span><span class="o">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">clearBeforeBuild</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>最后，我们还需要 export 一下这个配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
+</span></span></code></pre></div><h2 id="react">React</h2>
+<p>在<code>src</code>文件夹下新建一个<code>app.js</code>文件，然后写一个 React 组件。这部分不是这篇文章的重点，就不多说了。</p>
+<h2 id="构建">构建</h2>
+<p>以前，我们会使用 webpack 提供的<code>webpack-dev-server</code>来开启一个本地服务器。在<code>hjs-webpack</code>中，提供了一个<code>hjs-dev-server</code>命令。其实最终结果跟<code>webpack-dev-server</code>差不多，只是过程简单了很多。</p>
+<p>在命令行中输入命令<code>hjs-dev-server</code>就能开始构建过程了。也可以把这个命令写在<code>package.json</code>中。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="s2">&#34;scripts&#34;</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;start&#34;</span><span class="o">:</span> <span class="s2">&#34;NODE_ENV=development hjs-dev-server&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;build&#34;</span><span class="o">:</span> <span class="s2">&#34;webpack&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>运行命令<code>npm start</code>。</p>
+<p>如果没有报错的话，在浏览器中访问<code>localhost:3000</code>就能看到我们的应用了。当然，我们可以把端口改成自己喜欢的。详细配置看<a href="https://github.com/HenrikJoreteg/hjs-webpack">这里</a>。</p>
+<h2 id="css">CSS</h2>
+<p>在 webpack 中，如果要应用 CSS，就要用 loader。而我们刚刚也提到，在<code>hjs-webpack</code>中已经配置了<code>css-loader</code>了，我们只需要<code>npm install</code>一下，然后在<code>app.js</code>中加载我们的 css 文件就可以了。</p>
+<pre tabindex="0"><code>npm install --save-dev css-loader style-loader
+</code></pre><p>然后在<code>app.js</code>中导入 css 文件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;./style/app.css&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="p">.....&lt;/</span><span class="nt">h1</span><span class="p">&gt;;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(&lt;</span><span class="nt">App</span> <span class="p">/&gt;,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
+</span></span></code></pre></div><p>这样我们就能应用样式了！</p>
+<p>在<code>hjs-webpack</code>中，包含了对<code>autoprefixer</code>这样的<code>postcss</code>插件的支持，但如果你想要使用其他的插件，如<code>cssnano</code>，就要自己去扩展或者说修改 webpack 配置。在上面的配置中，<code>hjs-webpack</code>会返回一个 webpack 的配置对象：<code>config</code>。我们就可以在这个对象的基础上进行修改配置。</p>
+<p>例如我们需要使用<code>cssnano</code>和<code>precss</code>这两个 postcss 的插件，可以这么配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">getConfig</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">config</span><span class="p">.</span><span class="nx">postcss</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">concat</span><span class="p">([</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;precss&#39;</span><span class="p">)({}),</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cssnano&#39;</span><span class="p">)({})]);</span>
+</span></span></code></pre></div><p>到此，我们的开发环境的配置已经基本完成了。如果想了解更多用法，可以参考<a href="https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/">这里</a>。</p>
+<h2 id="总结">总结</h2>
+<p>本文主要是介绍了 React + webpack 的开发环境的配置方法，过程中使用了<code>hjs-webpack</code>这个工具来简化了 webpack 的配置。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp/">React Tutorial: Cloning Yelp</a></p>
+<p><a href="https://github.com/HenrikJoreteg/hjs-webpack">hjs-webpack</a></p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>express&#43;webpack for react</title>
+			<link>/posts/express-webpack-for-react/</link>
+			<pubDate>Mon, 09 May 2016 15:02:19 +0000</pubDate>
+			
+			<guid>/posts/express-webpack-for-react/</guid>
+			<description>最近在做毕业设计，用到了 reactJs， express，mongoDB，然后用 webpack 作为构建工具。每次开始工作的时候都要先开启三个命令行窗口或标签页，分别用来启动 mongoDB，express 和 webpack构建命令。但是觉得每次都要开三个窗口太麻烦了，于是就想着能不能把 express 和 webpack 的启动放在一起。
+Google 了一下之后果然找到了办法。
+webpack middleware 这里主要用到了 webpack 的一个中间件：webpack-dev-middleware。
+提醒一下，如果你原来是用 webpack-dev-server 的话，最好先 uninstall 一下，不然可能会出错。其实，webpack-dev-server 在内部也是用到了 webpack-dev-middleware ，我们这里只是把它独立出来使用。
+可能用人会问，webpack-dev-server 不也是内置了 express 的功能吗？为什么不直接用？我开始的时候也是这样想，但后来发现，这个内置的「express」好像只具备「server」的功能，没有处理网络请求的功能，所以当我在前端就不能正确的访问数据库。（当然也有可能是我的配置不对）
+另外，还用到了另一个中间件：webpack-hot-middleware。由于没有webpack-dev-server ，所以用这个中间件来提供「hot reload」的功能。
+webpack 配置文件 主要是 entry 的配置：
+entry: [ &amp;#39;webpack-hot-middleware/client&amp;#39;, &amp;#39;webpack/hot/dev-server&amp;#39; &amp;#39;./src/index.js&amp;#39; ], app.js var express = require(&amp;#39;express&amp;#39;); var app = express(); var webpack = require(&amp;#39;webpack&amp;#39;); var WebpackDevMiddleware = require(&amp;#39;webpack-dev-middleware&amp;#39;); var WebpackHotMiddleware = require(&amp;#39;webpack-hot-middleware&amp;#39;); var config = require(&amp;#39;./webpack.config&amp;#39;); var compiler = webpack(config); app.</description>
+			<content type="html"><![CDATA[<p>最近在做毕业设计，用到了 reactJs， express，mongoDB，然后用 webpack 作为构建工具。每次开始工作的时候都要先开启三个命令行窗口或标签页，分别用来启动 mongoDB，express 和 webpack构建命令。但是觉得每次都要开三个窗口太麻烦了，于是就想着能不能把 express 和 webpack 的启动放在一起。</p>
+<p>Google 了一下之后果然找到了办法。</p>
+<h2 id="webpack-middleware">webpack middleware</h2>
+<p>这里主要用到了 webpack 的一个中间件：<code>webpack-dev-middleware</code>。</p>
+<p><strong>提醒一下</strong>，如果你原来是用 <code>webpack-dev-server</code> 的话，最好先 uninstall 一下，不然可能会出错。其实，<code>webpack-dev-server</code> 在内部也是用到了 <code>webpack-dev-middleware</code> ，我们这里只是把它独立出来使用。</p>
+<p>可能用人会问，<code>webpack-dev-server</code> 不也是内置了 express 的功能吗？为什么不直接用？我开始的时候也是这样想，但后来发现，这个内置的「express」好像只具备「server」的功能，没有处理网络请求的功能，所以当我在前端就不能正确的访问数据库。（当然也有可能是我的配置不对）</p>
+<p>另外，还用到了另一个中间件：<code>webpack-hot-middleware</code>。由于没有<code>webpack-dev-server</code> ，所以用这个中间件来提供「hot reload」的功能。</p>
+<h2 id="webpack-配置文件">webpack 配置文件</h2>
+<p>主要是 entry 的配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">entry</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;webpack-hot-middleware/client&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;webpack/hot/dev-server&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;./src/index.js&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">],</span>
+</span></span></code></pre></div><h2 id="appjs">app.js</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">WebpackDevMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack-dev-middleware&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">WebpackHotMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;webpack-hot-middleware&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./webpack.config&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">compiler</span> <span class="o">=</span> <span class="nx">webpack</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">WebpackDevMiddleware</span><span class="p">(</span><span class="nx">compiler</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">publicPath</span><span class="o">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">publicPath</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">historyApiFallback</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">stats</span><span class="o">:</span> <span class="p">{</span><span class="nx">colors</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">WebpackHotMiddleware</span><span class="p">(</span><span class="nx">compiler</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</span></span></code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>css实现元素宽高等比</title>
+			<link>/posts/css%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E5%AE%BD%E9%AB%98%E7%AD%89%E6%AF%94/</link>
+			<pubDate>Tue, 03 May 2016 14:04:44 +0000</pubDate>
+			
+			<guid>/posts/css%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E5%AE%BD%E9%AB%98%E7%AD%89%E6%AF%94/</guid>
+			<description>实现 如何用纯 css 实现元素的宽高等比？方法很简单，代码如下：
+html :
+&amp;lt;div class=&amp;#34;out&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;in&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; css :
+.out{ position: relative; width: 50%; padding-bottom: 50%; } .in{ position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: #4AE3B5; } 原理解析 这里的关键点就是 padding-bottom 这个属性。当它的值为百分比的时候，它参照的是这个元素的包含块的宽度。
+在这里，我们把元素的 width，padding-bottom 的值设置成相等的百分比，那么最终计算出来的width 和 padding-bottom 的值也是一样的。同时，由于没有显式的设置 height，所以元素的高度就是 padding-bottom 的值。这样就可以在不同宽度下实现元素的宽高等比了。
+把 padding-bottom 换成 padding-top 也有同样的效果。</description>
+			<content type="html"><![CDATA[<h3 id="实现">实现</h3>
+<p>如何用纯 css 实现元素的宽高等比？方法很简单，代码如下：</p>
+<p>html :</p>
+<pre tabindex="0"><code>&lt;div class=&#34;out&#34;&gt;
+  &lt;div class=&#34;in&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>css :</p>
+<pre tabindex="0"><code>.out{
+  position: relative;
+  width: 50%;
+  padding-bottom: 50%;
+}
+.in{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #4AE3B5;
+}
+</code></pre><h3 id="原理解析">原理解析</h3>
+<p>这里的关键点就是 <code>padding-bottom</code> 这个属性。当它的值为百分比的时候，它参照的是这个元素的包含块的宽度。</p>
+<p>在这里，我们把元素的 <code>width</code>，<code>padding-bottom</code> 的值设置成相等的<strong>百分比</strong>，那么最终计算出来的<code>width</code> 和 <code>padding-bottom</code> 的值也是一样的。同时，由于没有显式的设置 <code>height</code>，所以元素的高度就是 <code>padding-bottom</code> 的值。这样就可以在不同宽度下实现元素的宽高等比了。</p>
+<p>把 <code>padding-bottom</code> 换成 <code>padding-top</code> 也有同样的效果。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>javascript数组降维</title>
+			<link>/posts/javascript%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4/</link>
+			<pubDate>Fri, 19 Feb 2016 13:08:27 +0000</pubDate>
+			
+			<guid>/posts/javascript%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4/</guid>
+			<description>今天看到了一篇文章，《优雅的数组降维——Javascript中apply方法的妙用》。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。
+下面以二维数组转一维数组为例来说明。
+1、一般的转换 看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &amp;lt; arr.length; i++) { for (var j = 0; j &amp;lt; arr[i].length; j++) { reduced.push(arr[i][j]); } } return reduced; } 这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。
+2、利用 concat() js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &amp;lt; arr.length; i++){ reduced = reduced.concat(arr[i]); } return reduced; } 3、利用 concat() 和 apply() concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。</description>
+			<content type="html"><![CDATA[<p>今天看到了一篇文章，<a href="http://www.cnblogs.com/front-end-ralph/p/4871332.html">《优雅的数组降维——Javascript中apply方法的妙用》</a>。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。</p>
+<!-- raw HTML omitted -->
+<p>下面以二维数组转一维数组为例来说明。</p>
+<h3 id="1一般的转换">1、一般的转换</h3>
+<p>看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">reduced</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">reduced</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">reduced</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。</p>
+<h3 id="2利用-concat">2、利用 concat()</h3>
+<p>js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">reduced</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">reduced</span> <span class="o">=</span> <span class="nx">reduced</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">reduced</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="3利用-concat-和-apply">3、利用 concat() 和 apply()</h3>
+<p>concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。</p>
+<p>所以现在的问题就是怎么样<strong>不用</strong>循环把 arr 包含的多个数组一次过传给 concat()。幸运的是在 js 里面我们有 apply() 函数。apply() 函数的第二个参数是一个数组，这个数组中的每一个元素会依次作为被调用函数的参数。利用这个特点，我们就可以解决上面的问题了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">concat</span><span class="p">.</span><span class="nx">apply</span><span class="p">([],</span> <span class="nx">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//对于二维数组，arr = [[1,2], [3,4], [5,6]]
+</span></span></span><span class="line"><span class="cl"><span class="c1">//上面的函数就相当于下面的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>相对于前面两种方法，第三种方法显得更加简单，巧妙。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>用mongoose操作MongoDB(一)</title>
+			<link>/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/</link>
+			<pubDate>Wed, 06 Jan 2016 09:58:14 +0000</pubDate>
+			
+			<guid>/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/</guid>
+			<description>最近在做一个课程设计，想做一个单页应用。但我是学前端的，后端知识比较缺乏，所以有点苦恼后端要怎么实现。正好前阵子看到了一本书，《单页 web 应用 javascript 从前端到后端》(写得挺详细的一本书，推荐一下)，受到了启发，于是决定用 nodejs 做后端。
+这篇文章主要是讲一下在数据库方面的使用。其实我自己对于数据库是不太懂，这次的设计算是我第一次真正意义上的使用数据库，而且还是我自己一步一步摸索（瞎搞）出来的，有不对的地方请多多指教。
+数据库我是用 MongoDB 。因为 mongoDB 的存储格式是 JSON ，比较适合单页应用。在 MongoDb 的驱动方面，我选择了一个 ODM( Object Docunemt Mapper) ：mongoose。
+注意 我是用 OSX 的，其他系统的操作可能会有些不同。
+安装 MongoDB 安装 在 osx 下，推荐用 homebrew 来安装：
+brew install mongodb 如果 homebrew 安装失败的话，可以直接从官网下载对应的二进制文件。
+其他平台的安装可以看官方文档。
+mongoose 安装 mongoose 的安装也非常简单：
+npm install --save mongoose 安装之前先确保你已经正确安装了 nodejs 。
+启动数据库 默认路径下启动 启动 MongoDB 最简单的方法就是在命令行输入：
+mongod 这时候，数据库就会在默认的路径 &amp;lsquo;data/db&amp;rsquo; 下启动数据库。
+特定路径下启动 如果你想在自己定义的项目目录下启动的话可以这样：
+//假设你在当前目录下有一个叫做 &amp;#39;test&amp;#39; 的目录 mongod --dbpath test 如果数据库正确启动了，test 目录里面就会多出一些文件。</description>
+			<content type="html"><![CDATA[<p>最近在做一个课程设计，想做一个单页应用。但我是学前端的，后端知识比较缺乏，所以有点苦恼后端要怎么实现。正好前阵子看到了一本书，《单页 web 应用 javascript 从前端到后端》(写得挺详细的一本书，推荐一下)，受到了启发，于是决定用 nodejs 做后端。</p>
+<p>这篇文章主要是讲一下在数据库方面的使用。其实我自己对于数据库是不太懂，这次的设计算是我第一次真正意义上的使用数据库，而且还是我自己一步一步摸索（瞎搞）出来的，有不对的地方请多多指教。</p>
+<p>数据库我是用 <a href="https://www.mongodb.org/">MongoDB</a> 。因为 mongoDB 的存储格式是 JSON ，比较适合单页应用。在 MongoDb 的驱动方面，我选择了一个 ODM( Object Docunemt Mapper) ：<a href="http://mongoosejs.com/">mongoose</a>。</p>
+<p><strong>注意</strong> 我是用 OSX 的，其他系统的操作可能会有些不同。</p>
+<h2 id="安装">安装</h2>
+<h3 id="mongodb-安装">MongoDB 安装</h3>
+<p>在 osx 下，推荐用 homebrew 来安装：</p>
+<pre tabindex="0"><code>brew install mongodb
+</code></pre><p>如果 homebrew 安装失败的话，可以直接从官网下载对应的二进制文件。</p>
+<p>其他平台的安装可以看<a href="https://docs.mongodb.org/manual/installation/">官方文档</a>。</p>
+<h3 id="mongoose-安装">mongoose 安装</h3>
+<p>mongoose 的安装也非常简单：</p>
+<pre tabindex="0"><code>npm install --save mongoose
+</code></pre><p>安装之前先确保你已经正确安装了 nodejs 。</p>
+<h2 id="启动数据库">启动数据库</h2>
+<h3 id="默认路径下启动">默认路径下启动</h3>
+<p>启动 MongoDB 最简单的方法就是在命令行输入：</p>
+<pre tabindex="0"><code>mongod
+</code></pre><p>这时候，数据库就会在默认的路径 &lsquo;data/db&rsquo; 下启动数据库。</p>
+<h3 id="特定路径下启动">特定路径下启动</h3>
+<p>如果你想在自己定义的项目目录下启动的话可以这样：</p>
+<pre tabindex="0"><code>//假设你在当前目录下有一个叫做 &#39;test&#39; 的目录
+
+mongod --dbpath test
+</code></pre><p>如果数据库正确启动了，test 目录里面就会多出一些文件。</p>
+<h3 id="特定端口启动">特定端口启动</h3>
+<p>MongoDB 默认是启动在 27017 端口，如果想用其他端口的话可以这样：</p>
+<pre tabindex="0"><code>mongod --port 8080
+</code></pre><p>到这里，你的数据库应该就能成功启动了。如果不行，可能是因为授权的问题，可以参考官方文档，或者 Google 一下。</p>
+<h2 id="连接数据库">连接数据库</h2>
+<p>在项目目录下新建一个文件 app.js :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost:27017/db/test&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">connection</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="s1">&#39;connection error:&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;connect success&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>然后，在保持数据库启动的状态下，打开一个新的命令窗口，输入命令：</p>
+<pre tabindex="0"><code>node app.js
+</code></pre><p>这个时候如果连接成功的话就会在命令窗口中显示 &lsquo;connect success&rsquo; 这样的字样，表示数据库已经连接成功了。现在我们可以对数据进行 CRUD 操作了。这部分我们下次再讲。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>osx下显示隐藏文件</title>
+			<link>/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/</link>
+			<pubDate>Thu, 31 Dec 2015 11:23:50 +0000</pubDate>
+			
+			<guid>/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/</guid>
+			<description>前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。
+使用终端 在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool YES 然后确定。要重启 Finder 才能生效。继续输入一下命令： killall Finder 点击确定。现在再打开 Finder ，就能看到隐藏文件了。 如果要恢复隐藏的话，在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool NO。 然后同样是重启 Finder ，就能恢复了。
+在 Finder 的服务中添加一个选项 在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到Run Shell Script（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：
+STATUS=`defaults read com.apple.finder AppleShowAllFiles` if [ $STATUS == YES ]; then defaults write com.apple.finder AppleShowAllFiles NO else defaults write com.apple.finder AppleShowAllFiles YES fi killall Finder 最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。 !</description>
+			<content type="html"><![CDATA[<p>前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。</p>
+<!-- raw HTML omitted -->
+<ol>
+<li>
+<p>使用终端
+在终端输入以下命令：
+<code>defaults write com.apple.finder AppleShowAllFiles -bool YES</code>
+然后确定。要重启 Finder 才能生效。继续输入一下命令：
+<code>killall Finder</code>
+点击确定。现在再打开 Finder ，就能看到隐藏文件了。
+如果要恢复隐藏的话，在终端输入以下命令：
+<code>defaults write com.apple.finder AppleShowAllFiles -bool NO</code>。
+然后同样是重启 Finder ，就能恢复了。</p>
+</li>
+<li>
+<p>在 Finder 的服务中添加一个选项
+在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到<code>Run Shell Script</code>（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">STATUS</span><span class="o">=</span><span class="sb">`</span>defaults <span class="nb">read</span> com.apple.finder AppleShowAllFiles<span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$STATUS</span> <span class="o">==</span> YES <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span>
+</span></span><span class="line"><span class="cl">defaults write com.apple.finder AppleShowAllFiles NO
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">defaults write com.apple.finder AppleShowAllFiles YES
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">killall Finder
+</span></span></code></pre></div><pre><code>最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。
+
+![hiddenFiles01](https://s1.ax1x.com/2022/06/01/XGfbWQ.png)
+</code></pre>
+<ol start="3">
+<li>
+<p>在右键菜单中添加一下选项</p>
+<p>上一个方法是在 Finder 的服务菜单中添加选项，这个方法是在文件夹的右键菜单的服务菜单里面添加一下选项。
+前部分跟上一个方法一样，但这次我们在 Service receives 中选择 ‘文件或文件夹’，并在右边选中 Finder 。现在，就可以在 Finder 的右键菜单的服务中找到 ‘Toggle Hidden Files’ 了。</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGfqzj.png" alt="hiddenFiles02"></p>
+</li>
+</ol>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Redux 初探</title>
+			<link>/posts/redux/</link>
+			<pubDate>Thu, 31 Dec 2015 10:13:02 +0000</pubDate>
+			
+			<guid>/posts/redux/</guid>
+			<description>&lt;p&gt;最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>最近发现了一个东西叫做 redux ，感觉很厉害的样子，于是就抽时间学习了一下。</p>
+<h2 id="文档">文档</h2>
+<ul>
+<li>
+<p><a href="http://camsong.github.io/redux-in-chinese/index.html">中文文档</a></p>
+</li>
+<li>
+<p><a href="http://rackt.org/redux/index.html">英文文档</a></p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="redux-的三个原则">Redux 的三个原则</h2>
+<h3 id="1-只有一个store">1. 只有一个store</h3>
+<p>​	在 redux 中，你只有一个 store ，这个 store 中有一棵 object tree ，它维护着整个引用的 state 。这样就保证了数据的单一来源。在 flux 中，由于你可以有多个 store ，导致你有时候分不清你的 state 是在哪里发生变化的，这样就导致了一些莫名其妙的 bug ，特别是对于初学者来说。</p>
+<h3 id="2-state-是只读的">2. state 是只读的</h3>
+<p>​	在你的应用中，你只能通过 action 来改变 state 。无论是视图还是网络请求，都不能直接改变 state ，只能通过 dispatch 一个 action 来表达想要改变 state 的意图。其实这也是保证了单一的数据源。</p>
+<h3 id="3-使用纯函数来修改数据">3. 使用纯函数来修改数据</h3>
+<p>​	在 redux 中，我们通过 reducer 来接受 action 和旧的 state ，然后返回新的 state ，从而改变整个应用的 state tree。reducer 只是一些纯函数（不产生副作用，不发出网络请求）。你可以有多个 reducer ，并按照需要把 reducers 写在不同的文件中，最后通过 redux 的一个函数 combineReducers 把他们合并在一起。</p>
+<h2 id="一个非常简单的例子">一个非常简单的例子</h2>
+<p>​	我们来做一个非常简单的例子，有一个按钮，点击一下分成一个随机数，并显示在屏幕上。真的非常简单！但是为了学习 redux 我还是稍微做的复杂了一点。</p>
+<p>首先安装一下 redux ，由于我们是和 react 一起用，所以还有装一个 react 绑定库。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">npm</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">save</span> <span class="nx">redux</span> <span class="nx">react</span><span class="o">-</span><span class="nx">redux</span>
+</span></span></code></pre></div><p>然后添加一个 action：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">//actions.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">CHANGE</span> <span class="o">=</span> <span class="s1">&#39;change&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这里我们返回了一个事件(action)，每次我们想要改变 state tree
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 的时候就调用这个函数。在这里，我们只返回一个 action ，不做其他
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 的事情，不产生任何的副作用。这样的函数我们叫做 action creater
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">newRandom</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">type</span><span class="o">:</span> <span class="nx">CHANGE</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接着我们有一个 reducer：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">//reduder.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">CHANGE</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../actions/actions&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> reducer 从 store 中接收两个参数：state 和 action ，你也可以为 state 加上默认值。
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 根据 aciton.type 来改变应用的 state tree (返回新的 state)。
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 建议默认返回原来的 state ，避免出现问题。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">reducer</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">CHANGE</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">text</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="p">};</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接下来是我们的顶层组件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// app.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">newRandom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./actions/actions&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">connect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">bindActionCreators</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">App</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">const</span> <span class="p">{</span> <span class="nx">dispatch</span> <span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">text</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()=&gt;</span><span class="nx">dispatch</span><span class="p">(</span><span class="nx">newRandom</span><span class="p">())}&gt;</span><span class="nx">click</span> <span class="nx">me</span><span class="o">!</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这个函数能接收到应用的 state tree ，并且返回我们需要的数据，也就是 props
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">mapStateToProps</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">text</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">text</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//使用 connect 函数之后，App 组件就会被注入全局的 state 和一个 dispatch 函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">mapStateToProps</span><span class="p">)(</span><span class="nx">App</span><span class="p">)</span>
+</span></span></code></pre></div><p>最后是我们的 index 文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// index.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-redux&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">reducer</span> <span class="nx">from</span> <span class="s1">&#39;./reducers/reducer&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;./app&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//实例化一个 store
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">reducer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 用 Provider 把我们的顶级组件 App 包裹其中，并传入 store 实例，
+</span></span></span><span class="line"><span class="cl"><span class="cm"> 这样在 App 中我们就能访问到 store 了。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;</span><span class="nt">Provider</span> <span class="na">store</span><span class="o">=</span><span class="p">{</span><span class="nx">store</span><span class="p">}&gt;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">&lt;</span><span class="nt">App</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">&lt;/</span><span class="nt">Provider</span><span class="p">&gt;,</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></div><p>最后，用 webpack 之类的打包工具打包一下，并开启本地服务器，就能在浏览器中访问我们的应用了：</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGhKYD.png" alt="redux01"></p>
+<p>现在，每次点击按钮，都会产生一个随机数：</p>
+<p><img src="https://s1.ax1x.com/2022/06/01/XGh8OI.png" alt="redux02"></p>
+<p>great！我们已经用 react ＋ redux 做出了一个应用！现在来解释一下数据流。</p>
+<ol>
+<li>
+<p>调用<code>store.dispatch(action)</code></p>
+<p>用 dispatch 函数来派发一个 action ，一个 action 就是一个简单的对象。一个 action 至少要有一个表示事件类型的属性，例如 <code>type</code> 。然后，你可以添加任何你需要的属性，就像这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;click&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;banana&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>你可以在任何你需要的地方调用 dispatch ，可以在一个 ajax 的回调函数中，或者一个 setInterval 中。</p>
+</li>
+<li>
+<p>store 调用 reducer</p>
+<p>还记得我们在实例化 store 的时候传进来了一个 reducer 了吗？我们的 store 会在这个时候调用这个 reducer ，同时传入两个参数：当前的 state tree 和 上一步的 action 。</p>
+<p><strong>强调一下</strong> ：我们的 reducer 只是一个纯函数，它只会计算新的 state 。同时它的行为是可以预测的：同样的输入，每次都会得到同样的输出。它不应该执行任何会有副作用的动作，例如调用API ，路由，网络请求等，这些行为都应该在 dispatch( action ) 之前执行。</p>
+</li>
+<li>
+<p>root reducer 把多个 reducer 的返回值合并成一棵单一的 state tree</p>
+<p>也许你的应用中只有一个 reducer ，但当应用的规模变大的时候，就会需要多个 reducer 来处理不同的逻辑，这时候，你可以用 <code>combineReducers( )</code> 来把多个 <code>reducer</code> 合并成一个 <code>rootReducer</code> 。就像下面这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">todos</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Somehow calculate it...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">return</span> <span class="nx">nextState</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">function</span> <span class="nx">visibleTodoFilter</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="s1">&#39;SHOW_ALL&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">// Somehow calculate it...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="k">return</span> <span class="nx">nextState</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">let</span> <span class="nx">todoApp</span> <span class="o">=</span> <span class="nx">combineReducers</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">todos</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">visibleTodoFilter</span>
+</span></span><span class="line"><span class="cl"> <span class="p">})</span>
+</span></span></code></pre></div><p>当你派发来一个事件的时候，<code>todoApp</code> 就会调用传进来的所有 <code>reducers</code> ，在这里就是 <code>todos()</code> 和 <code>visibleTodoFilter()</code> ，然后把各个 <code>reducer</code> 返回的新的 state 组合成 state tree 。</p>
+</li>
+<li>
+<p>store 把 root reducer 返回的整棵 state tree 保存起来</p>
+<p>来到这里，你的 app 中就有了一棵新的 state tree 了。这时候，所有用 <code>store.subscribe( listener )</code> 注册的 <code>listener</code> 函数都会被调用，在 <code>listener</code> 函数中，可以调用 <code>store.getState()</code> 来获取到当前的 state ，也就是最新的 state 了。最后，我们的 UI 就会更新，在 react 中，就相当于自动调用了 <code>component.setState()</code>。</p>
+</li>
+</ol>]]></content>
+		</item>
+		
+		<item>
+			<title>iScroll导致元素无法点击</title>
+			<link>/posts/iscroll%E5%AF%BC%E8%87%B4%E5%85%83%E7%B4%A0%E6%97%A0%E6%B3%95%E7%82%B9%E5%87%BB/</link>
+			<pubDate>Wed, 16 Dec 2015 19:15:03 +0000</pubDate>
+			
+			<guid>/posts/iscroll%E5%AF%BC%E8%87%B4%E5%85%83%E7%B4%A0%E6%97%A0%E6%B3%95%E7%82%B9%E5%87%BB/</guid>
+			<description>最近接手了一个游戏，在接入某一个渠道的时候，需要加一个分享的功能。
+这个需求很简单，一个&amp;lt;textarea&amp;gt;，一个确定按钮，一个取消按钮，加一点点逻辑，理论上就可以了。
+但是却遇到了一个问题：点击&amp;lt;textarea&amp;gt;的时候无法聚焦到它上面，就是说无法在&amp;lt;textarea&amp;gt;里面输入内容，百思不解。
+于是Google了一下，在其他人的一些文章中发现了问题的所在。
+我的游戏中为了在移动端获得比较好的滚动体验，使用了一个工具：iScroll。这个工具为了要达到模拟滚动的最佳效果，默认禁用了所有元素（除了&amp;lt;a&amp;gt;）的默认事件，所以造成了&amp;lt;textarea&amp;gt;等的一些元素无法点击，也就无法聚焦。
+解决办法也有一些，有的是直接修改源码。但为了防止其他bug的出现，我选择了用js来对特定元素进行聚焦，代码如下：
+_getFocus(){ document.getElementsByClassName(&amp;#39;inputArea&amp;#39;)[0].focus(); }, render(){ return ( ... &amp;lt;textarea className=&amp;#34;inputArea&amp;#34; ref=&amp;#34;share&amp;#34; placeholder={this.state.defaultMsg} &amp;gt; ... ) } 这里用了jsx的语法，但大意还是很清楚，就是点击了这个&amp;lt;textarea&amp;gt;的时候，就focus到这个元素上，很简单。</description>
+			<content type="html"><![CDATA[<p>最近接手了一个游戏，在接入某一个渠道的时候，需要加一个分享的功能。</p>
+<p>这个需求很简单，一个<code>&lt;textarea&gt;</code>，一个确定按钮，一个取消按钮，加一点点逻辑，理论上就可以了。</p>
+<p>但是却遇到了一个问题：点击<code>&lt;textarea&gt;</code>的时候无法聚焦到它上面，就是说无法在<code>&lt;textarea&gt;</code>里面输入内容，百思不解。</p>
+<!-- raw HTML omitted -->
+<p>于是Google了一下，在其他人的一些文章中发现了问题的所在。</p>
+<p>我的游戏中为了在移动端获得比较好的滚动体验，使用了一个工具：<a href="http://iscrolljs.com/">iScroll</a>。这个工具为了要达到模拟滚动的最佳效果，默认禁用了所有元素（除了<code>&lt;a&gt;</code>）的默认事件，所以造成了<code>&lt;textarea&gt;</code>等的一些元素无法点击，也就无法聚焦。</p>
+<p>解决办法也有一些，有的是直接修改源码。但为了防止其他bug的出现，我选择了用js来对特定元素进行聚焦，代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">_getFocus</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;inputArea&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">focus</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="nx">render</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="nx">textarea</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;inputArea&#34;</span> <span class="nx">ref</span><span class="o">=</span><span class="s2">&#34;share&#34;</span> <span class="nx">placeholder</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">defaultMsg</span><span class="p">}</span> <span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里用了jsx的语法，但大意还是很清楚，就是点击了这个<code>&lt;textarea&gt;</code>的时候，就focus到这个元素上，很简单。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>browser-sync &#43; gulp &#43; postcss配置文件</title>
+			<link>/posts/%E7%94%A8browser-sync%E5%90%8C%E6%97%B6%E5%BC%80%E5%8F%91%E5%A4%9A%E4%B8%AA%E5%B0%BA%E5%AF%B8%E7%9A%84%E9%A1%B5%E9%9D%A2/</link>
+			<pubDate>Sat, 24 Oct 2015 17:37:34 +0000</pubDate>
+			
+			<guid>/posts/%E7%94%A8browser-sync%E5%90%8C%E6%97%B6%E5%BC%80%E5%8F%91%E5%A4%9A%E4%B8%AA%E5%B0%BA%E5%AF%B8%E7%9A%84%E9%A1%B5%E9%9D%A2/</guid>
+			<description>最近发现了一个工具browser-sync。使用这个工具可以同时在多个尺寸的浏览器中打开同一个页面，当在A浏览器中点击了一个按钮，在B浏览器中也会响应这个事件。另外，当你修改了本地的 HTML 文件或者 css 文件的时候，浏览器也会自动刷新网页，就像是liveEdit一样。非常cool的功能！ 而且，它也可以结合gulp或grunt来使用，自动编译文件（例如.sacc）后实时显示效果。这样，你就可以同时打开几个浏览器窗口，分别显示不同的尺寸。
+安装什么的就不啰嗦了，官网上有。使用也很简单，一行命令就可以了。
+如果用自动化工具（gulp/grunt）来运行 browser-sync 的话，可以同时结合其他gulp插件来使用。例如自动编译scss然后同步在浏览器中显示效果。
+由于最近在学习postcss，所以就想结合gulp、postcss、browser-sync来玩一下。以下是我的gulpfile：
+var gulp = require(&amp;#39;gulp&amp;#39;); var browserSync = require(&amp;#39;browser-sync&amp;#39;).create(); var postcss = require(&amp;#39;gulp-postcss&amp;#39;); var autoprefixer = require(&amp;#39;autoprefixer&amp;#39;); gulp.task(&amp;#39;browser-sync&amp;#39;,[&amp;#39;css&amp;#39;],function(){ browserSync.init({ proxy: &amp;#39;localhost/postcss/index.html&amp;#39;, files: &amp;#34;build/css/base.css&amp;#34; }); gulp.watch(&amp;#39;src/css/base.css&amp;#39;,[&amp;#39;css&amp;#39;]); }); gulp.task(&amp;#39;css&amp;#39;,function(){ return gulp.src(&amp;#39;./src/css/*.css&amp;#39;) .pipe( postcss([ require(&amp;#39;precss&amp;#39;)({}) ]) ) .pipe(gulp.dest(&amp;#39;./build/css&amp;#39;)); }); 修改了对应的css文件之后就会自动用postcss来处理，然后显示在浏览器中。现在这里mark一下，已备不时之需。</description>
+			<content type="html"><![CDATA[<p>最近发现了一个工具<a href="http://www.browsersync.io/">browser-sync</a>。使用这个工具可以同时在多个尺寸的浏览器中打开同一个页面，当在A浏览器中点击了一个按钮，在B浏览器中也会响应这个事件。另外，当你修改了本地的 HTML 文件或者 css 文件的时候，浏览器也会自动刷新网页，就像是liveEdit一样。非常cool的功能！
+而且，它也可以结合<a href="http://gulpjs.com/">gulp</a>或<a href="http://gruntjs.com/">grunt</a>来使用，自动编译文件（例如.sacc）后实时显示效果。这样，你就可以同时打开几个浏览器窗口，分别显示不同的尺寸。</p>
+<!-- raw HTML omitted -->
+<p>安装什么的就不啰嗦了，官网上有。使用也很简单，一行命令就可以了。</p>
+<p>如果用自动化工具（gulp/grunt）来运行 browser-sync 的话，可以同时结合其他gulp插件来使用。例如自动编译scss然后同步在浏览器中显示效果。</p>
+<p>由于最近在学习<a href="https://github.com/postcss/postcss">postcss</a>，所以就想结合gulp、postcss、browser-sync来玩一下。以下是我的gulpfile：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">browserSync</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;browser-sync&#39;</span><span class="p">).</span><span class="nx">create</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">postcss</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-postcss&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">autoprefixer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;autoprefixer&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;browser-sync&#39;</span><span class="p">,[</span><span class="s1">&#39;css&#39;</span><span class="p">],</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">browserSync</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">proxy</span><span class="o">:</span> <span class="s1">&#39;localhost/postcss/index.html&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">files</span><span class="o">:</span> <span class="s2">&#34;build/css/base.css&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">gulp</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s1">&#39;src/css/base.css&#39;</span><span class="p">,[</span><span class="s1">&#39;css&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;css&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;./src/css/*.css&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">.</span><span class="nx">pipe</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">postcss</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;precss&#39;</span><span class="p">)({})</span>
+</span></span><span class="line"><span class="cl">			<span class="p">])</span>
+</span></span><span class="line"><span class="cl">		<span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;./build/css&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>修改了对应的css文件之后就会自动用postcss来处理，然后显示在浏览器中。现在这里mark一下，已备不时之需。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>javascript闭包工作原理</title>
+			<link>/posts/javascript%E9%97%AD%E5%8C%85%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</link>
+			<pubDate>Mon, 12 Oct 2015 20:18:55 +0000</pubDate>
+			
+			<guid>/posts/javascript%E9%97%AD%E5%8C%85%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</guid>
+			<description>闭包是JavaScript的一个重要内容，但我以前一直没搞清楚它的工作原理，直到看到了一篇文章。
+下面就简单的概括一下。
+作用域链（scope chain） 在JavaScript中，每一个function都有一个对应的作用域对象，用来保存function中的局部变量以及参数。你可以把这个作用域对象想象成一个普通的JavaScript对象，但你不能直接获取这个对象，你只能修改它的属性（也就是修改局部变量）。当你在函数外部定义变量时，这些变量就会添加到全局对象中，这些变量就是我们平常说的全局变量。显然，全局变量的作用域就是全局对象。
+当在function中嵌套另一个function的时候，就会出现父级作用域。把所有的作用域对象像链条一样一个一个的链接起来就形成了一个作用域链。作用域的顶部是一个全局对象。当JavaScript中的function需要查找（或者叫做变量解析）某一个变量x的时候，它首先会在当前函数的作用域对象里面查找，如果没有找到，就会在它的父级作用域对象中一级一级的往上查找。如果到最后还是没有找到，就会抛出一个错误：ReferenceError。
+在这里可以引出一个关于JavaScript性能优化的小tips：当你需要在一个函数中多次的引用一个外部变量时，可以先把它保存在一个局部变量中，再对这个局部变量进行操作。这样就可以省去在父级作用域中多次查找变量的时间。
+对作用域的引用 有一下一段代码：
+var foo = 1; var myfunc = function(){ var bar = 2; var innerfunc(){ console.log(foo); } innerfunc(); } myfunc(); 当函数被定义时，这个函数的标识符就会被添加到当前作用域中（在上面的代码中就是全局作用域），标识符所引用的是一个函数对象，这个函数对象包含了函数的源代码和一些内部属性，其中一个我们关心的就是[[scope]]。[[scope]]所引用的是这个函数在定义时所能直接访问的作用域（这里是全局作用域）。如果函数是嵌套在另外一个函数中，那么它的[[scope]]就是指向外层函数的作用域。这一点对于理解闭包很重要！
+我们知道，在myfunc被调用的时候会创建一个新的作用域，用来保存局部变量和参数，这个作用域的父级作用域就是定义myfunc时所处的作用域，也就是 myfunc 的[[scope]]所指向的作用域。
+调用myfunc时,会在内部调用innerfunc，这时JavaScript需要在innerfunc的作用域中查找foo,没找到，于是在innerfunc的[[scope]]所指向的作用域（也就是myfunc的作用域）中查找，还是没找到，继续在myfunc的[[scope]]所指向的作用域（全局作用域）中查找，找到了foo = 1，查找结束。
+当函数执行完并返回的时候，再也没有一个对象会引用它的作用域，这个作用域就可以被垃圾回收器回收，因此也就不能继续访问函数内部的变量了。上面的代码中，当myfunc执行完毕并返回后，就不能再访问它内部的bar了。
+返回引用 上面讨论到了，在函数调用结束并返回之后，由于它的作用域会被回收而不能继续访问它的局部变量。假设我们把函数作用域的引用返回，并保存在一个外部的变量里，是不是就意味着可以继续访问函数的局部变量呢？答案是肯定的，这也就是我们平常说的闭包所做的事情了。
+var counter = function(){ var a = 1; var add = function(){ a++; console.log(a); } return add; } var myCounter = counter(); myCounter() //2 myCounter() //3 myCounter() //4 上面是一个简单的闭包。调用counter的时候counter函数返回了一个add函数并赋值给myCounter，使得myCounter指向了add。同时，由于add的[[scope]]保存了对counter作用域的引用，所以即使在counter调用结束了，myCounter依然可以访问到counter中的变量a。
+需要注意的是作用域链是不会被复制的，每次函数调用只会往作用域链下面新增一个作用域对象。
+有一个经典的闭包例子：
+var arr = []; for(var i=0;i&amp;lt;3;i++){ arr[i] = function(){return i}; } 当依次调用arr[0](),arr[1](),arr[2]()的时候会得到什么结果呢？</description>
+			<content type="html"><![CDATA[<p>闭包是JavaScript的一个重要内容，但我以前一直没搞清楚它的工作原理，直到看到了<a href="http://blog.leapoahead.com/2015/09/15/js-closure/">一篇文章</a>。</p>
+<p>下面就简单的概括一下。</p>
+<!-- raw HTML omitted -->
+<h2 id="作用域链scope-chain">作用域链（scope chain）</h2>
+<p>在JavaScript中，每一个function都有一个对应的<em>作用域对象</em>，用来保存function中的局部变量以及参数。你可以把这个<em>作用域对象</em>想象成一个普通的JavaScript对象，但你不能直接获取这个对象，你只能修改它的属性（也就是修改局部变量）。当你在函数外部定义变量时，这些变量就会添加到全局对象中，这些变量就是我们平常说的全局变量。显然，全局变量的作用域就是全局对象。</p>
+<p>当在function中嵌套另一个function的时候，就会出现<em>父级作用域</em>。把所有的作用域对象像链条一样一个一个的链接起来就形成了一个<em>作用域链</em>。作用域的顶部是一个全局对象。当JavaScript中的function需要查找（或者叫做变量解析）某一个变量x的时候，它首先会在当前函数的<em>作用域对象</em>里面查找，如果没有找到，就会在它的父级作用域对象中一级一级的往上查找。如果到最后还是没有找到，就会抛出一个错误：<code>ReferenceError</code>。</p>
+<p>在这里可以引出一个关于JavaScript性能优化的小tips：当你需要在一个函数中多次的引用一个外部变量时，可以先把它保存在一个局部变量中，再对这个局部变量进行操作。这样就可以省去在父级作用域中多次查找变量的时间。</p>
+<h2 id="对作用域的引用">对作用域的引用</h2>
+<p>有一下一段代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">myfunc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">innerfunc</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">innerfunc</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">myfunc</span><span class="p">();</span>
+</span></span></code></pre></div><p>当函数被定义时，这个函数的标识符就会被添加到当前作用域中（在上面的代码中就是全局作用域），标识符所引用的是一个函数对象，这个函数对象包含了函数的源代码和一些内部属性，其中一个我们关心的就是[[scope]]。[[scope]]所引用的是这个函数在定义时所能直接访问的作用域（这里是全局作用域）。如果函数是嵌套在另外一个函数中，那么它的[[scope]]就是指向外层函数的作用域。这一点对于理解闭包<strong>很重要！</strong></p>
+<p>我们知道，在<code>myfunc</code>被调用的时候会创建一个新的作用域，用来保存局部变量和参数，这个作用域的父级作用域就是定义<code>myfunc</code>时所处的作用域，也就是 myfunc 的[[scope]]所指向的作用域。</p>
+<p>调用<code>myfunc</code>时,会在内部调用<code>innerfunc</code>，这时JavaScript需要在<code>innerfunc</code>的作用域中查找<code>foo</code>,没找到，于是在<code>innerfunc</code>的[[scope]]所指向的作用域（也就是<code>myfunc</code>的作用域）中查找，还是没找到，继续在<code>myfunc</code>的[[scope]]所指向的作用域（全局作用域）中查找，找到了<code>foo = 1</code>，查找结束。</p>
+<p>当函数执行完并返回的时候，再也没有一个对象会引用它的作用域，这个作用域就可以被垃圾回收器回收，因此也就不能继续访问函数内部的变量了。上面的代码中，当<code>myfunc</code>执行完毕并返回后，就不能再访问它内部的<code>bar</code>了。</p>
+<h2 id="返回引用">返回引用</h2>
+<p>上面讨论到了，在函数调用结束并返回之后，由于它的作用域会被回收而不能继续访问它的局部变量。假设我们把函数作用域的引用返回，并保存在一个外部的变量里，是不是就意味着可以继续访问函数的局部变量呢？答案是肯定的，这也就是我们平常说的闭包所做的事情了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">a</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">add</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">myCounter</span> <span class="o">=</span> <span class="nx">counter</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">myCounter</span><span class="p">()</span>     <span class="c1">//2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">myCounter</span><span class="p">()</span>     <span class="c1">//3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">myCounter</span><span class="p">()</span>     <span class="c1">//4
+</span></span></span></code></pre></div><p>上面是一个简单的闭包。调用<code>counter</code>的时候<code>counter</code>函数返回了一个<code>add</code>函数并赋值给<code>myCounter</code>，使得<code>myCounter</code>指向了<code>add</code>。同时，由于<code>add</code>的[[scope]]保存了对<code>counter</code>作用域的引用，所以即使在counter调用结束了，<code>myCounter</code>依然可以访问到<code>counter</code>中的变量<code>a</code>。</p>
+<p>需要注意的是作用域链是不会被复制的，每次函数调用只会往作用域链下面新增一个作用域对象。</p>
+<p>有一个经典的闭包例子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="nx">i</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>当依次调用<code>arr[0](),arr[1](),arr[2]()</code>的时候会得到什么结果呢？</p>
+<h2 id="总结">总结</h2>
+<p>闭包是什么？
+闭包是一个对象，它包含了对函数对象的引用以及对作用域对象的引用，所以可以通过闭包在函数外部访问到函数内部的局部变量。实际上，JavaScript所有的对象都是闭包。</p>
+<p>闭包什么时候被创建和销毁？
+由于所有JavaScript对象都是闭包，所以在定义一个函数的时候就创建了一个闭包；而当这个闭包没有被任何对象引用的时候它就会被销毁。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>用prefetch来提升性能</title>
+			<link>/posts/prefetch/</link>
+			<pubDate>Wed, 16 Sep 2015 17:54:41 +0000</pubDate>
+			
+			<guid>/posts/prefetch/</guid>
+			<description>&lt;p&gt;最近在&lt;a href=&#34;https://css-tricks.com/&#34;&gt;css-tricks&lt;/a&gt;看到了一篇关于前端性能优化的文章&lt;a href=&#34;https://css-tricks.com/prefetching-preloading-prebrowsing/&#34;&gt;《Prefetching, preloading, prebrowsing》&lt;/a&gt;，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>最近在<a href="https://css-tricks.com/">css-tricks</a>看到了一篇关于前端性能优化的文章<a href="https://css-tricks.com/prefetching-preloading-prebrowsing/">《Prefetching, preloading, prebrowsing》</a>，于是尝试翻译一下。（第一次翻译，如有错漏，请多多指教）</p>
+<p>当我们谈论到前端性能的时候我们会想到这样的一些东西：级联、最小化、缓存、或者压缩服务器上的资源，这样页面就可以加载得更快而且用户也可以尽快的完成他们的目的。</p>
+<p>资源预抓取（prefetching）是另一个提升性能的技术。我们可以用这个技术来告诉浏览器，用户将来可能会需要哪些资源。（在用户还没用到这些资源之前）。</p>
+<p><em>Patrick Hamann</em> :</p>
+<blockquote>
+<p>预抓取是一种用来提示浏览器哪些资源在将来一定会或者可能会用到的方法，有些提示应用在当前的页面，其他的用在将来可能打开的页面。</p>
+</blockquote>
+<blockquote>
+<p>作为开发者，我们比浏览器更加清楚我们的应用。我们可以利用这些信息来告诉浏览器那些核心的资源。</p>
+</blockquote>
+<p>这种在用户需要之前就猜测用户需要什么的实践已经被叫做‘预浏览（prebrowsing）’，但这并不是单一的一种技术，它分成了很多不同的技术：DNS预抓取，子资源，标准的预抓取，预连接，和预渲染。</p>
+<h2 id="dns预抓取">DNS预抓取</h2>
+<p>这个方法会通知客户端有一些来自特定URL的资源我们在以后会用到，这样浏览器就能尽快解析这个DNS。假设我们需要一个来自<code>example.com</code>这个URL的资源，例如一张图片或者一段音频。这文档的<code>&lt;head&gt;</code>里面我们这样写：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;dns-prefetch&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;//example.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>这样，当我们需要从这个URL请求一个文件的时候就不用再等待DNS查找。当我们需要用到第三方库的代码或者来自网络中的其他资源。</p>
+<p>在<em>Harry Roberts</em>的‘史诗级’的关于<a href="http://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-front-end-developers/#section:dns-prefetching">前端性能优化的文章</a>中，他建议用这个技术：</p>
+<blockquote>
+<p>这行简单的代码会告诉那些支持它的浏览器在真正需要之前就开始预抓取这个域名的DNS。这就意味着‘DNS查询’的这个过程在浏览器遇到真正需要请求这个组件的<code>&lt;script&gt;</code>元素的时候就已经在进行。这就给了浏览器一个小小的提前。</p>
+</blockquote>
+<p>这看上去可能会是一个微乎其微的不怎么重要的性能优化，但其实并不是那么一回事——Chrome浏览器一直都在做类似的事情。当你在地址栏输入域名的一部分的时候，它（Chrome）就会自动的与解析对应的DNS（有的时候甚至会提前渲染页面），这就会在每次请求的时候减少那关键的几毫秒。</p>
+<h2 id="预连接">预连接</h2>
+<p>跟DNS预抓取很相似，预连接也会解析DNS，但它也会同时执行TCP握手和可选的TLS协商。它可以这样用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;preconnect&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://css-tricks.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>想要更多的信息的话，<em>Ilya Grigorik</em>写了一篇关于这个方便的资源提示的<a href="https://www.igvita.com/2015/08/17/eliminating-roundtrips-with-preconnect/">文章</a>：</p>
+<blockquote>
+<p>现代浏览器会尽它们最大的能力在网站发起真正的请求之前就去预测这个网站将会需要哪些连接。通过提前开始“预连接”，浏览器可以提前建立sockets并且消除DNS，TCP和TLS等在实际请求过程中的艰难道路上昂贵的往返时间。也就是说，就算浏览器很聪明，它们也不能可靠的预测每一个网站的所有预连接目标。</p>
+</blockquote>
+<blockquote>
+<p>但值得高兴的是我们可以帮助浏览器。通过在<em>Firefox 39</em>和<em>Chrome 46</em>中引入的新的预连接提示，我们可以在真正的请求开始之前就告诉浏览器我们需要哪些sockets。</p>
+</blockquote>
+<h2 id="预抓取">预抓取</h2>
+<p>如果我们确定一个特定的资源在将来会被用到，我们就可以叫浏览器去请求这个资源并把它存储在缓存中以便之后的引用。例如一张图片或者一段脚本，或者其他任何可以被浏览器缓存的东西：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;prefetch&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;image.png&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>与DNS预抓取不同，我们真的是在请求并下载这个资源，并且把它存储在缓存中。但是这要依赖很多的条件，因为预抓取可以被浏览器忽略。例如，在一个网速慢的环境中，客户端可能会放弃请求一个很大的字体文件。FireFox只会在“浏览器空闲”的时候预抓取资源。</p>
+<p>就像<em>Bram Stein</em>在他的<a href="http://www.bramstein.com/writing/preload-hints-for-web-fonts.html">文章</a>中对这个问题的解析一样，对于webfonts，预抓取会有巨大的性能提升。在目前，字体文件必须要等到DOM和CSSOM被构造之后才开始下载。但如果我们预抓取这些文件，就可以轻松地解决这个瓶颈。</p>
+<blockquote>
+<p><strong>注意</strong> 虽然以前测试资源的预抓取有点困难，但是Chrome和Firefox现在可以在网络面板中显示预抓取的资源。同时应当记得对于资源预抓取是没有同源限制的。</p>
+</blockquote>
+<h2 id="子资源">子资源</h2>
+<p>这是另一个预抓取技术，它可以用来标识那些具有优先级并且在预抓取文件之前就应该被请求。例如，在Chrome和Opera中我们在文档的<code>head</code>标签里加入以下代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;subresource&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;styles.css&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>根据<a href="https://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource">Chromium文档</a>，它的工作原理是这样的：</p>
+<blockquote>
+<p><code>LINK rel=subresource</code>提供了一个与<code>LINK rel=prefetch</code>具有不同语意的链接关系类型。<code>LINK rel=prefetch</code>为在随后的页面中用到的资源提供一个低优先级的下载，但<code>LINK rel=subresource</code>使得资源能在当前页面中提前下载。</p>
+</blockquote>
+<p>所以，如果某个资源是要在当前前面中使用，或者需求比较急迫，那么最好是用<code>subresource</code>，否则就用<code>prefetch</code>。</p>
+<h2 id="页面预渲染">页面预渲染</h2>
+<p>这是一个核弹般的选择，因为<code>prerender</code>给予我们一种可以先发制人地下载一个特定文档的所有资源，就像这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;prerender&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;http://css-tricks.com&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p><em>Steve Souders</em>写了一篇关于这个技术的<a href="http://www.stevesouders.com/blog/2013/11/07/prebrowsing/">解析</a>：</p>
+<blockquote>
+<p>这就像在一个隐藏的tab中打开这个URL，所有的资源都会被下载，DOM会被创建，页面会被展示，CSS会被应用，JavaScript会被执行，等等。如果用户导航到了这个特定的<code>href</code>，这个隐藏的页面就会被换进视口中，看起来就像是在瞬间加载一样。谷歌搜索拥有这个特性已经很多年了，并且把它叫做“瞬时页面”。微软最近也宣布他们打算在IE11平台上的Bing同样的使用预渲染。</p>
+</blockquote>
+<p>但是小心！你应该要确定用户有可能会点击这个链接，否则浏览器就会不需要任何理由地下载所有用来渲染这个页面的资源。</p>
+<p><em>Steve Souders</em>继续说道：</p>
+<blockquote>
+<p>与任何预想性的工作一样，这个预测有一定的风险会出错。如果这个预测工作是昂贵的（例如：从其他进程偷取CPU，耗电，或者浪费带宽）那么就要慎重考虑。预测用户下一步会去哪一个页面会看起来比较困难，但一些比较高几率的情况还是存在的：</p>
+</blockquote>
+<ul>
+<li>如果用户已经用一个明显的结果进行了搜索，这个搜索页面就很有可能在下一步被加载；</li>
+<li>如果用户导航到了一个登陆页面，那么登陆后的页面就有可能跟着被加载；</li>
+<li>如果用户正在阅读一篇多页的文章或者一些分页的结果，当前页面的下一个页面就很有可能在下一步被加载。</li>
+</ul>
+<p>最后，<a href="http://www.w3.org/TR/page-visibility/">页面可见性API</a>可以被用来防止脚本在被渲染到用户页面之前就被触发。</p>
+<p>现在，先撇开规范和这些设计上的考虑，我们来谈一些对未来有意义的事情。</p>
+<h2 id="未来的选择预加载">未来的选择：预加载</h2>
+<p>一篇叫做<a href="https://w3c.github.io/preload/">预加载</a>的文档建议有时候最好总把所有的资源都下载，不管浏览器是否认为这是一个好主意。与可以被忽略的资源预抓取不同，资源的预加载必须被浏览器请求。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;preload&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;image.png&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>所以，即使预加载在当前还没有被任何浏览器支持，但它背后的想法是还是很有意义的。</p>
+<h2 id="总结">总结</h2>
+<p>预测我们的用户下一步要做什么是很困难的，并且需要很多的计划和测试。但对性能的追求是绝对值得的。如果我们愿意去尝试这些预抓取技术，那么我们肯定可以明显的提升用户体验。</p>]]></content>
+		</item>
+		
+		<item>
+			<title>页面拥有ID的元素会创建全局变量</title>
+			<link>/posts/%E9%A1%B5%E9%9D%A2%E6%8B%A5%E6%9C%89id%E7%9A%84%E5%85%83%E7%B4%A0%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/</link>
+			<pubDate>Mon, 14 Sep 2015 21:16:40 +0000</pubDate>
+			
+			<guid>/posts/%E9%A1%B5%E9%9D%A2%E6%8B%A5%E6%9C%89id%E7%9A%84%E5%85%83%E7%B4%A0%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/</guid>
+			<description>&lt;p&gt;前段时间在网上看到一篇文章介绍了一些前端冷知识&lt;a href=&#34;http://web.jobbole.com/83473/&#34;&gt;文章在此&lt;/a&gt;，其中里面有说到了一点：页面拥有ID的元素会创建全局变量。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>前段时间在网上看到一篇文章介绍了一些前端冷知识<a href="http://web.jobbole.com/83473/">文章在此</a>，其中里面有说到了一点：页面拥有ID的元素会创建全局变量。</p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;hello&#39;</span><span class="p">&gt;</span>i&#39;m a div<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>然后我在控制台中输入id：</p>
+<pre tabindex="0"><code class="language-javasccript" data-lang="javasccript">hello
+</code></pre><p>得到如下结果：
+<img src="https://s1.ax1x.com/2022/06/01/XGfHJg.png" alt=""></p>
+<h3 id="扩展1">扩展1</h3>
+<p>假设页面中有两个或者多个元素，它们拥有相同的id（实际上是不允许的），那结果会是怎样？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m a div<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m div number2<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m div number3<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m div number4<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m div number5<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>在控制台输入id<code>hello</code>之后：
+<img src="https://s1.ax1x.com/2022/06/01/XGf7FS.png" alt=""></p>
+<p>也就是说，所有拥有相同id的元素都会被选中，并且存在一个数组里面。情况有点像用<code>document.getElementsByClassName()</code>。同时要注意到如果用<code>document.getElementById()</code>只会获取到第一个匹配的元素，也就是<code>&lt;div id=&quot;hello&quot;&gt;i'm a div&lt;/div&gt;</code>。</p>
+<h3 id="扩展2">扩展2</h3>
+<p>如果在其中一个<code>div</code>里面再嵌套一个id为<code>hello</code>的元素，情况会是如何呢？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m a div<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m div number2
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;hello&#34;</span><span class="p">&gt;</span>i&#39;m a child<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>输出结果：
+<img src="https://s1.ax1x.com/2022/06/01/XGh1ld.png" alt=""></p>
+<p>可以看到数组中有三个元素，也就是说页面中拥有相同id的元素有多少个，数组中就有多少个元素，即使某些元素之间存在嵌套关系。</p>]]></content>
+		</item>
+		
+		<item>
+			<title>CSS3动画生成插件</title>
+			<link>/posts/css%E5%8A%A8%E7%94%BB%E7%94%9F%E6%88%90%E6%8F%92%E4%BB%B6/</link>
+			<pubDate>Sat, 11 Apr 2015 20:00:37 +0000</pubDate>
+			
+			<guid>/posts/css%E5%8A%A8%E7%94%BB%E7%94%9F%E6%88%90%E6%8F%92%E4%BB%B6/</guid>
+			<description>&lt;p&gt;最近发现了一个可以生成CSS3动画的插件，感觉挺方便的，在这里推荐一下&lt;a href=&#34;http://melonh.com/animationGenerator/&#34;&gt;Animation Generator&lt;/a&gt;&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>最近发现了一个可以生成CSS3动画的插件，感觉挺方便的，在这里推荐一下<a href="http://melonh.com/animationGenerator/">Animation Generator</a></p>
+<p>这个工具使得开发者可以可视化地配置CSS3支持的动画效果。由于它集成在Chrome的开发者工具中，所以配置完以后可以马上显示效果。然后可以直接把textarea中的代码复制到自己的项目中。最方便的是这些生成的代码中已经包含了浏览器前缀。</p>
+<p>这里是界面
+<img src="https://s3.bmp.ovh/imgs/2022/06/01/d29417c2cf16ab2f.png" alt=""></p>
+<p>具体的使用方法可以到官网上查看<a href="http://melonh.com/animationGenerator/">Animation Generator</a></p>]]></content>
+		</item>
+		
+		<item>
+			<title>获取滚动条高度</title>
+			<link>/posts/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%9A%84%E9%AB%98%E5%BA%A6/</link>
+			<pubDate>Tue, 31 Mar 2015 11:51:02 +0000</pubDate>
+			
+			<guid>/posts/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%9A%84%E9%AB%98%E5%BA%A6/</guid>
+			<description>&lt;p&gt;在开发过程中有时候我们需要判断滚动条的位置，来执行某些行为。一个典型的例子：制作‘返回顶部’的控件时，我们想控制这个控件在页面向下滚动一定高度的时候才显示，当页面的顶部出现时这个控件隐藏。下面介绍在不同浏览器中获取滚动条高度的方法。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>在开发过程中有时候我们需要判断滚动条的位置，来执行某些行为。一个典型的例子：制作‘返回顶部’的控件时，我们想控制这个控件在页面向下滚动一定高度的时候才显示，当页面的顶部出现时这个控件隐藏。下面介绍在不同浏览器中获取滚动条高度的方法。</p>
+<ul>
+<li>
+<p>在所有现代浏览器中（除了IE8及更早版本），都支持<code>Window</code>对象的<code>pageYOffset</code>和<code>pageXOffset</code>属性。
+<code>pageYOffset</code>用来获取垂直方向上文档滚动的高度。
+<code>pageXOffset</code>获取水平方法都得滚动距离。</p>
+</li>
+<li>
+<p>在IE全系列中都支持<code>scrollTop</code>和<code>scrollLeft</code>属性。但他们不属于<code>Window</code>对象。这里分两种情况：</p>
+</li>
+</ul>
+<ol>
+<li>正常情况下，通过查询文档的根节点<code>document.documentElement</code>来获取这些属性。（在chrome中这种方法始终返回 0）</li>
+<li>怪异模式下，通过body元素查询<code>document.body.scrollTop</code>。（chrome用这种方法竟然能正常工作）</li>
+</ol>
+<p>于是我们可以用以下的代码来实现‘返回顶部’控件的显示和隐藏：</p>
+<pre><code>    window.onscroll = function(){
+        var w = window,
+            d = document,
+            scroll = w.pageYOffset || d.documentElement.scrollTop ||d.body.scrollTop;
+        if(scroll&gt;200){
+            //显示控件
+        }else{
+            //隐藏控件
+        }
+    }
+</code></pre>
+<p><a href="#header">返回顶部</a></p>]]></content>
+		</item>
+		
+		<item>
+			<title>获取图片尺寸</title>
+			<link>/posts/picture-size/</link>
+			<pubDate>Mon, 30 Mar 2015 11:51:02 +0000</pubDate>
+			
+			<guid>/posts/picture-size/</guid>
+			<description>&lt;p&gt;最近在一次笔试中遇到了一道题目，其中要求在未显式设置图片大小的情况下获取图片的大小，这里收集了几种方法。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>最近在一次笔试中遇到了一道题目，其中要求在未显式设置图片大小的情况下获取图片的大小，这里收集了几种方法。</p>
+<ol>
+<li>
+<p>##通过读取图片的头文件信息</p>
+<pre><code> var img = document.getElementById( 'imag' );
+ var imgheader = new Image();//关键
+ imgheader.src = img.src;
+ console.log( imgheader.width,imgheader.height );
+</code></pre>
+</li>
+<li>
+<p>##getBoundingClientRect()方法</p>
+<p>调用元素的<code>getBoundingClientRect()</code>方法会返回一个对象，这个对象的属性包括<code>top,bottom,left,right</code>。其中，<code>top,left</code>分别表示元素的左上角的X和Y坐标，而<code>bottom,right</code>分别代表元素右下角的X和Y坐标。</p>
+<p>在非IE浏览器中这个对象还会有两个属性：<code>width,height</code>，分别代表当前元素的宽度和高度。但IE不支持这两个属性。要在IE中获取元素的宽度和高度可以用一下方法：</p>
+<pre><code> w = obj.right - obj.left;
+ h = obj.bottom - obj.top;
+</code></pre>
+</li>
+</ol>
+<p><a href="#header">返回顶部</a></p>]]></content>
+		</item>
+		
+		<item>
+			<title>元素居中方法收集</title>
+			<link>/posts/%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+			<pubDate>Wed, 25 Mar 2015 23:34:43 +0000</pubDate>
+			
+			<guid>/posts/%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+			<description>&lt;p&gt;元素居中不仅是一种技术，更是一种艺术。它主要分成水平方向的居中和垂直方向的居中。由于在开发中经常会遇到，所以从网上收集了一些实现元素居中的方法。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>元素居中不仅是一种技术，更是一种艺术。它主要分成水平方向的居中和垂直方向的居中。由于在开发中经常会遇到，所以从网上收集了一些实现元素居中的方法。</p>
+<ol>
+<li>相对定位元素实现水平居中
+先上代码：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl">	<span class="p">.</span><span class="nc">floatMiddle</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">margin-left</span><span class="p">:</span> <span class="mi">-25</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span></code></pre></div><p>这种方法关键的地方在于对元素相对定位之后，设置<code>left</code>的值为50%，然后设置<code>margin-left</code>的值为 <code>-（width/2）</code>。<code>left</code>的值为50%的时候，定位元素的左边界就在父元素的中轴上。如图：
+<img src="https://s1.ax1x.com/2022/06/01/XGhMfe.png" alt="图1">
+这个时候设置<code>margin-left</code>值为<code>-（width/2）</code>会使定位元素向左移动，移动的距离刚好使得定位元素的中轴与父元素的中轴重叠，也就是水平居中。效果如图所示：
+<img src="https://s1.ax1x.com/2022/06/01/XGhlSH.png" alt="图2"></p>
+<p>另外，我们可以扩展一下，用这种方法实现垂直居中。只需要再添加几行代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">floatMiddle</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>   <span class="err">//显示地设置高度</span>
+</span></span><span class="line"><span class="cl">	<span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">left</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">margin-left</span><span class="p">:</span> <span class="mi">-25</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">top</span><span class="p">:</span> <span class="mi">50</span><span class="kt">%</span><span class="p">;</span>               <span class="err">//设置垂直居中</span>
+</span></span><span class="line"><span class="cl">	<span class="k">margin-top</span><span class="p">:</span> <span class="mi">-20</span><span class="kt">px</span><span class="p">;</span>      <span class="err">//</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这种方法的好处在于兼容性强，简单，而且不受父元素定位的限制。但一定要知道居中元素的宽度和高度。</p>
+<p><a href="#header">返回顶部</a></p>
+<pre tabindex="0"><code></code></pre>]]></content>
+		</item>
+		
+		<item>
+			<title>innerHTML, outerHTML, innerText, outerText之间的区别</title>
+			<link>/posts/innerhtmlouterhtml%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+			<pubDate>Tue, 24 Mar 2015 23:34:43 +0000</pubDate>
+			
+			<guid>/posts/innerhtmlouterhtml%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+			<description>&lt;p&gt;之前一直迷惑&lt;code&gt;innerHTML &lt;/code&gt;，&lt;code&gt;outerHTML&lt;/code&gt;以及&lt;code&gt;outerText&lt;/code&gt;，&lt;code&gt;innerText&lt;/code&gt;之间的关系。今天自己写了一些代码然后总结一下。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>之前一直迷惑<code>innerHTML </code>，<code>outerHTML</code>以及<code>outerText</code>，<code>innerText</code>之间的关系。今天自己写了一些代码然后总结一下。</p>
+<p>html:</p>
+<pre><code>&lt;div id=&quot;outerDiv&quot;&gt;
+	i'm outer div
+	&lt;div id=&quot;innerDiv&quot;&gt;
+		i'm inner div
+		&lt;p id=&quot;innerP&quot;&gt;
+			i'm inner p
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>执行以下语句:</p>
+<pre><code>var outerDiv = document.getElementById('outerDiv');
+var innerDiv = document.getElementById('innerDiv');
+var innerP = document.getElementById('innerP');
+
+outerDiv.innerHTML;
+</code></pre>
+<p>得到：</p>
+<pre><code>&quot;
+	i'm outer div
+	&lt;div id=&quot;innerDiv&quot;&gt;
+		i'm inner div
+		&lt;p id=&quot;innerP&quot;&gt;
+			i'm inner p
+		&lt;/p&gt;
+	&lt;/div&gt;
+&quot;
+</code></pre>
+<p>执行语句：</p>
+<pre><code>outerDiv.outerHTML;
+</code></pre>
+<p>输出结果：</p>
+<pre><code>&quot;&lt;div id=&quot;outerDiv&quot;&gt;
+	i'm outer div
+	&lt;div id=&quot;innerDiv&quot;&gt;
+		i'm inner div
+		&lt;p id=&quot;innerP&quot;&gt;
+			i'm inner p
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;&quot;
+</code></pre>
+<p>而执行以下两条语句</p>
+<pre><code>outerDiv.innerText;
+outerDiv.outerText;
+</code></pre>
+<p>将会得到相同的输出：</p>
+<pre><code>&quot;i'm outer div
+i'm inner div
+i'm inner p&quot;
+</code></pre>
+<p>而事实上</p>
+<pre><code>outerDiv.innerText === outerDiv.outerText
+</code></pre>
+<p>结果为<em>true</em>。</p>
+<p>因此可以总结出以下几点：</p>
+<ul>
+<li><code>outerText</code>和<code>innerText</code>包含的是当前对象中的所有文本，包括嵌套的文本；</li>
+<li><code>innerHTML</code>的范围是当前对象中包含的所有标签和文本，包括嵌套的，但不包括当前对象自身的标签；</li>
+<li><code>outerHTML</code>是在<code>innerHTML</code>的基础上加上自身标签；</li>
+<li>还应该注意到这几个属性的值都是字符串。</li>
+</ul>
+<p><a href="#header">返回顶部</a></p>]]></content>
 		</item>
 		
 	</channel>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="在 web 环境中获取 uuid 的简单方法">
+<meta itemprop="description" content="偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString "><meta itemprop="datePublished" content="2021-12-15T10:10:51+08:00" />
+<meta itemprop="dateModified" content="2021-12-15T10:10:51+08:00" />
+<meta itemprop="wordCount" content="58">
+<meta itemprop="keywords" content="uuid,javascript,web," /><meta property="og:title" content="在 web 环境中获取 uuid 的简单方法" />
+<meta property="og:description" content="偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/web-create-uuid/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-15T10:10:51+08:00" />
+<meta property="article:modified_time" content="2021-12-15T10:10:51+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在 web 环境中获取 uuid 的简单方法"/>
+<meta name="twitter:description" content="偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
+URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
+URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的对象作为参数，然后返回一个 DOMString。这个 DOMString 指向作为参数传入的对象。然后就可以通过这个 DOMString 访问到对应的对象。
+即使传入的是同一个对象，每次调用 URL.createObjectURL() 都会返回一个新的 DOMString 。留意返回的 DOMString，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 DOMString 。例如：
+&#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
+另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
+参考 createObjectURL DOMString "/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>在 web 环境中获取 uuid 的简单方法</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Dec 15, 2021</span></div>
+				<h1>在 web 环境中获取 uuid 的简单方法</h1>
+			</header>
+			<div class="content">
+				<p>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自<a href="https://juejin.cn/post/7039960318897815565">这篇文章</a>的评论区。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="k">new</span> <span class="nx">Blob</span><span class="p">()).</span><span class="nx">substr</span><span class="p">(</span><span class="o">-</span><span class="mi">36</span><span class="p">);</span>
+</span></span></code></pre></div><h2 id="解析">解析<a href="#解析" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>下面稍微解析一下这行代码。</p>
+<p><code>URL.createObjectURL()</code> 接收一个类型是 <code>File</code>, <code>Blob</code>, 或者 <code>MediaSource</code> 的对象作为参数，然后返回一个 <code>DOMString</code>。这个 <code>DOMString</code> 指向作为参数传入的对象。然后就可以通过这个 <code>DOMString</code> 访问到对应的对象。</p>
+<p>即使传入的是同一个对象，每次调用 <code>URL.createObjectURL()</code> 都会返回一个新的 <code>DOMString</code> 。留意返回的 <code>DOMString</code>，会发现最后的 36 个字符是一串唯一的字符串，用来区分每个 <code>DOMString</code> 。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="s1">&#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&#39;</span>
+</span></span></code></pre></div><p>所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。</p>
+<p>另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 <code>URL.createObjectURL()</code> 创建的 <code>object URL</code>，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 <code>URL.revokeObjectURL()</code> 来释放 <code>object URL</code>。</p>
+<h2 id="参考">参考<a href="#参考" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">createObjectURL</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</a></li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/uuid">uuid</a></span><span class="tag"><a href="/tags/javascript">javascript</a></span><span class="tag"><a href="/tags/web">web</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>58 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021-12-15 02:10</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/loading_compoents_dynamically_by_systemjs/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>一个基于 Systemjs 的组件动态加载方案</span>
+			</a>
+			<a class="prev-post" href="/posts/children_count_in_one_row/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>获取一行中子元素的个数</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

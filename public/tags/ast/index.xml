@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ast on Nicong&#39;s blog</title>
+    <link>/tags/ast/</link>
+    <description>Recent content in ast on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 21 Jun 2022 07:33:46 +0000</lastBuildDate><atom:link href="/tags/ast/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>移除项目中的 @ant-design/compatible 依赖</title>
+      <link>/posts/remove-antd-compatible/</link>
+      <pubDate>Tue, 21 Jun 2022 07:33:46 +0000</pubDate>
+      
+      <guid>/posts/remove-antd-compatible/</guid>
+      <description>Ant Design 第4版发布之后不久，我就按照 antd 官方的指引利用迁移工具帮项目做了升级。由于迁移工具实际上是通过引入 @ant-design/compatible 来使那些不兼容的组件能继续运行，所以这样升级完之后实际上项目里就会同时存在 v3 和 v4 两个版本的 antd，不仅代码体积有冗余，还会有两套 Form 组件的写法，不利用后期维护。于是最近花时间移除了对 @ant-design/compatible 的依赖，实现了“完全”的升级。
+这篇文章主要讲述我如何使用 AST 转换工具来帮助我完成升级。
+修改范围与整体思路 需要做的迁移工作可以参考 antd 官方的说明。
+对于我的项目，由于使用到 @ant-design/compatible 的基本上只有 v3 版本的 Form 组件， 所以要修改的范围主要有这些：
+移除 Form.create({})(Component) 写法； 把 getFieldDecorator 的写法改成用 &amp;lt;Form.Item&amp;gt;； 移除 @ant-design/compatible 相关的 import 语句； 修改表单实体方法的调用方式。 第 1 点基本上可以通过编辑器的字符串替换功能加上正则表达式完成。
+第 2、3 点可以我用一个 AST 转换工具来辅助修改。这是本文的重点，后面会展开说。
+第 4 点理论上也可以用刚刚提到的工具来修改，但是项目里调用的方法不统一，例如有 this.props.form.setFieldsValue 也有 const { setFieldsValue } from this.props.form 等等，工具里需要的判断比较多。而且项目里使用到的实体方法不算很多，修改起来工作量比 getFieldDecorator 少很多。所以我打算手动修改，刚好可以边自测边修改。
+确认范围之后就可以开干了。
+代码修改工具 下面主要说说上面提到的 “代码修改工具”。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>osx技巧 on Nicong&#39;s blog</title>
+    <link>/tags/osx%E6%8A%80%E5%B7%A7/</link>
+    <description>Recent content in osx技巧 on Nicong&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 31 Dec 2015 11:23:50 +0000</lastBuildDate><atom:link href="/tags/osx%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>osx下显示隐藏文件</title>
+      <link>/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Thu, 31 Dec 2015 11:23:50 +0000</pubDate>
+      
+      <guid>/posts/osx%E4%B8%8B%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/</guid>
+      <description>前段时间入手了 MacBook ，虽然游戏性能真的不怎么样，但是用来工作，写代码什么的体验确实很棒，毕竟定位不同嘛。后来发现一个问题，就是要在 osx 中显示隐藏文件，并不能像 windows 一样方便。于是上网收集了一下。
+使用终端 在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool YES 然后确定。要重启 Finder 才能生效。继续输入一下命令： killall Finder 点击确定。现在再打开 Finder ，就能看到隐藏文件了。 如果要恢复隐藏的话，在终端输入以下命令： defaults write com.apple.finder AppleShowAllFiles -bool NO。 然后同样是重启 Finder ，就能恢复了。
+在 Finder 的服务中添加一个选项 在应用程序中找到 Automator ，打开之后，点击服务。在左侧的资源库中找到Run Shell Script（中文系统是：运行 shell 脚本），把它拖到右侧工作区中，将以下代码粘贴到输入框中：
+STATUS=`defaults read com.apple.finder AppleShowAllFiles` if [ $STATUS == YES ]; then defaults write com.apple.finder AppleShowAllFiles NO else defaults write com.apple.finder AppleShowAllFiles YES fi killall Finder 最后在上边的 Service receives 的下拉菜单中选择 ‘no input’ ，然后将工作流程保存为 ‘Toggle Hidden Files’ 。 现在打开 Finder 的服务菜单，就会看到 ‘Toggle Hidden Files’ 这一个选项了。 !</description>
+    </item>
+    
+  </channel>
+</rss>

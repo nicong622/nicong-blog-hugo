@@ -6,7 +6,19 @@
     <description>Recent content in html on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Oct 2021 19:15:32 +0800</lastBuildDate><atom:link href="/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>获取一行中子元素的个数</title>
+      <link>/posts/children_count_in_one_row/</link>
+      <pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
+      
+      <guid>/posts/children_count_in_one_row/</guid>
+      <description>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
+如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
+对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
+遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 </description>
+    </item>
+    
     <item>
       <title>Textarea 自适应高度</title>
       <link>/posts/autosize_textarea_height/</link>

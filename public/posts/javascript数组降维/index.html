@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="javascript数组降维">
+<meta itemprop="description" content="今天看到了一篇文章，《优雅的数组降维——Javascript中apply方法的妙用》。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。
+下面以二维数组转一维数组为例来说明。
+1、一般的转换 看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;) { for (var j = 0; j &lt; arr[i].length; j&#43;&#43;) { reduced.push(arr[i][j]); } } return reduced; } 这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。
+2、利用 concat() js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;){ reduced = reduced.concat(arr[i]); } return reduced; } 3、利用 concat() 和 apply() concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。"><meta itemprop="datePublished" content="2016-02-19T13:08:27+00:00" />
+<meta itemprop="dateModified" content="2016-02-19T13:08:27+00:00" />
+<meta itemprop="wordCount" content="111">
+<meta itemprop="keywords" content="JavaScript," /><meta property="og:title" content="javascript数组降维" />
+<meta property="og:description" content="今天看到了一篇文章，《优雅的数组降维——Javascript中apply方法的妙用》。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。
+下面以二维数组转一维数组为例来说明。
+1、一般的转换 看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;) { for (var j = 0; j &lt; arr[i].length; j&#43;&#43;) { reduced.push(arr[i][j]); } } return reduced; } 这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。
+2、利用 concat() js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;){ reduced = reduced.concat(arr[i]); } return reduced; } 3、利用 concat() 和 apply() concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/javascript%E6%95%B0%E7%BB%84%E9%99%8D%E7%BB%B4/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-02-19T13:08:27+00:00" />
+<meta property="article:modified_time" content="2016-02-19T13:08:27+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="javascript数组降维"/>
+<meta name="twitter:description" content="今天看到了一篇文章，《优雅的数组降维——Javascript中apply方法的妙用》。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。
+下面以二维数组转一维数组为例来说明。
+1、一般的转换 看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;) { for (var j = 0; j &lt; arr[i].length; j&#43;&#43;) { reduced.push(arr[i][j]); } } return reduced; } 这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。
+2、利用 concat() js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。
+function reduceDimension(arr) { var reduced = []; for (var i = 0; i &lt; arr.length; i&#43;&#43;){ reduced = reduced.concat(arr[i]); } return reduced; } 3、利用 concat() 和 apply() concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>javascript数组降维</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Feb 19, 2016</span></div>
+				<h1>javascript数组降维</h1>
+			</header>
+			<div class="content">
+				<p>今天看到了一篇文章，<a href="http://www.cnblogs.com/front-end-ralph/p/4871332.html">《优雅的数组降维——Javascript中apply方法的妙用》</a>。里面介绍了3种多维数组降维的方法，个人感觉比较实用，于是记录一下。</p>
+<!-- raw HTML omitted -->
+<p>下面以二维数组转一维数组为例来说明。</p>
+<h3 id="1一般的转换">1、一般的转换<a href="#1一般的转换" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>看到数组降维，我们可能首先就想到用循环，这也是最直观最简单的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">reduced</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">reduced</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">reduced</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这个方法的思路很简单，利用嵌套的循环来遍历二维数组中的每一个元素。</p>
+<h3 id="2利用-concat">2、利用 concat()<a href="#2利用-concat" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>js 的 concat() 函数用于拼接数组，它的参数可以是一个元素也可以是一个数组，如果是数组的话，数组中的每一个元素都会按照顺序拼接到新的数组的尾部。对于二维数组来说，arr[i] 就是一个数组。因此 arr[i] 就可以作为 concat() 的参数来，于是我们可以改进一下第一种方法，省去了内层的循环。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">reduced</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">reduced</span> <span class="o">=</span> <span class="nx">reduced</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">reduced</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="3利用-concat-和-apply">3、利用 concat() 和 apply()<a href="#3利用-concat-和-apply" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>concat() 的参数可以只有一个，也可以有多个，如果是多个参数的话，就会按顺序进行拼接。我们的二维数组 arr，从另一种角度来看也是一维数，它的每一个元素都是一个数组，我们现在只需要把它的每一个元素（数组）作为参数，一次过传给 concat()，这样就可以不用循环了。</p>
+<p>所以现在的问题就是怎么样<strong>不用</strong>循环把 arr 包含的多个数组一次过传给 concat()。幸运的是在 js 里面我们有 apply() 函数。apply() 函数的第二个参数是一个数组，这个数组中的每一个元素会依次作为被调用函数的参数。利用这个特点，我们就可以解决上面的问题了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">concat</span><span class="p">.</span><span class="nx">apply</span><span class="p">([],</span> <span class="nx">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//对于二维数组，arr = [[1,2], [3,4], [5,6]]
+</span></span></span><span class="line"><span class="cl"><span class="c1">//上面的函数就相当于下面的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">reduceDimension</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>相对于前面两种方法，第三种方法显得更加简单，巧妙。</p>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/javascript">JavaScript</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>111 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2016-02-19 13:08</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="/posts/css%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E5%AE%BD%E9%AB%98%E7%AD%89%E6%AF%94/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;新</span><br><span>css实现元素宽高等比</span>
+			</a>
+			<a class="prev-post" href="/posts/%E7%94%A8mongoose%E6%93%8D%E4%BD%9Cmongodb%E4%B8%80/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>用mongoose操作MongoDB(一)</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
