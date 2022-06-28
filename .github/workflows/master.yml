@@ -1,4 +1,4 @@
-name: Push to master
+name: deploy to tencent cloud
 
 # Controls when the workflow will run
 on:
