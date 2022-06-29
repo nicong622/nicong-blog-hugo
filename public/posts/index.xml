@@ -5,8 +5,27 @@
 		<description>Recent content in Posts on Nicong&#39;s blog</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Tue, 28 Jun 2022 15:00:11 +0800</lastBuildDate>
+		<lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>如何选择用 Map 还是 Object</title>
+			<link>/posts/map_or_object/</link>
+			<pubDate>Wed, 29 Jun 2022 15:26:39 +0800</pubDate>
+			
+			<guid>/posts/map_or_object/</guid>
+			<description>在很多场景里，我们似乎都可以用 Map 来代替 Object 来完成同样的功能，那么这两者到底要如何选择呢？这篇文章做了详细的描述和对比。
+结论是：
+如果在开发阶段就有固定且属性个数有限，可以使用 Object ，例如配置列表； 相反，如果 keys 的数量和类型不能提前知道，并且需要频繁更新的，就应该使用 Map ，例如 event emitter； 在插入、删除、遍历的时候，Map 的性能都比 Object 好，除非 keys 是比较小的整数。 </description>
+			<content type="html"><![CDATA[<p>在很多场景里，我们似乎都可以用 Map 来代替 Object 来完成同样的功能，那么这两者到底要如何选择呢？<a href="https://www.zhenghao.io/posts/object-vs-map">这篇文章</a>做了详细的描述和对比。</p>
+<p>结论是：</p>
+<ul>
+<li>如果在开发阶段就有固定且属性个数有限，可以使用 <code>Object</code> ，例如配置列表；</li>
+<li>相反，如果 keys 的数量和类型不能提前知道，并且需要频繁更新的，就应该使用 <code>Map</code> ，例如 <code>event emitter</code>；</li>
+<li>在插入、删除、遍历的时候，<code>Map</code> 的性能都比 <code>Object</code> 好，除非 keys 是比较小的整数。</li>
+</ul>
+]]></content>
+		</item>
 		
 		<item>
 			<title>Object.hasOwn vs Object.hasOwnProperty</title>

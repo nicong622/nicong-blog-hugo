@@ -6,7 +6,18 @@
     <description>Recent content on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 28 Jun 2022 15:00:11 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何选择用 Map 还是 Object</title>
+      <link>/posts/map_or_object/</link>
+      <pubDate>Wed, 29 Jun 2022 15:26:39 +0800</pubDate>
+      
+      <guid>/posts/map_or_object/</guid>
+      <description>在很多场景里，我们似乎都可以用 Map 来代替 Object 来完成同样的功能，那么这两者到底要如何选择呢？这篇文章做了详细的描述和对比。
+结论是：
+如果在开发阶段就有固定且属性个数有限，可以使用 Object ，例如配置列表； 相反，如果 keys 的数量和类型不能提前知道，并且需要频繁更新的，就应该使用 Map ，例如 event emitter； 在插入、删除、遍历的时候，Map 的性能都比 Object 好，除非 keys 是比较小的整数。 </description>
+    </item>
+    
     <item>
       <title>Object.hasOwn vs Object.hasOwnProperty</title>
       <link>/posts/hasown_vs_hasownproperty/</link>
@@ -167,21 +178,6 @@ nuxt-link 的 to 属性指向的页面是同一个应用的页面。
 只需两行代码：
 // 当输入的时候 textarea.style.height = &amp;#39;auto&amp;#39;; textarea.style.height = textarea.scrollHeight + &amp;#39;px&amp;#39;; 第一行的作用是在删除输入的内容时候让 textarea 的高度能自动缩回去；
 在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</description>
-    </item>
-    
-    <item>
-      <title>Vue Devtool Panel not Showing</title>
-      <link>/posts/vue_devtool_panel_not_showing/</link>
-      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/vue_devtool_panel_not_showing/</guid>
-      <description>Chrome 的 vue devtool 插件已经检测到当前页面使用了 Vue ，但是 Chrome 开发者工具里没有出现 Vue devtool panel，要怎么处理？
-第一步 首先检查一下项目里是否手动设置了 Vue.config.devtools 。把这个配置设为 true 的时候就能看到 Vue devtool panel 。这个配置需要在创建 Vue 实例之前。根据 Vue官方文档 的说法，Vue.config.devtools 在开发时候默认是 true 。
-设置完之后重新构建一次，然后重新打开 Chrome devtool 或者修改 Chrome devtool 的主题，就能看到 Vue devtool。
-多数情况下这一步就能解决问题。
-第二步 如果上一步还是不能解决问题，再试试在创建了 Vue 实例之后执行 window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor; 其中 app 是 Vue 的实例。
-或者直接在 Chrome devtool 里执行 window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue;。
-参考 https://github.com/vuejs/vue-devtools/issues/620#issuecomment-368948291</description>
     </item>
     
   </channel>
