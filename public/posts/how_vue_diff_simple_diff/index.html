@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="【How Vue Diff】之简单 Diff">
+<meta itemprop="description" content="简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
+首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
+算法的整体流程 Diff 算法的主要目标是通过新旧两组节点的对比，找到可以复用的节点，然后移动节点到新的位置。所以，算法整体的流程总结一下就是：
+找到可以复用的元素（即分别在新旧 children 中 key 相同的两个元素）； 对这两个节点进行 patch 操作； 移动元素到合适的位置； 处理新增或者不存在的元素； 找到可复用的元素 通过参考代码可以看到，算法的主要逻辑就是循环里嵌套循环：遍历新的子节点数组 newChildren，对于里面的每一个子节点 newVNode，都尝试在 oldChildren 中找到一个 oldVNode，使得 newVNode.key === oldVNode.key 即元素可复用。然后做一下更新，即 patch() 。
+主体代码如下：
+// 遍历新的 children for (let i = 0; i &lt; newChildren.length; i&#43;&#43;) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &lt; oldChildren.length; j&#43;&#43;) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode."><meta itemprop="datePublished" content="2022-07-06T14:57:34+08:00" />
+<meta itemprop="dateModified" content="2022-07-06T14:57:34+08:00" />
+<meta itemprop="wordCount" content="447">
+<meta itemprop="keywords" content="Vue,diff," /><meta property="og:title" content="【How Vue Diff】之简单 Diff" />
+<meta property="og:description" content="简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
+首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
+算法的整体流程 Diff 算法的主要目标是通过新旧两组节点的对比，找到可以复用的节点，然后移动节点到新的位置。所以，算法整体的流程总结一下就是：
+找到可以复用的元素（即分别在新旧 children 中 key 相同的两个元素）； 对这两个节点进行 patch 操作； 移动元素到合适的位置； 处理新增或者不存在的元素； 找到可复用的元素 通过参考代码可以看到，算法的主要逻辑就是循环里嵌套循环：遍历新的子节点数组 newChildren，对于里面的每一个子节点 newVNode，都尝试在 oldChildren 中找到一个 oldVNode，使得 newVNode.key === oldVNode.key 即元素可复用。然后做一下更新，即 patch() 。
+主体代码如下：
+// 遍历新的 children for (let i = 0; i &lt; newChildren.length; i&#43;&#43;) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &lt; oldChildren.length; j&#43;&#43;) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/how_vue_diff_simple_diff/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-06T14:57:34+08:00" />
+<meta property="article:modified_time" content="2022-07-06T14:57:34+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【How Vue Diff】之简单 Diff"/>
+<meta name="twitter:description" content="简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
+首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
+算法的整体流程 Diff 算法的主要目标是通过新旧两组节点的对比，找到可以复用的节点，然后移动节点到新的位置。所以，算法整体的流程总结一下就是：
+找到可以复用的元素（即分别在新旧 children 中 key 相同的两个元素）； 对这两个节点进行 patch 操作； 移动元素到合适的位置； 处理新增或者不存在的元素； 找到可复用的元素 通过参考代码可以看到，算法的主要逻辑就是循环里嵌套循环：遍历新的子节点数组 newChildren，对于里面的每一个子节点 newVNode，都尝试在 oldChildren 中找到一个 oldVNode，使得 newVNode.key === oldVNode.key 即元素可复用。然后做一下更新，即 patch() 。
+主体代码如下：
+// 遍历新的 children for (let i = 0; i &lt; newChildren.length; i&#43;&#43;) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &lt; oldChildren.length; j&#43;&#43;) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>【How Vue Diff】之简单 Diff</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="目录"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Jul 6, 2022</span></div>
+				<h1>【How Vue Diff】之简单 Diff</h1>
+			</header>
+			<div class="content">
+				<p>简单分析一下 Vuejs 中的“简单 Diff”算法，<a href="https://github.com/HcySunYang/code-for-vue-3-book/blob/master/course5-%E6%B8%B2%E6%9F%93%E5%99%A8/code-9.6.html">参考代码</a>，主要关注 <code>patchChildren()</code> 函数的实现过程。</p>
+<p>首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。</p>
+<h2 id="算法的整体流程">算法的整体流程<a href="#算法的整体流程" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Diff 算法的主要目标是通过新旧两组节点的对比，找到可以复用的节点，然后移动节点到新的位置。所以，算法整体的流程总结一下就是：</p>
+<ol>
+<li>找到可以复用的元素（即分别在新旧 children 中 key 相同的两个元素）；</li>
+<li>对这两个节点进行 <code>patch</code> 操作；</li>
+<li>移动元素到合适的位置；</li>
+<li>处理新增或者不存在的元素；</li>
+</ol>
+<h2 id="找到可复用的元素">找到可复用的元素<a href="#找到可复用的元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>通过参考代码可以看到，算法的主要逻辑就是循环里嵌套循环：遍历新的子节点数组 <code>newChildren</code>，对于里面的每一个子节点 <code>newVNode</code>，都尝试在 <code>oldChildren</code> 中找到一个 <code>oldVNode</code>，使得 <code>newVNode.key === oldVNode.key</code> 即<strong>元素可复用</strong>。然后做一下更新，即 <code>patch()</code> 。</p>
+<p>主体代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 遍历新的 children
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">newChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">newVNode</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 遍历旧的 children
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">for</span> <span class="p">(</span><span class="nx">j</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">oldChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">oldVNode</span> <span class="o">=</span> <span class="nx">oldChildren</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nx">newVNode</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">oldVNode</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">patch</span><span class="p">(</span><span class="nx">oldVNode</span><span class="p">,</span> <span class="nx">newVNode</span><span class="p">,</span> <span class="nx">container</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span> <span class="c1">// 这里需要 break
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="如何找到需要移动的元素">如何找到需要移动的元素<a href="#如何找到需要移动的元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>接下来需要判断一个节点是否需要移动，这里可以用逆向思维，即什么时候节点不需要移动？答案是如果在新旧两组子节点中，如果节点的相对顺序没有改变，就不需要移动。</p>
+<p>例如，对于下面这种情况，就不需要移动元素：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 旧 children 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p0</span> <span class="c1">// 索引：0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p1</span> <span class="c1">// 索引：1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p2</span> <span class="c1">// 索引：2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 新 children 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p0</span> <span class="c1">// 索引：0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p1</span> <span class="c1">// 索引：1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p2</span> <span class="c1">// 索引：2
+</span></span></span></code></pre></div><p>节点的索引组成的序列在更新前后都是：0、1、2，是一个递增的序列。如果在更新后，序列不再是递增，就表示有元素需要移动。而打破这个递增关系的元素就是需要移动的元素。</p>
+<p>例如下面这个情况，更新后的序列是：2、0、1，所以需要移动的元素是 p0 和 p1 的元素：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 旧 children 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p0</span> <span class="c1">// 索引：0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p1</span> <span class="c1">// 索引：1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p2</span> <span class="c1">// 索引：2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 新 children 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p2</span> <span class="c1">// 索引：2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p0</span> <span class="c1">// 索引：0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">p1</span> <span class="c1">// 索引：1
+</span></span></span></code></pre></div><p>对于 p0 和 p1，它们的索引都比 p2 的索引小，说明在旧 children 中，p0 和 p1 都排在 p2 前面，但是在新 children 中，p0 和 p1 都排在 p2 后面，所以 p0 和 p1 需要移动。</p>
+<p>可以发现，这里用 p2 在旧 children 中的索引作为后续比较的基准，实际上可以这样定义这个索引：<strong>在旧 children 中寻找具有相同 key 值节点的过程中，遇到的最大索引值</strong>。如果在后续寻找过程中，存在索引值比当前遇到的最大索引值小的节点，则意味着该节点需要移动。</p>
+<p>反映到代码中就是：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 利用 lastIndex 存储当前遇到的最大索引值；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">lastIndex</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 遍历新的 children
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">newChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">newVNode</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 遍历旧的 children
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">for</span> <span class="p">(</span><span class="nx">j</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">oldChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">oldVNode</span> <span class="o">=</span> <span class="nx">oldChildren</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">newVNode</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">oldVNode</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">lastIndex</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 需要移动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">prevVNode</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">prevVNode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">prevVNode</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">nextSibling</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">insert</span><span class="p">(</span><span class="nx">newVNode</span><span class="p">.</span><span class="nx">el</span><span class="p">,</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 更新 lastIndex
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">lastIndex</span> <span class="o">=</span> <span class="nx">j</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span> <span class="c1">// 这里需要 break
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="如何移动元素">如何移动元素<a href="#如何移动元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>移动元素时候主要关注两点：</p>
+<ol>
+<li><strong>获取真实的 DOM 元素</strong>：通过 <code>vnode.el</code> 来获取节点对应的真实 DOM 元素；</li>
+<li><strong>插入的位置</strong>：由于新 children 的顺序就是更新后真实 DOM 节点的顺序，所以插入的位置就在 <code>prevNode</code> 后面，所以用 <code>prevVNode.el.nextSibling</code> 作为插入的锚点；</li>
+</ol>
+<h2 id="处理新增或者不存在的元素">处理新增或者不存在的元素<a href="#处理新增或者不存在的元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="添加新元素">添加新元素<a href="#添加新元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>如何知道某个元素是否是新增？</p>
+<p>如果新 children 中的某个元素在旧 children 中没有找到 key 值相同的节点，这个元素就是新增的元素。对应的代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">newChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">newVNode</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">find</span> <span class="o">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 遍历旧的 children
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">for</span> <span class="p">(</span><span class="nx">j</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">oldChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">oldVNode</span> <span class="o">=</span> <span class="nx">oldChildren</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">newVNode</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">oldVNode</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">find</span> <span class="o">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">break</span> <span class="c1">// 这里需要 break
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">find</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">prevVNode</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">anchor</span> <span class="o">=</span> <span class="kc">null</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">prevVNode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">prevVNode</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">nextSibling</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">firstChild</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">patch</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">newVNode</span><span class="p">,</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里需要注意一下插入的锚点 <code>anchor</code>。</p>
+<h3 id="移除不存在的元素">移除不存在的元素<a href="#移除不存在的元素" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 遍历旧的节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">oldChildren</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">oldVNode</span> <span class="o">=</span> <span class="nx">oldChildren</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 拿着旧 VNode 去新 children 中寻找相同的节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">const</span> <span class="nx">has</span> <span class="o">=</span> <span class="nx">newChildren</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">vnode</span> <span class="p">=&gt;</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">oldVNode</span><span class="p">.</span><span class="nx">key</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">has</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果没有找到相同的节点，则移除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">unmount</span><span class="p">(</span><span class="nx">oldVNode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>简单 Diff 算法的核心流程就是拿新的一组子节点中的每个节点去旧的一组子节点中寻找可复用的节点。如果能找到，还要判断该节点是否需要移动；如果没找到，表示是新节点，需要做添加操作。最后再遍历旧 children，移除在新 children 中不存在的元素。</p>
+<h2 id="参考">参考<a href="#参考" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>《Vue.js 设计与实现》第 9 章  简单 Diff 算法</li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/vue">Vue</a></span><span class="tag"><a href="/tags/diff">diff</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>447 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2022-07-06 14:57</p>
+			</footer>
+		</article>
+		<aside id="toc">
+			<div class="toc-title">目录</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#算法的整体流程">算法的整体流程</a></li>
+    <li><a href="#找到可复用的元素">找到可复用的元素</a></li>
+    <li><a href="#如何找到需要移动的元素">如何找到需要移动的元素</a>
+      <ul>
+        <li><a href="#如何移动元素">如何移动元素</a></li>
+      </ul>
+    </li>
+    <li><a href="#处理新增或者不存在的元素">处理新增或者不存在的元素</a>
+      <ul>
+        <li><a href="#添加新元素">添加新元素</a></li>
+        <li><a href="#移除不存在的元素">移除不存在的元素</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/map_or_object/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>如何选择用 Map 还是 Object</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2022 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

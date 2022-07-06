@@ -6,7 +6,21 @@
     <description>Recent content on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【How Vue Diff】之简单 Diff</title>
+      <link>/posts/how_vue_diff_simple_diff/</link>
+      <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
+      
+      <guid>/posts/how_vue_diff_simple_diff/</guid>
+      <description>简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
+首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
+算法的整体流程 Diff 算法的主要目标是通过新旧两组节点的对比，找到可以复用的节点，然后移动节点到新的位置。所以，算法整体的流程总结一下就是：
+找到可以复用的元素（即分别在新旧 children 中 key 相同的两个元素）； 对这两个节点进行 patch 操作； 移动元素到合适的位置； 处理新增或者不存在的元素； 找到可复用的元素 通过参考代码可以看到，算法的主要逻辑就是循环里嵌套循环：遍历新的子节点数组 newChildren，对于里面的每一个子节点 newVNode，都尝试在 oldChildren 中找到一个 oldVNode，使得 newVNode.key === oldVNode.key 即元素可复用。然后做一下更新，即 patch() 。
+主体代码如下：
+// 遍历新的 children for (let i = 0; i &amp;lt; newChildren.length; i++) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &amp;lt; oldChildren.length; j++) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode.</description>
+    </item>
+    
     <item>
       <title>如何选择用 Map 还是 Object</title>
       <link>/posts/map_or_object/</link>
@@ -166,18 +180,6 @@ nuxt-link 的 to 属性指向的页面是同一个应用的页面。
 有网络链接并且不是 2g 网络。
 1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。
 原理 接下来梳理一下预加载的大致流程。为了说明原理，nuxt-link 源码里有些条件分支会省略，但不影响理解。下面会以 /cart 这个链接作为 nuxt-link 的跳转地址来做说明。/cart 页面对应的文件路径是 /pages/cart/index.</description>
-    </item>
-    
-    <item>
-      <title>Textarea 自适应高度</title>
-      <link>/posts/autosize_textarea_height/</link>
-      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/autosize_textarea_height/</guid>
-      <description>如何使 textarea 元素的高度可以根据内容自动伸缩？
-只需两行代码：
-// 当输入的时候 textarea.style.height = &amp;#39;auto&amp;#39;; textarea.style.height = textarea.scrollHeight + &amp;#39;px&amp;#39;; 第一行的作用是在删除输入的内容时候让 textarea 的高度能自动缩回去；
-在 Vue 中使用：https://codepen.io/Nicong622/pen/LYZYNqb</description>
     </item>
     
   </channel>
