@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Jul 2022 16:29:30 +0800</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>centos</title>
+      <link>/tags/centos/</link>
+      <pubDate>Wed, 13 Jul 2022 16:29:30 +0800</pubDate>
+      
+      <guid>/tags/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>/tags/linux/</link>
+      <pubDate>Wed, 13 Jul 2022 16:29:30 +0800</pubDate>
+      
+      <guid>/tags/linux/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>diff</title>
       <link>/tags/diff/</link>
@@ -76,24 +94,6 @@
       <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
       
       <guid>/tags/uuid/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>web</title>
-      <link>/tags/web/</link>
-      <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
-      
-      <guid>/tags/web/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>html</title>
-      <link>/tags/html/</link>
-      <pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
-      
-      <guid>/tags/html/</guid>
       <description></description>
     </item>
     

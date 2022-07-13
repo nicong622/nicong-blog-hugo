@@ -5,11 +5,46 @@
 		<description>Recent content in Posts on Nicong&#39;s blog</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate>
+		<lastBuildDate>Wed, 13 Jul 2022 16:29:30 +0800</lastBuildDate>
 		<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>【How Vue Diff】之简单 Diff</title>
+			<title>Centos 中缺少 CXXABI_1.3.8 的问题</title>
+			<link>/posts/libstdcpp_error_in_centos/</link>
+			<pubDate>Wed, 13 Jul 2022 16:29:30 +0800</pubDate>
+			
+			<guid>/posts/libstdcpp_error_in_centos/</guid>
+			<description>最近在 Centos7.6 中利用 sequelize 连接 sqlite 的时候出现了如下错误：
+/lib64/libstdc++.so.6: version `CXXABI_1.3.8&amp;#39; not found 出现这个错误是因为CentOS7当前版本默认的GCC的版本太老，里面的动态链接库没有CXXABI_1.3.8。
+执行下面的命令可以看到没有找到 CXXABI_1.3.8：
+strings /usr/lib64/libstdc++.so.6 | grep CXXABI 解决方案 cd /usr/local/lib64/ # 下载最新版本的`下载最新版本的libstdc.so_.6.0.26` wget http://www.vuln.cn/wp-content/uploads/2019/08/libstdc.so_.6.0.26.zip # 解压 unzip libstdc.so_.6.0.26.zip # 将下载的最新版本拷贝到 /usr/lib64 cp libstdc++.so.6.0.26 /usr/lib64 cd /usr/lib64 # 查看 /usr/lib64下libstdc++.so.6链接的版本 ls -l | grep libstdc++ # 删除原先的软连接(不放心可以备份) rm libstdc++.so.6 # 使用最新的库建立软连接 ln -s libstdc++.so.6.0.26 libstdc++.so.6 # 查看新版本，成功 strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX </description>
+			<content type="html"><![CDATA[<p>最近在 Centos7.6 中利用 <a href="https://sequelize.org/">sequelize</a> 连接 sqlite 的时候出现了如下错误：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/lib64/libstdc++.so.6: version <span class="sb">`</span>CXXABI_1.3.8<span class="err">&#39;</span> not found
+</span></span></code></pre></div><p>出现这个错误是因为CentOS7当前版本默认的GCC的版本太老，里面的动态链接库没有CXXABI_1.3.8。</p>
+<p>执行下面的命令可以看到没有找到 <code>CXXABI_1.3.8</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">strings /usr/lib64/libstdc++.so.6 <span class="p">|</span> grep CXXABI
+</span></span></code></pre></div><h2 id="解决方案">解决方案</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> /usr/local/lib64/
+</span></span><span class="line"><span class="cl"><span class="c1"># 下载最新版本的`下载最新版本的libstdc.so_.6.0.26`</span>
+</span></span><span class="line"><span class="cl">wget http://www.vuln.cn/wp-content/uploads/2019/08/libstdc.so_.6.0.26.zip
+</span></span><span class="line"><span class="cl"><span class="c1"># 解压</span>
+</span></span><span class="line"><span class="cl">unzip libstdc.so_.6.0.26.zip
+</span></span><span class="line"><span class="cl"><span class="c1"># 将下载的最新版本拷贝到 /usr/lib64</span>
+</span></span><span class="line"><span class="cl">cp libstdc++.so.6.0.26 /usr/lib64
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span>  /usr/lib64
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看 /usr/lib64下libstdc++.so.6链接的版本</span>
+</span></span><span class="line"><span class="cl">ls -l <span class="p">|</span> grep libstdc++
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除原先的软连接(不放心可以备份)</span>
+</span></span><span class="line"><span class="cl">rm libstdc++.so.6
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用最新的库建立软连接</span>
+</span></span><span class="line"><span class="cl">ln -s libstdc++.so.6.0.26 libstdc++.so.6
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看新版本，成功</span>
+</span></span><span class="line"><span class="cl">strings /usr/lib64/libstdc++.so.6 <span class="p">|</span> grep GLIBCXX
+</span></span></code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>【How Vue Diff】之简单 Diff 算法</title>
 			<link>/posts/how_vue_diff_simple_diff/</link>
 			<pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
 			

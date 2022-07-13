@@ -1,5 +1,5 @@
 ---
-title: "【How Vue Diff】之简单 Diff"
+title: "【How Vue Diff】之简单 Diff 算法"
 date: 2022-07-06T14:57:34+08:00
 draft: false
 toc: true

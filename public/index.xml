@@ -6,9 +6,21 @@
     <description>Recent content on Nicong&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Jul 2022 16:29:30 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>【How Vue Diff】之简单 Diff</title>
+      <title>Centos 中缺少 CXXABI_1.3.8 的问题</title>
+      <link>/posts/libstdcpp_error_in_centos/</link>
+      <pubDate>Wed, 13 Jul 2022 16:29:30 +0800</pubDate>
+      
+      <guid>/posts/libstdcpp_error_in_centos/</guid>
+      <description>最近在 Centos7.6 中利用 sequelize 连接 sqlite 的时候出现了如下错误：
+/lib64/libstdc++.so.6: version `CXXABI_1.3.8&amp;#39; not found 出现这个错误是因为CentOS7当前版本默认的GCC的版本太老，里面的动态链接库没有CXXABI_1.3.8。
+执行下面的命令可以看到没有找到 CXXABI_1.3.8：
+strings /usr/lib64/libstdc++.so.6 | grep CXXABI 解决方案 cd /usr/local/lib64/ # 下载最新版本的`下载最新版本的libstdc.so_.6.0.26` wget http://www.vuln.cn/wp-content/uploads/2019/08/libstdc.so_.6.0.26.zip # 解压 unzip libstdc.so_.6.0.26.zip # 将下载的最新版本拷贝到 /usr/lib64 cp libstdc++.so.6.0.26 /usr/lib64 cd /usr/lib64 # 查看 /usr/lib64下libstdc++.so.6链接的版本 ls -l | grep libstdc++ # 删除原先的软连接(不放心可以备份) rm libstdc++.so.6 # 使用最新的库建立软连接 ln -s libstdc++.so.6.0.26 libstdc++.so.6 # 查看新版本，成功 strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX </description>
+    </item>
+    
+    <item>
+      <title>【How Vue Diff】之简单 Diff 算法</title>
       <link>/posts/how_vue_diff_simple_diff/</link>
       <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
       
@@ -161,25 +173,6 @@ B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇�
 首先我在 zf 的某个贴子中看到了一个外壳，prism60。它的主要亮点是 4 个角的设计，不是普通的直角，而是一个多面体。配合电泳白的配色，有一种冷峻、硬朗的感觉。而且后面拿到手的时候发现还挺重的，挺有质感。
 （已下图片来自 zf，侵删）
 在我发现这个外壳的时候已经结束团购了，但是 zf 上还有现货。于是我就下单了。另外还在淘宝上买了一套 gk64xs 的 pcb 套件。买 pcb 的时候还有个小插曲。本来 zf 的客服给我推荐了一个配套的 pcb，但只支持 61 键的配列，不支持左移 64。但我平常对方向键比较依赖，不想通过组合键来实现方向键的切换。所以只能去淘宝上买支持左移 64 的 pcb。关于左移 64 的概念大家可以上网搜一下，这里不展开说明。</description>
-    </item>
-    
-    <item>
-      <title>nuxt-link预加载的原理</title>
-      <link>/posts/how-do-nuxt-link-preload/</link>
-      <pubDate>Tue, 02 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/how-do-nuxt-link-preload/</guid>
-      <description>nuxt-link 是 nuxtjs 提供的一个组件，基于 vue-router 的 router-link 做了一层封装，实现了预加载的功能。本文来简单聊聊这个“预加载”的原理。
-一点准备工作 如果直接打开 nuxt 项目中 nuxt-link的源码，会发现里面使用了很多类似于 &amp;lt;%...%&amp;gt; 这样的模板语法。这其实是 lodash.template 提供的模板语法。如果觉得影响阅读，可以按照 nuxt 的文档，新建一个 nuxt 应用，然后构建一次，再找到 .nuxt/components/nuxt-link.client.js，这个就是编译过后的 nuxt-link 代码。
-前置条件 要想触发 nuxt-link 的预加载，需要同时满足以下几个条件：
-nuxt-link 的 prefetch 属性值是 true 。
-默认值是 nuxt 配置里的 router.prefetchLinks。prefetchLinks 的默认值是 true ，所以 prefetch 的默认值也是 true。
-nuxt-link 的 noPrefetch 属性值是 false。默认值是 false。
-当 nuxt-link 组件出现在可见区域内。
-nuxt-link 的 to 属性指向的页面是同一个应用的页面。
-有网络链接并且不是 2g 网络。
-1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。
-原理 接下来梳理一下预加载的大致流程。为了说明原理，nuxt-link 源码里有些条件分支会省略，但不影响理解。下面会以 /cart 这个链接作为 nuxt-link 的跳转地址来做说明。/cart 页面对应的文件路径是 /pages/cart/index.</description>
     </item>
     
   </channel>
