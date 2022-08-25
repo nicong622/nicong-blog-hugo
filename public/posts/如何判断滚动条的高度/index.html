@@ -40,7 +40,7 @@
 		<div class="hdr-wrapper section-inner">
 			<div class="hdr-left">
 				<div class="site-branding">
-					<a href="/">Nicong&#39;s blog</a>
+					<a href="/">Nicong的生活学习笔记</a>
 				</div>
 				<nav class="site-nav hide-in-mobile">
 					
@@ -85,18 +85,17 @@
 <li>怪异模式下，通过body元素查询<code>document.body.scrollTop</code>。（chrome用这种方法竟然能正常工作）</li>
 </ol>
 <p>于是我们可以用以下的代码来实现‘返回顶部’控件的显示和隐藏：</p>
-<pre><code>    window.onscroll = function(){
-        var w = window,
-            d = document,
-            scroll = w.pageYOffset || d.documentElement.scrollTop ||d.body.scrollTop;
-        if(scroll&gt;200){
-            //显示控件
-        }else{
-            //隐藏控件
-        }
-    }
-</code></pre>
-<p><a href="#header">返回顶部</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">onscroll</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">window</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">scroll</span> <span class="o">=</span> <span class="nx">w</span><span class="p">.</span><span class="nx">pageYOffset</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">||</span><span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">scroll</span><span class="o">&gt;</span><span class="mi">200</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//显示控件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//隐藏控件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><a href="#header">返回顶部</a></p>
 			</div>
 			<hr class="post-end">
 			<footer class="post-info">

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vscode on Nicong&#39;s blog</title>
+    <title>vscode on Nicong的生活学习笔记</title>
     <link>/tags/vscode/</link>
-    <description>Recent content in vscode on Nicong&#39;s blog</description>
+    <description>Recent content in vscode on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
