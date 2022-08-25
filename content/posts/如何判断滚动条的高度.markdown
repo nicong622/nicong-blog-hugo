@@ -18,17 +18,18 @@ tags:
 
 于是我们可以用以下的代码来实现‘返回顶部’控件的显示和隐藏：
 
-
-        window.onscroll = function(){
-            var w = window,
-                d = document,
-                scroll = w.pageYOffset || d.documentElement.scrollTop ||d.body.scrollTop;
-            if(scroll>200){
-                //显示控件
-            }else{
-                //隐藏控件
-            }
-        }
+```js
+window.onscroll = function(){
+    var w = window,
+        d = document,
+        scroll = w.pageYOffset || d.documentElement.scrollTop ||d.body.scrollTop;
+    if(scroll>200){
+        //显示控件
+    }else{
+        //隐藏控件
+    }
+}
+```
 
 [返回顶部](#header)
 
