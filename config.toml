@@ -1,6 +1,6 @@
 baseURL = "/"
 defaultContentLanguage = "cn"
-title = "Nicong's blog"
+title = "Nicong的生活学习笔记"
 # theme = "hermit"
 # enableGitInfo = true
 pygmentsCodefences  = true
