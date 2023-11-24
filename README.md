@@ -2,7 +2,7 @@
 my personal blog built with hugo.
 
 ## 如何更新
-1. 在本地编写好 post 之后，把修改 push 到 main 分支；
+1. 在本地编写好文章之后，把修改 push 到 main 分支；
 2. 之后会自动触发 Github Action 进行构建；
 3. 构建产物会自动提交到 master 分支；
 4. 腾讯的 web 应用托管在检测到 master 分支有变动之后就会自动触发网站的部署。
