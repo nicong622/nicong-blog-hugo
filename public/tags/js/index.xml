@@ -5,42 +5,38 @@
     <link>/tags/js/</link>
     <description>Recent content in js on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate><atom:link href="/tags/js/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate>
+    <atom:link href="/tags/js/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何选择用 Map 还是 Object</title>
       <link>/posts/map_or_object/</link>
       <pubDate>Wed, 29 Jun 2022 15:26:39 +0800</pubDate>
-      
       <guid>/posts/map_or_object/</guid>
       <description>在很多场景里，我们似乎都可以用 Map 来代替 Object 来完成同样的功能，那么这两者到底要如何选择呢？这篇文章做了详细的描述和对比。
 结论是：
 如果在开发阶段就有固定且属性个数有限，可以使用 Object ，例如配置列表； 相反，如果 keys 的数量和类型不能提前知道，并且需要频繁更新的，就应该使用 Map ，例如 event emitter； 在插入、删除、遍历的时候，Map 的性能都比 Object 好，除非 keys 是比较小的整数。 </description>
     </item>
-    
     <item>
       <title>Object.hasOwn vs Object.hasOwnProperty</title>
       <link>/posts/hasown_vs_hasownproperty/</link>
       <pubDate>Tue, 28 Jun 2022 15:00:11 +0800</pubDate>
-      
       <guid>/posts/hasown_vs_hasownproperty/</guid>
       <description>Object.hasOwn() 是 ES2022 中的新特性，他它是一个静态方法，作用是提供一种安全的方法来检查某个对象是否自主拥有（不是继承而来的）某个属性。看起来作用跟 Object.hasOwnProperty() 一样，那为什么还要提出 Object.hasOwn() 呢？
 原因有以下几个：
 由于 Object.hasOwnProperty() 方法是从对象的原型 Object.prototype 上继承而来的，如果用户在对象上定义了一个同名的方法，就会出现意料之外的结果，即所谓的“原型污染”。 对于用 Object.create(null) 创建出来的对象，由于对象的原型就是 null ，所以对象本身没有 hasOwnProperty() 方法。虽然可以用 Object.prototype.hasOwnProperty.call() ，但是这样看起来就比较笨重了，并且 Eslint 的内置规则是禁止直接使用 Object.prototype 上的方法的。 Object.hasOwn() 就是为了解决上面的问题而提出的，所以应该用这个方法来代替 Object.hasOwnProperty()。
 注意：不过需要注意的是，你依然可以重新定义 Object.hasOwn() 方法。</description>
     </item>
-    
     <item>
       <title>获取一行中子元素的个数</title>
       <link>/posts/children_count_in_one_row/</link>
       <pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
-      
       <guid>/posts/children_count_in_one_row/</guid>
       <description>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
 如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
 对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
 遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 </description>
     </item>
-    
   </channel>
 </rss>

@@ -5,13 +5,14 @@
     <link>/tags/vue/</link>
     <description>Recent content in Vue on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate><atom:link href="/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate>
+    <atom:link href="/tags/vue/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【How Vue Diff】之简单 Diff 算法</title>
       <link>/posts/how_vue_diff_simple_diff/</link>
       <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
-      
       <guid>/posts/how_vue_diff_simple_diff/</guid>
       <description>简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
 首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
@@ -20,12 +21,10 @@
 主体代码如下：
 // 遍历新的 children for (let i = 0; i &amp;lt; newChildren.length; i++) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &amp;lt; oldChildren.length; j++) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode.</description>
     </item>
-    
     <item>
       <title>nuxt-link预加载的原理</title>
       <link>/posts/how-do-nuxt-link-preload/</link>
       <pubDate>Tue, 02 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>/posts/how-do-nuxt-link-preload/</guid>
       <description>nuxt-link 是 nuxtjs 提供的一个组件，基于 vue-router 的 router-link 做了一层封装，实现了预加载的功能。本文来简单聊聊这个“预加载”的原理。
 一点准备工作 如果直接打开 nuxt 项目中 nuxt-link的源码，会发现里面使用了很多类似于 &amp;lt;%...%&amp;gt; 这样的模板语法。这其实是 lodash.template 提供的模板语法。如果觉得影响阅读，可以按照 nuxt 的文档，新建一个 nuxt 应用，然后构建一次，再找到 .nuxt/components/nuxt-link.client.js，这个就是编译过后的 nuxt-link 代码。
@@ -39,12 +38,10 @@ nuxt-link 的 to 属性指向的页面是同一个应用的页面。
 1、2 两点控制是否启动预加载功能（默认是开启预加载），3、4、5是决定什么时候执行预加载的逻辑。
 原理 接下来梳理一下预加载的大致流程。为了说明原理，nuxt-link 源码里有些条件分支会省略，但不影响理解。下面会以 /cart 这个链接作为 nuxt-link 的跳转地址来做说明。/cart 页面对应的文件路径是 /pages/cart/index.</description>
     </item>
-    
     <item>
       <title>Vue Devtool Panel not Showing</title>
       <link>/posts/vue_devtool_panel_not_showing/</link>
       <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
-      
       <guid>/posts/vue_devtool_panel_not_showing/</guid>
       <description>Chrome 的 vue devtool 插件已经检测到当前页面使用了 Vue ，但是 Chrome 开发者工具里没有出现 Vue devtool panel，要怎么处理？
 第一步 首先检查一下项目里是否手动设置了 Vue.config.devtools 。把这个配置设为 true 的时候就能看到 Vue devtool panel 。这个配置需要在创建 Vue 实例之前。根据 Vue官方文档 的说法，Vue.config.devtools 在开发时候默认是 true 。
@@ -54,6 +51,5 @@ nuxt-link 的 to 属性指向的页面是同一个应用的页面。
 或者直接在 Chrome devtool 里执行 window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue;。
 参考 https://github.com/vuejs/vue-devtools/issues/620#issuecomment-368948291</description>
     </item>
-    
   </channel>
 </rss>

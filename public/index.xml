@@ -5,13 +5,14 @@
     <link>/</link>
     <description>Recent content on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 01 Aug 2022 09:34:30 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Aug 2022 09:34:30 +0800</lastBuildDate>
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>《浪潮之巅》读书笔记 -- 硅谷奇迹探秘</title>
       <link>/posts/why_silicon_vally_success/</link>
       <pubDate>Mon, 01 Aug 2022 09:34:30 +0800</pubDate>
-      
       <guid>/posts/why_silicon_vally_success/</guid>
       <description>在过去60多年里，硅谷从类似蛮荒之地发展起来，实现了可持续增长，并且在历次产业转型中都没有落伍，还在不断引领世界科技产业的潮流，实属奇迹。
 ​	&amp;mdash;&amp;mdash;《浪潮之巅 - 硅谷奇迹探秘》
@@ -47,24 +48,20 @@
 因为机会多且均等，所以即使压力大，每年还是吸引着大量年轻的专业人士来到硅谷创业或者工作。
 硅含量降低 硅谷最初以半导体产业闻名。但过去几十年间，硅谷已逐渐完成产业的升级转型，半导体产业在硅谷的经济中比重逐渐降低，取而代之的是互联网、软件、生物技术等高科技公司。反摩尔定律和“亚洲制造”是导致硅谷半导体产业衰落的两个直接原因。</description>
     </item>
-    
     <item>
       <title>Centos 中缺少 CXXABI_1.3.8 的问题</title>
       <link>/posts/libstdcpp_error_in_centos/</link>
       <pubDate>Wed, 13 Jul 2022 16:29:30 +0800</pubDate>
-      
       <guid>/posts/libstdcpp_error_in_centos/</guid>
       <description>最近在 Centos7.6 中利用 sequelize 连接 sqlite 的时候出现了如下错误：
 /lib64/libstdc++.so.6: version `CXXABI_1.3.8&amp;#39; not found 出现这个错误是因为CentOS7当前版本默认的GCC的版本太老，里面的动态链接库没有CXXABI_1.3.8。
 执行下面的命令可以看到没有找到 CXXABI_1.3.8：
 strings /usr/lib64/libstdc++.so.6 | grep CXXABI 解决方案 cd /usr/local/lib64/ # 下载最新版本的`下载最新版本的libstdc.so_.6.0.26` wget http://www.vuln.cn/wp-content/uploads/2019/08/libstdc.so_.6.0.26.zip # 解压 unzip libstdc.so_.6.0.26.zip # 将下载的最新版本拷贝到 /usr/lib64 cp libstdc++.so.6.0.26 /usr/lib64 cd /usr/lib64 # 查看 /usr/lib64下libstdc++.so.6链接的版本 ls -l | grep libstdc++ # 删除原先的软连接(不放心可以备份) rm libstdc++.so.6 # 使用最新的库建立软连接 ln -s libstdc++.so.6.0.26 libstdc++.so.6 # 查看新版本，成功 strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX </description>
     </item>
-    
     <item>
       <title>【How Vue Diff】之简单 Diff 算法</title>
       <link>/posts/how_vue_diff_simple_diff/</link>
       <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
-      
       <guid>/posts/how_vue_diff_simple_diff/</guid>
       <description>简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
 首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
@@ -73,35 +70,29 @@ strings /usr/lib64/libstdc++.so.6 | grep CXXABI 解决方案 cd /usr/local/lib64
 主体代码如下：
 // 遍历新的 children for (let i = 0; i &amp;lt; newChildren.length; i++) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &amp;lt; oldChildren.length; j++) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode.</description>
     </item>
-    
     <item>
       <title>如何选择用 Map 还是 Object</title>
       <link>/posts/map_or_object/</link>
       <pubDate>Wed, 29 Jun 2022 15:26:39 +0800</pubDate>
-      
       <guid>/posts/map_or_object/</guid>
       <description>在很多场景里，我们似乎都可以用 Map 来代替 Object 来完成同样的功能，那么这两者到底要如何选择呢？这篇文章做了详细的描述和对比。
 结论是：
 如果在开发阶段就有固定且属性个数有限，可以使用 Object ，例如配置列表； 相反，如果 keys 的数量和类型不能提前知道，并且需要频繁更新的，就应该使用 Map ，例如 event emitter； 在插入、删除、遍历的时候，Map 的性能都比 Object 好，除非 keys 是比较小的整数。 </description>
     </item>
-    
     <item>
       <title>Object.hasOwn vs Object.hasOwnProperty</title>
       <link>/posts/hasown_vs_hasownproperty/</link>
       <pubDate>Tue, 28 Jun 2022 15:00:11 +0800</pubDate>
-      
       <guid>/posts/hasown_vs_hasownproperty/</guid>
       <description>Object.hasOwn() 是 ES2022 中的新特性，他它是一个静态方法，作用是提供一种安全的方法来检查某个对象是否自主拥有（不是继承而来的）某个属性。看起来作用跟 Object.hasOwnProperty() 一样，那为什么还要提出 Object.hasOwn() 呢？
 原因有以下几个：
 由于 Object.hasOwnProperty() 方法是从对象的原型 Object.prototype 上继承而来的，如果用户在对象上定义了一个同名的方法，就会出现意料之外的结果，即所谓的“原型污染”。 对于用 Object.create(null) 创建出来的对象，由于对象的原型就是 null ，所以对象本身没有 hasOwnProperty() 方法。虽然可以用 Object.prototype.hasOwnProperty.call() ，但是这样看起来就比较笨重了，并且 Eslint 的内置规则是禁止直接使用 Object.prototype 上的方法的。 Object.hasOwn() 就是为了解决上面的问题而提出的，所以应该用这个方法来代替 Object.hasOwnProperty()。
 注意：不过需要注意的是，你依然可以重新定义 Object.hasOwn() 方法。</description>
     </item>
-    
     <item>
       <title>移除项目中的 @ant-design/compatible 依赖</title>
       <link>/posts/remove-antd-compatible/</link>
       <pubDate>Tue, 21 Jun 2022 07:33:46 +0000</pubDate>
-      
       <guid>/posts/remove-antd-compatible/</guid>
       <description>Ant Design 第4版发布之后不久，我就按照 antd 官方的指引利用迁移工具帮项目做了升级。由于迁移工具实际上是通过引入 @ant-design/compatible 来使那些不兼容的组件能继续运行，所以这样升级完之后实际上项目里就会同时存在 v3 和 v4 两个版本的 antd，不仅代码体积有冗余，还会有两套 Form 组件的写法，不利用后期维护。于是最近花时间移除了对 @ant-design/compatible 的依赖，实现了“完全”的升级。
 这篇文章主要讲述我如何使用 AST 转换工具来帮助我完成升级。
@@ -113,12 +104,10 @@ strings /usr/lib64/libstdc++.so.6 | grep CXXABI 解决方案 cd /usr/local/lib64
 确认范围之后就可以开干了。
 代码修改工具 下面主要说说上面提到的 “代码修改工具”。</description>
     </item>
-    
     <item>
       <title>一个基于 Systemjs 的组件动态加载方案</title>
       <link>/posts/loading_compoents_dynamically_by_systemjs/</link>
       <pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>/posts/loading_compoents_dynamically_by_systemjs/</guid>
       <description>背景 在低代码平台的设计中，通常需要动态地加载一个组件。
 Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
@@ -129,12 +118,10 @@ Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于
 &amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script type=&amp;#34;systemjs-importmap&amp;#34;&amp;gt; // 定义 importmap { &amp;#34;imports&amp;#34;: { &amp;#34;lodash&amp;#34;: &amp;#34;https://unpkg.com/lodash@4.17.10/lodash.js&amp;#34; // 或者其他需要动态加载的模块 } } &amp;lt;/script&amp;gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
 window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&amp;#39;lodash&amp;#39;) .then(lodash =&amp;gt; lodash.</description>
     </item>
-    
     <item>
       <title>在 web 环境中获取 uuid 的简单方法</title>
       <link>/posts/web-create-uuid/</link>
       <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
-      
       <guid>/posts/web-create-uuid/</guid>
       <description>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
 URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
@@ -144,24 +131,20 @@ URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的�
 另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
 参考 createObjectURL DOMString </description>
     </item>
-    
     <item>
       <title>获取一行中子元素的个数</title>
       <link>/posts/children_count_in_one_row/</link>
       <pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
-      
       <guid>/posts/children_count_in_one_row/</guid>
       <description>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
 如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
 对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
 遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 </description>
     </item>
-    
     <item>
       <title>入坑客制化键盘的一些建议</title>
       <link>/posts/custom_keyboard_attention/</link>
       <pubDate>Sat, 16 Oct 2021 11:48:50 +0800</pubDate>
-      
       <guid>/posts/custom_keyboard_attention/</guid>
       <description>进入客制化键盘圈子有一段时间了，我发现这个圈子虽然相对小众，但是不乏优秀的作品。不过跟其他圈子一样，新入门的时候很容易走弯路，花钱买了自己不喜欢或者不合适的东西，最后只能搁置或者亏钱转卖。于是我总结了一下这段时间里自己的体会，希望能帮助客制化键盘的新手们少走一些弯路，多省点钱。
 在哪里获取新动态 首先说说在哪里能了解到最新的客制化键盘相关的资讯。
@@ -186,6 +169,5 @@ B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇�
 我之前也曾经有过一把左移 64 的 prism60，类似于下图，这是来自“装备前线 键盘葫芦forkrere60 by elvis”的照片。
 虽然它能基本满足我日常工作需求，但是右 shift 键只有 1U 宽度，并且与方向键挨在一起，导致很容易误触，很不爽。所以最后我还是放弃了它。</description>
     </item>
-    
   </channel>
 </rss>

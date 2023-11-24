@@ -5,13 +5,14 @@
     <link>/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/</link>
     <description>Recent content in 前端工具 on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 24 Oct 2015 17:37:34 +0000</lastBuildDate><atom:link href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 Oct 2015 17:37:34 +0000</lastBuildDate>
+    <atom:link href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>browser-sync &#43; gulp &#43; postcss配置文件</title>
       <link>/posts/%E7%94%A8browser-sync%E5%90%8C%E6%97%B6%E5%BC%80%E5%8F%91%E5%A4%9A%E4%B8%AA%E5%B0%BA%E5%AF%B8%E7%9A%84%E9%A1%B5%E9%9D%A2/</link>
       <pubDate>Sat, 24 Oct 2015 17:37:34 +0000</pubDate>
-      
       <guid>/posts/%E7%94%A8browser-sync%E5%90%8C%E6%97%B6%E5%BC%80%E5%8F%91%E5%A4%9A%E4%B8%AA%E5%B0%BA%E5%AF%B8%E7%9A%84%E9%A1%B5%E9%9D%A2/</guid>
       <description>最近发现了一个工具browser-sync。使用这个工具可以同时在多个尺寸的浏览器中打开同一个页面，当在A浏览器中点击了一个按钮，在B浏览器中也会响应这个事件。另外，当你修改了本地的 HTML 文件或者 css 文件的时候，浏览器也会自动刷新网页，就像是liveEdit一样。非常cool的功能！ 而且，它也可以结合gulp或grunt来使用，自动编译文件（例如.sacc）后实时显示效果。这样，你就可以同时打开几个浏览器窗口，分别显示不同的尺寸。
 安装什么的就不啰嗦了，官网上有。使用也很简单，一行命令就可以了。
@@ -19,6 +20,5 @@
 由于最近在学习postcss，所以就想结合gulp、postcss、browser-sync来玩一下。以下是我的gulpfile：
 var gulp = require(&amp;#39;gulp&amp;#39;); var browserSync = require(&amp;#39;browser-sync&amp;#39;).create(); var postcss = require(&amp;#39;gulp-postcss&amp;#39;); var autoprefixer = require(&amp;#39;autoprefixer&amp;#39;); gulp.task(&amp;#39;browser-sync&amp;#39;,[&amp;#39;css&amp;#39;],function(){ browserSync.init({ proxy: &amp;#39;localhost/postcss/index.html&amp;#39;, files: &amp;#34;build/css/base.css&amp;#34; }); gulp.watch(&amp;#39;src/css/base.css&amp;#39;,[&amp;#39;css&amp;#39;]); }); gulp.task(&amp;#39;css&amp;#39;,function(){ return gulp.src(&amp;#39;./src/css/*.css&amp;#39;) .pipe( postcss([ require(&amp;#39;precss&amp;#39;)({}) ]) ) .pipe(gulp.dest(&amp;#39;./build/css&amp;#39;)); }); 修改了对应的css文件之后就会自动用postcss来处理，然后显示在浏览器中。现在这里mark一下，已备不时之需。</description>
     </item>
-    
   </channel>
 </rss>

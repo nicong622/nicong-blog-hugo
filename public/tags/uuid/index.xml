@@ -5,13 +5,14 @@
     <link>/tags/uuid/</link>
     <description>Recent content in uuid on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 15 Dec 2021 10:10:51 +0800</lastBuildDate><atom:link href="/tags/uuid/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 10:10:51 +0800</lastBuildDate>
+    <atom:link href="/tags/uuid/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在 web 环境中获取 uuid 的简单方法</title>
       <link>/posts/web-create-uuid/</link>
       <pubDate>Wed, 15 Dec 2021 10:10:51 +0800</pubDate>
-      
       <guid>/posts/web-create-uuid/</guid>
       <description>偶然在掘金看到了一个在 web 环境中生成 uuid 的方法，只需要一行代码。来自这篇文章的评论区。
 URL.createObjectURL(new Blob()).substr(-36); 解析 下面稍微解析一下这行代码。
@@ -21,6 +22,5 @@ URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的�
 另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
 参考 createObjectURL DOMString </description>
     </item>
-    
   </channel>
 </rss>

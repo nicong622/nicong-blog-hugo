@@ -5,13 +5,14 @@
     <link>/tags/diff/</link>
     <description>Recent content in diff on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate><atom:link href="/tags/diff/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Jul 2022 14:57:34 +0800</lastBuildDate>
+    <atom:link href="/tags/diff/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【How Vue Diff】之简单 Diff 算法</title>
       <link>/posts/how_vue_diff_simple_diff/</link>
       <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
-      
       <guid>/posts/how_vue_diff_simple_diff/</guid>
       <description>简单分析一下 Vuejs 中的“简单 Diff”算法，参考代码，主要关注 patchChildren() 函数的实现过程。
 首先假设新旧 vnode 的子节点都是一组节点。因为如果其中一个 vnode 的子节点不是数组的话，Diff 的意义就不大了。
@@ -20,6 +21,5 @@
 主体代码如下：
 // 遍历新的 children for (let i = 0; i &amp;lt; newChildren.length; i++) { const newVNode = newChildren[i] let j = 0 // 遍历旧的 children for (j; j &amp;lt; oldChildren.length; j++) { const oldVNode = oldChildren[j] // 如果找到了具有相同 key 值的两个节点，则调用 `patch` 函数更新之 if (newVNode.</description>
     </item>
-    
   </channel>
 </rss>

@@ -5,13 +5,14 @@
     <link>/tags/%E5%AE%A2%E5%88%B6%E5%8C%96%E9%94%AE%E7%9B%98/</link>
     <description>Recent content in 客制化键盘 on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 16 Oct 2021 11:48:50 +0800</lastBuildDate><atom:link href="/tags/%E5%AE%A2%E5%88%B6%E5%8C%96%E9%94%AE%E7%9B%98/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Oct 2021 11:48:50 +0800</lastBuildDate>
+    <atom:link href="/tags/%E5%AE%A2%E5%88%B6%E5%8C%96%E9%94%AE%E7%9B%98/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>入坑客制化键盘的一些建议</title>
       <link>/posts/custom_keyboard_attention/</link>
       <pubDate>Sat, 16 Oct 2021 11:48:50 +0800</pubDate>
-      
       <guid>/posts/custom_keyboard_attention/</guid>
       <description>进入客制化键盘圈子有一段时间了，我发现这个圈子虽然相对小众，但是不乏优秀的作品。不过跟其他圈子一样，新入门的时候很容易走弯路，花钱买了自己不喜欢或者不合适的东西，最后只能搁置或者亏钱转卖。于是我总结了一下这段时间里自己的体会，希望能帮助客制化键盘的新手们少走一些弯路，多省点钱。
 在哪里获取新动态 首先说说在哪里能了解到最新的客制化键盘相关的资讯。
@@ -36,12 +37,10 @@ B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇�
 我之前也曾经有过一把左移 64 的 prism60，类似于下图，这是来自“装备前线 键盘葫芦forkrere60 by elvis”的照片。
 虽然它能基本满足我日常工作需求，但是右 shift 键只有 1U 宽度，并且与方向键挨在一起，导致很容易误触，很不爽。所以最后我还是放弃了它。</description>
     </item>
-    
     <item>
       <title>关于客制化键盘</title>
       <link>/posts/custom_keyboard_review/</link>
       <pubDate>Tue, 28 Sep 2021 11:48:50 +0800</pubDate>
-      
       <guid>/posts/custom_keyboard_review/</guid>
       <description>前段时间因为一个偶然的机会入坑了客制化键盘。在坑里摸爬了一段时间之后，逐渐有了一些自己的想法。回想一下感觉整个过程就像是谈恋爱一样，从相识进入热恋，然后逐渐趋于冷静平淡最后或相伴一生或形同陌路。
 缘由 2021年中旬，我女朋友换了新工作，没做多久就跟我抱怨新公司配的手提电脑键盘不好用，敲起来像钢板一样，而且按键小，反正就是不爽。然后就故意问我：“你要不要换新键盘啊~”。其实就是想从我这里白嫖一把键盘，然后让我自己再买一把新的。
@@ -65,6 +64,5 @@ B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇�
 （已下图片来自 zf，侵删）
 在我发现这个外壳的时候已经结束团购了，但是 zf 上还有现货。于是我就下单了。另外还在淘宝上买了一套 gk64xs 的 pcb 套件。买 pcb 的时候还有个小插曲。本来 zf 的客服给我推荐了一个配套的 pcb，但只支持 61 键的配列，不支持左移 64。但我平常对方向键比较依赖，不想通过组合键来实现方向键的切换。所以只能去淘宝上买支持左移 64 的 pcb。关于左移 64 的概念大家可以上网搜一下，这里不展开说明。</description>
     </item>
-    
   </channel>
 </rss>

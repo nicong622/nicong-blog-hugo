@@ -5,13 +5,14 @@
     <link>/tags/systemjs/</link>
     <description>Recent content in systemjs on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 09 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/systemjs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/systemjs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一个基于 Systemjs 的组件动态加载方案</title>
       <link>/posts/loading_compoents_dynamically_by_systemjs/</link>
       <pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>/posts/loading_compoents_dynamically_by_systemjs/</guid>
       <description>背景 在低代码平台的设计中，通常需要动态地加载一个组件。
 Bigo 的活动配置平台 raptor 使用 requirejs 来实现动态加载。requirejs 要求加载的是 AMD 格式的包。但是很多优秀的第三方组件都没有打包成 AMD 格式，而是只有Commonjs 和 ESM 版本，这就意味着不能直接在平台里使用这些组件。
@@ -22,6 +23,5 @@ Systemjs systemjs 实现了一个叫做 System.register 的模块格式，用于
 &amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/systemjs/dist/system.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script type=&amp;#34;systemjs-importmap&amp;#34;&amp;gt; // 定义 importmap { &amp;#34;imports&amp;#34;: { &amp;#34;lodash&amp;#34;: &amp;#34;https://unpkg.com/lodash@4.17.10/lodash.js&amp;#34; // 或者其他需要动态加载的模块 } } &amp;lt;/script&amp;gt; 接着，就可以使用以下两种方法来加载并使用一个在上面的 importmap 中配置过的模块。
 window.System.import // window.System.import 返回的是一个 Promise 对象 window.System.import(&amp;#39;lodash&amp;#39;) .then(lodash =&amp;gt; lodash.</description>
     </item>
-    
   </channel>
 </rss>

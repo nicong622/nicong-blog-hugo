@@ -5,13 +5,14 @@
     <link>/tags/jscodeshift/</link>
     <description>Recent content in jscodeshift on Nicong的生活学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 21 Jun 2022 07:33:46 +0000</lastBuildDate><atom:link href="/tags/jscodeshift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Jun 2022 07:33:46 +0000</lastBuildDate>
+    <atom:link href="/tags/jscodeshift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>移除项目中的 @ant-design/compatible 依赖</title>
       <link>/posts/remove-antd-compatible/</link>
       <pubDate>Tue, 21 Jun 2022 07:33:46 +0000</pubDate>
-      
       <guid>/posts/remove-antd-compatible/</guid>
       <description>Ant Design 第4版发布之后不久，我就按照 antd 官方的指引利用迁移工具帮项目做了升级。由于迁移工具实际上是通过引入 @ant-design/compatible 来使那些不兼容的组件能继续运行，所以这样升级完之后实际上项目里就会同时存在 v3 和 v4 两个版本的 antd，不仅代码体积有冗余，还会有两套 Form 组件的写法，不利用后期维护。于是最近花时间移除了对 @ant-design/compatible 的依赖，实现了“完全”的升级。
 这篇文章主要讲述我如何使用 AST 转换工具来帮助我完成升级。
@@ -23,6 +24,5 @@
 确认范围之后就可以开干了。
 代码修改工具 下面主要说说上面提到的 “代码修改工具”。</description>
     </item>
-    
   </channel>
 </rss>
