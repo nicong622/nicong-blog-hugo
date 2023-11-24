@@ -7,8 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 01 Aug 2022 09:34:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Nov 2023 11:31:50 +0800</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS Grid 布局不完全学习笔记</title>
+      <link>/posts/css-grid-learning-note/</link>
+      <pubDate>Fri, 24 Nov 2023 11:31:50 +0800</pubDate>
+      <guid>/posts/css-grid-learning-note/</guid>
+      <description>注意，这篇文章只是我自己在学习 CSS Grid 布局过程中的一些笔记。更加完整的指南请参考 MDN 的文档或者CSS-TRICKS 的这篇文章。
+基础例子 html：
+&amp;lt;div class=&amp;#34;container&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;box box-1&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box box-2&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box box-3&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box box-4&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box box-5&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box box-6&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; css:
+.box { color: white; text-align: center; } .box-1 { background-color: #A9B388; grid-area: box-1; } .box-2 { background-color: #5F6F52; grid-area: box-2; } .box-3 { background-color: #2D9596; grid-area: box-3; } .box-4 { background-color: #9AD0C2; grid-area: box-4; } .box-5 { background-color: #265073; grid-area: box-5; } .</description>
+    </item>
+    <item>
+      <title>基于Fabric.js实现一个可以在图片上创建多个点击热区的组件</title>
+      <link>/posts/fabric-use-case/</link>
+      <pubDate>Fri, 24 Nov 2023 11:30:50 +0800</pubDate>
+      <guid>/posts/fabric-use-case/</guid>
+      <description>需求描述 前段时间接到一个需求，需要在管理后台的页面装修模块里增加一个组件。组件的主体就是一张图片，通过在图片中任意位置拖动鼠标可以创建一个矩形选区，该选区就是一个可点击的区域，所以还需要配置点击该区域后的页面跳转路径。可以创建多个选区，但选区不能重叠，也不能超出图片的边界。这个组件在用户端渲染出来后，用户可以通过点击该组件的不同区域跳转到对应的页面。
+需求分析 实现这个组件的思路比较简单。先创建一个 canvas，同时用自定义的图片填充这个 canvas，然后创建选区。创建完选区后需要保存到服务端的主要数据包括图片的链接、每个选区的尺寸、选区左上角的坐标、选区的跳转链接。之后在用户端再根据这些数据在图片上创建透明的点击区域即可。
+这里的重点在于如何通过拖动鼠标的方式创建可点击区域。
+其实这个交互在一般的画板应用中都会看到，就是创建矩形的功能。原理也比较简单，就是监听鼠标事件。在 mouse:down 的时候记录下当前鼠标位置的坐标，然后在 mouse:up 的时候再获取一次当前坐标。有了这两组坐标就可以创建一个矩形了。当然，为了用户体验，一般还需要通过监听 mousemove 事件在拖动鼠标的时候实时渲染一个过渡状态的选区，让用户感知到当前选区的实际位置与大小。
+市面上有不少库实现了类似功能，我选用了 Fabric.js。
+最终结果 需求实现 创建 canvas 既然是要在图片上创建点击区域，自然就要先创建一个与图片宽高“一样”的 canvas。但是由于运营实际上传的图片尺寸可能非常大，不可能在创建选区的时候直接按图片原尺寸创建 canvas，所以需要给定一个最大宽度，然后按图片的宽高比例进行缩放得到实际的 canvas 宽高。
+一种实现方案是在页面里创建一个看不见的 img 元素并设置它的最大宽度和高度，加载完成后就可以通过查询这个 img 元素的宽高从而得到图片缩放后的实际宽高。也可以监听 img 元素的 load 事件，获取图片原始宽高然后根据设定的最大宽高计算得到缩放后的实际宽高。
+const BORDER_WIDTH = 3; const bgImg = new fabric.Image(document.getElementById(&amp;#34;bgImg&amp;#34;)); bgImg.scale(this.canvasWidth / this.imgWidth); const canvas = new fabric.Canvas(&amp;#34;canvas&amp;#34;, { backgroundImage: bgImg, selectionColor: &amp;#34;rgba(255, 255, 255, 0)&amp;#34;, // 鼠标框选区域背景颜色 selectionLineWidth: BORDER_WIDTH, // 鼠标框选区域边框宽度 selectionBorderColor: ACTIVE_COLOR, // 鼠标框选区域边框颜色 }); 创建选区 创建选区主要是监听 canvas 对象上的 mouse:down 和 mouse:up 事件。</description>
+    </item>
     <item>
       <title>《浪潮之巅》读书笔记 -- 硅谷奇迹探秘</title>
       <link>/posts/why_silicon_vally_success/</link>
@@ -130,44 +154,6 @@ URL.createObjectURL() 接收一个类型是 File, Blob, 或者 MediaSource 的�
 &amp;#39;blob:https://www.google.com/82482eae-c186-4246-b02b-40d43d9f4d90&amp;#39; 所以截取最后的 36 个字符后就能获得一个 uuid。对于一般的 web 应用来说，这个方法比引入一个 UUID 或 NanoId 库更简单。
 另外，在 MDN 的文档里也提到了，虽然浏览器会在页面 unloaded 的时候自动释放由 URL.createObjectURL() 创建的 object URL，但如果你对性能和内存使用有要求的话，最好还是手动调用一下 URL.revokeObjectURL() 来释放 object URL。
 参考 createObjectURL DOMString </description>
-    </item>
-    <item>
-      <title>获取一行中子元素的个数</title>
-      <link>/posts/children_count_in_one_row/</link>
-      <pubDate>Mon, 25 Oct 2021 19:15:32 +0800</pubDate>
-      <guid>/posts/children_count_in_one_row/</guid>
-      <description>有这样一个场景：一个父元素中有若干个行内子元素，子元素数量比较多，需要换行展示。例如下图。此时我想知道每一行里有多少个子元素，要怎么做？
-如果每个子元素的宽度都是固定，那就直接用父元素的宽度除以子元素的宽度就可以。但如果每个子元素的宽度不固定呢？
-对于子元素宽度不固定的情况，关键是要找到从哪个元素开始换行。以下是两种思路：
-遍历每个子元素，并且对每个子元素的宽度做累加，如果累加的宽度超过了父元素的宽度，就表示需要换行； 还是遍历子元素，然后获取每个子元素距离父元素左边或者屏幕左边的距离，假设是 X，如果子元素是在同一行，X 就会逐渐增加。如果在遍历的过程中出现了一个元素，它的 X 与第 0 个元素的 X 一样，或者简单点，比上一个元素的 X 小，就表示发生了换行。 </description>
-    </item>
-    <item>
-      <title>入坑客制化键盘的一些建议</title>
-      <link>/posts/custom_keyboard_attention/</link>
-      <pubDate>Sat, 16 Oct 2021 11:48:50 +0800</pubDate>
-      <guid>/posts/custom_keyboard_attention/</guid>
-      <description>进入客制化键盘圈子有一段时间了，我发现这个圈子虽然相对小众，但是不乏优秀的作品。不过跟其他圈子一样，新入门的时候很容易走弯路，花钱买了自己不喜欢或者不合适的东西，最后只能搁置或者亏钱转卖。于是我总结了一下这段时间里自己的体会，希望能帮助客制化键盘的新手们少走一些弯路，多省点钱。
-在哪里获取新动态 首先说说在哪里能了解到最新的客制化键盘相关的资讯。
-装备前线 我最常去的是 zFrontier 装备前线 的「机械键盘」板块。这里是我知道的国内最活跃的客制化键盘论坛了。里面还有 pc 装机、摄影、模型等等的其他板块，但我基本只看键盘相关的。
-里面除了会有键圈的朋友们晒自己的装备，还会有键盘相关产品的作者发布最新的产品消息等等。通过某些贴子里网友们的讨论，还能学到很多客制化键盘相关的知识。有空逛一逛，就能在短时间内了解到很多键圈最新的动态。
-各种聊天群 如果想要在第一时间了解到最新的产品消息，应该就要加入各种聊天群了，通常是 QQ 群。群号能在装备前线的一些贴子里找到，如果是新产品的贴子，一般能在贴子顶部找到；有时候还能在底下的评论里找到。
-这些群通常是某个新产品的作者建立的，用来沟通新产品的各种细节，包括前期的设计、购买渠道/时间、发货时间、售后情况等等。很多时候还会发布下一个新产品的信息。
-B站 在 BiliBili 除了有键盘的评测，还会有一些键圈信息的汇总。比较知名的有键盘侠赤瞳妖，KeyboardDaily，Ayb爱莹宝 等等。
-购买方式 团购 新发布的套件、键帽等通常是限量团购的形式，比较少有现货。
-团购多数是先款团购，也就是先付款（全款和定金都有）再生产，然后再发货，而且生产时间通常都比较久，有些人可能收到货的时候才想起来自己曾经下单买过。如果是套件的话一般都要两三个月。键帽可能会快一点，一个月左右，但也有例外，说的就是 GMK。现在（2021年10月）下单，都要等到 2023 年第一季度才能发货，中间还有可能会因为客观因素而导致延期或流产。除了客观因素，还可能在等待期间你就喜欢上了别的套件/键帽甚至退坑了。但多数时候上了团购的车就不能退款了，只能自己想办法转单，装备前线里就有很多键帽转单的。
-其实这个过程跟「期货」有点像，都是花钱买未来的产品。
-你可能会觉得这种形式有点坑，中间的变数太多。但实际上很多套件/键帽的作者都是个人或者小团队，没有自己的生产设备，只能找代工厂。而工厂都是要先付一部分钱才能生产，但小团队通常也没有这么多的资金，所以只能先款团购，这也无可厚非。如果你实在不放心，可以看看以下其他的购买方式。
-现货 有些产品如果在前期的设计阶段（或者叫 IC，Interest Check）已经有比较好的反响，有购买意愿的人数比较多，就会在团购订单之外额外多生产一些，用作现货售卖。当然数量不会很多而且价钱会比团购贵一点。好处就是不用等太久，而且能看看前期团购用户的真是反馈再决定买不买。
-还有一些一开始是限量团购，发货后发现用户反馈比较热烈，就会再生产一批现货出售。像我之前买的一套 2021 流行色键帽就是团购结束后再放出现货，团购的时候我还没入坑客制化，所以是在现货阶段买的。
-在哪里买 对于新出的产品，如果你能了解到有这款产品，一般也就能知道在哪里买。因为发布新产品的贴子里通常都会有注明购买渠道，这些渠道一般包括作者自己的网站或小程序、淘宝店、还有第三方的代理商，例如装备前线、KBDFans、米可维外设等等，还会有一些国外的网站。
-如果是已经截团的产品，可以先到闲鱼找找，除了二手有时候还能找到全新未拆封的。因为有些人专门做这种倒卖，或者单纯只是因为收到货后就不想要了。
-不过要注意在闲鱼里很多时候都会有一定程度的溢价，不要看到喜欢的就直接买。最好先尽可能找找这个套件/键帽相关的资料，包括开团价、配置里具体有哪些东西、各类评测，再看看网友们的晒图，看看自己是不是真的喜欢，溢价是否合理或者自己能否承受得了。除非你不在乎钱，否则我还是建议你先考虑清楚再买。
-套件 配列 如果要买套件，我首先会考虑的是配列。关于配列，可以参考一下这里客制化键盘配列 - by ^elvis^ - 来自 zFrontier.com。
-在考虑配列的时候，我一般会从实用性和占用空间两方面考虑。
-对于大尺寸的配列，虽然功能区和数字键都有，但你可能极少会用到。没必要为了这些不经常用到的功能而占用过多的桌面空间，除非你就是喜欢它的外观。还有一点就是多了一个数字键盘，就会使得字母区和鼠标之间的距离变长，继而导致右手在字母区与鼠标之间切换的距离变长，导致右手更容易累。当然更极致一点的就是完全用键盘组合键来代替鼠标操作。还有一些奇怪的配列会把字母区或者 F 区放在键盘左侧。
-对于小尺寸配列，要小心不要被它小巧精致的外观而迷惑。首先要考虑一下有哪些功能键是你比较依赖的，如果配列里没有，你是否能接受通过组合键来触发。其次还要考虑一下键盘尺寸变小之后带来的输入习惯的变化。比较明显的就是方向键的位置变化，有可能变成与其他按钮放在一起而导致容易误触，以及左移 64 配列里右 shift 键变小的问题。
-我之前也曾经有过一把左移 64 的 prism60，类似于下图，这是来自“装备前线 键盘葫芦forkrere60 by elvis”的照片。
-虽然它能基本满足我日常工作需求，但是右 shift 键只有 1U 宽度，并且与方向键挨在一起，导致很容易误触，很不爽。所以最后我还是放弃了它。</description>
     </item>
   </channel>
 </rss>

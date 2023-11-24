@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 01 Aug 2022 09:34:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Nov 2023 11:30:50 +0800</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>js</title>
+      <link>/tags/js/</link>
+      <pubDate>Fri, 24 Nov 2023 11:30:50 +0800</pubDate>
+      <guid>/tags/js/</guid>
+      <description></description>
+    </item>
     <item>
       <title>《浪潮之巅》</title>
       <link>/tags/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/</link>
@@ -49,13 +56,6 @@
       <link>/tags/vue/</link>
       <pubDate>Wed, 06 Jul 2022 14:57:34 +0800</pubDate>
       <guid>/tags/vue/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>js</title>
-      <link>/tags/js/</link>
-      <pubDate>Wed, 29 Jun 2022 15:26:39 +0800</pubDate>
-      <guid>/tags/js/</guid>
       <description></description>
     </item>
     <item>

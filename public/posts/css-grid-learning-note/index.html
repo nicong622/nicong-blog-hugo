@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="CSS Grid 布局不完全学习笔记">
+<meta itemprop="description" content="注意，这篇文章只是我自己在学习 CSS Grid 布局过程中的一些笔记。更加完整的指南请参考 MDN 的文档或者CSS-TRICKS 的这篇文章。
+基础例子 html：
+&lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;box box-1&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-2&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-3&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-4&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-5&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-6&#34;&gt;&lt;/div&gt; &lt;/div&gt; css:
+.box { color: white; text-align: center; } .box-1 { background-color: #A9B388; grid-area: box-1; } .box-2 { background-color: #5F6F52; grid-area: box-2; } .box-3 { background-color: #2D9596; grid-area: box-3; } .box-4 { background-color: #9AD0C2; grid-area: box-4; } .box-5 { background-color: #265073; grid-area: box-5; } ."><meta itemprop="datePublished" content="2023-11-24T11:31:50+08:00" />
+<meta itemprop="dateModified" content="2023-11-24T11:31:50+08:00" />
+<meta itemprop="wordCount" content="548">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="CSS Grid 布局不完全学习笔记" />
+<meta property="og:description" content="注意，这篇文章只是我自己在学习 CSS Grid 布局过程中的一些笔记。更加完整的指南请参考 MDN 的文档或者CSS-TRICKS 的这篇文章。
+基础例子 html：
+&lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;box box-1&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-2&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-3&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-4&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-5&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-6&#34;&gt;&lt;/div&gt; &lt;/div&gt; css:
+.box { color: white; text-align: center; } .box-1 { background-color: #A9B388; grid-area: box-1; } .box-2 { background-color: #5F6F52; grid-area: box-2; } .box-3 { background-color: #2D9596; grid-area: box-3; } .box-4 { background-color: #9AD0C2; grid-area: box-4; } .box-5 { background-color: #265073; grid-area: box-5; } ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/css-grid-learning-note/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-24T11:31:50+08:00" />
+<meta property="article:modified_time" content="2023-11-24T11:31:50+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CSS Grid 布局不完全学习笔记"/>
+<meta name="twitter:description" content="注意，这篇文章只是我自己在学习 CSS Grid 布局过程中的一些笔记。更加完整的指南请参考 MDN 的文档或者CSS-TRICKS 的这篇文章。
+基础例子 html：
+&lt;div class=&#34;container&#34;&gt; &lt;div class=&#34;box box-1&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-2&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-3&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-4&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-5&#34;&gt;&lt;/div&gt; &lt;div class=&#34;box box-6&#34;&gt;&lt;/div&gt; &lt;/div&gt; css:
+.box { color: white; text-align: center; } .box-1 { background-color: #A9B388; grid-area: box-1; } .box-2 { background-color: #5F6F52; grid-area: box-2; } .box-3 { background-color: #2D9596; grid-area: box-3; } .box-4 { background-color: #9AD0C2; grid-area: box-4; } .box-5 { background-color: #265073; grid-area: box-5; } ."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>CSS Grid 布局不完全学习笔记</title>
+	<link rel="stylesheet" href="/css/style.min.037b6ee8f8c1baab6a3d0a9da11c3ff18a7552471f16c59fd98538d5ce99208b.css" integrity="sha256-A3tu6PjBuqtqPQqdoRw/8Yp1UkcfFsWf2YU41c6ZIIs=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="/">Nicong的生活学习笔记</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="/posts/">Posts</a>
+				<a href="/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://github.com/nicong622" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="菜单"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="/posts/">Posts</a></li>
+			<li><a href="/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Nov 24, 2023</span></div>
+				<h1>CSS Grid 布局不完全学习笔记</h1>
+			</header>
+			<div class="content">
+				<p>注意，这篇文章只是我自己在学习 CSS Grid 布局过程中的一些笔记。更加完整的指南请参考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout">MDN 的文档</a>或者<a href="https://css-tricks.com/snippets/css/complete-guide-grid/">CSS-TRICKS 的这篇文章</a>。</p>
+<h2 id="基础例子">基础例子<a href="#基础例子" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>html：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-1&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-2&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-3&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-4&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-5&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-6&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>css:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#A9B388</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#5F6F52</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-3</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#2D9596</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-4</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#9AD0C2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-5</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#265073</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box-6</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#0766AD</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">box-6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">600</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="mi">400</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="k">grid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span> <span class="mi">50</span><span class="kt">%</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-rows</span><span class="p">:</span> <span class="nf">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-2 box-3&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-4 box-5 box-6&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>效果：</p>
+<p><img src="./image-20231122182510953.png" alt="basic-demo"></p>
+<p>在这里，给 <code>div.container</code> 设置了 <code>diaplay: grid;</code> 属性之后，<code>div.container</code> 就会变成一个 grid container，它的所有<strong>直接</strong>子元素都是一个 grid item。</p>
+<p>对于每一个 grid item，可以用 <code>grid-area</code> 属性取一个名字。在 grid container 的 <code>grid-template-areas</code> 属性中可以用这个名字应用到对应的 grid item。</p>
+<p>可以看出来，Grid 布局实际上是把一个区域划分成一个一个的“小格子”，或者叫“grid cell”。</p>
+<h2 id="合并多个-grid-cell">合并多个 grid cell<a href="#合并多个-grid-cell" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>利用 <code>grid-template-areas</code> 属性可以合并多个 grid cell。例如把左边两个 grid cell 合并成一个：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-2 box-3&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-5 box-6&#39;</span><span class="p">;</span> <span class="c">/* 把 box-4 改成 box-1 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这样就可以让 box-1 同时占据左边的两个 grid cell。效果：</p>
+<p><img src="./image-20231122183637577.png" alt="image-20231122183637577"></p>
+<p>我们发现，box-1 占据了原本属于 box-4 的位置，那 box-4 这个元素去哪里了？可以在 <code>div.box-4</code> 这个元素里加一些内容看看：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;container&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	...
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box box-4&#34;</span><span class="p">&gt;</span>box-4<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  ...
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p><img src="./image-20231123101736129.png" alt="image-20231123101736129"></p>
+<p>可以看到 box-4 被挤到了 grid container 的右下角。之前没有看到只是因为 box-4 没有内容，也没有显示地设置宽高。事实上，没有出现在 <code>grid-template-areas</code> 属性里的 grid item 都会被挤到 grid container 的右下角，而且是沿着 z 轴堆叠起来，而不是按照文档流排列。</p>
+<h3 id="搞一下破坏">搞一下破坏<a href="#搞一下破坏" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>虽然一般情况下你不会这样做，但我们还是可以写一些奇怪的配置。</p>
+<p>例如你把 <code>grid-template-areas</code> 改成这样：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-1 box-3&#39;</span>  <span class="c">/* 注意这里有两个 box-1 */</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-5 box-6&#39;</span><span class="p">;</span> <span class="c">/* 这里也有一个 box-1 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>就会发现所有的 grid item 都不见了（其实正如上面说的，只是被挤到了右下角）。并且用浏览器开发者工具的 Styles 面板去观察此时的 <code>grid-template-areas</code> ，发现它的值其实是不合法的，也就等于没有设置 <code>grid-template-areas</code>。简单来说就是同一个 grid-area 不能同时出现在横向和纵向排列中，除非 <code>grid-template-areas</code> 里面只出现同一个 grid item，这时候就变成用同一个 grid item 铺满一整个 grid container。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-1 box-1&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-1 box-1&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="加一些间隔">加一些间隔<a href="#加一些间隔" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>假设我们希望在每一列之间加一个 10px 宽的空白间隔，有以下几种方式。</p>
+<h3 id="grid-template">grid-template<a href="#grid-template" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>第一种做法是在 <code>grid-template-areas</code> 中每一行的每两个 grid-area 之间加一个“.”，同时还需要在 <code>grid-template-columns</code> 中相应的位置加上期望的间距值，在这里就是 10px。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span> <span class="mi">10</span><span class="kt">px</span> <span class="mi">50</span><span class="kt">%</span> <span class="mi">10</span><span class="kt">px</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span> <span class="c">/* 这里多了两个 10px */</span>
+</span></span><span class="line"><span class="cl">	<span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 . box-2 . box-3&#39;</span>  <span class="c">/* 这里每两个 grid-area 之间多了一个 . */</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-4 . box-5 . box-6&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><img src="./image-20231123163859663.png" alt="image-20231123163859663"></p>
+<h3 id="grid-column-gap">grid-column-gap<a href="#grid-column-gap" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>上面的方法需要同时改动 <code>grid-template-areas</code> 和 <code>grid-template-columns</code> 两个属性，有点麻烦。用 <code>grid-column-gap</code> 只需要一行代码就能实现同样的效果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-column-gap</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="非正常的做法">非正常的做法<a href="#非正常的做法" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>上面两种都是添加间距的正常方法，当然也有“不那么正常”的做法。直接把 <code>grid-template-areas</code> 中的某一个 grid area 换成 &ldquo;.&rdquo; ，对应的区域就会变成空白：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 . box-3&#39;</span>			<span class="c">/* 这里的 box-2 变成了 . */</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-4 . box-6&#39;</span><span class="p">;</span> 		<span class="c">/* 这里的 box-5 变成了 . */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><img src="./image-20231123162905585.png" alt="image-20231123162905585"></p>
+<p>可以看到，box-2 和 box-5 都“消失”了，变成了空白。同样，“消失”的 grid item 只是被挤到了 grid container 的右下角。只要调整一下 <code>grid-template-columns</code> 的属性值，让中间的空白区域变小，看起来就会是一个正常的空白间距了。</p>
+<p>但是这种方法会把某个 grid item 挤走，实际开发中可能会导致出现非期望中的结果。话虽如此，但也可以用这种方法来玩一些花样。例如实现一个跑马灯抽奖动画：</p>
+<p><img src="https://i.imgs.ovh/2023/11/24/M0tlR.gif" alt=""></p>
+<p>相关 js 代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">container</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.container&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;. box-2 box-3&#39; &#39;box-4 box-5 box-6&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;box-1 . box-3&#39; &#39;box-4 box-5 box-6&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;box-1 box-2 .&#39; &#39;box-4 box-5 box-6&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;box-1 box-2 box-3&#39; &#39;box-4 box-5 .&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;box-1 box-2 box-3&#39; &#39;box-4 . box-6&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;&#39;box-1 box-2 box-3&#39; &#39;. box-5 box-6&#39;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">===</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">container</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">gridTemplateAreas</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span> <span class="mi">300</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="调整顺序">调整顺序<a href="#调整顺序" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在不用 Grid 布局的时候，如果要调整几个子元素的顺序，一般需要修改 html 的节点顺序或者用 css 的定位。在 Grid 布局里，可以利用 <code>grid-template-areas</code> 来改变这些 grid item 的顺序：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-4 box-6 box-2&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-1 box-3 box-5&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><img src="./image-20231123165412751.png" alt="image-20231123165412751"></p>
+<p>当然，再怎么随意排列也不能超出 <code>grid-template-areas</code> 的有效值范围。例如这样就是无效的：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-areas</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-4 box-6 box-2 box-1&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;box-3 box-5&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>如果确实想要实现第一行有 4 个 grid item，第二行有两个 grid item 的效果，可以参考上面用 <code>grid-template</code> 设置间距的方法。</p>
+<h2 id="再说-grid-template">再说 grid-template<a href="#再说-grid-template" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>通过上面的例子可以发现，其实 <code>grid-template-areas</code> 的主要作用就是控制 grid item 的排列组合。即使不设置 <code>grid-template-areas</code> 的值，grid container 还是会根据 <code>grid-template-columns</code> 和 <code>grid-template-rows</code> 把自身的区域划分成多个区块。通过浏览器的开发者工具可以看出这一点：</p>
+<p><img src="./image-20231123182353693.png" alt="image-20231123182353693"></p>
+<p>我认为 <code>grid-template-areas</code> 属性值的语法是比较直观的。就是对着上面划分出来的区域把 grid-area 一个一个往里面填。至于每一个区域自身的内容要如何布局，就再用 Grid 的 <code>justify-items</code>、 <code>align-items</code> 等属性或者其他 css 的布局方式。用起来还是比较简单的。</p>
+<h2 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>CSS Grid 布局的要点主要是两个：</p>
+<ol>
+<li>划分区域：利用 <code>grid-template-columns</code> 和 <code>grid-template-rows</code> 在 grid container 里划分多个区域（也叫 grid cell）；</li>
+<li>排兵布阵：通过 <code>grid-template-areas</code> 对各个 <code>grid-area</code> 进行排列组合、填充 grid cell。</li>
+</ol>
+<p>只要掌握了这两点，就能把 Grid 布局用起来。</p>
+<p>如果想对 Grid 中的元素进行更多控制，就要用到 <code>justify-items</code>、 <code>align-items</code> 等属性。不过如果已经熟悉 Flexbox 的话，想再掌握 Grid 中的这些属性就很容易了。</p>
+<h2 id="参考">参考<a href="#参考" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><a href="https://css-tricks.com/snippets/css/complete-guide-grid">A Complete Guide to CSS Grid</a></li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>548 字</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2023-11-24 11:31</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="/posts/fabric-use-case/">
+				<span class="post-nav-label">旧&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>基于Fabric.js实现一个可以在图片上创建多个点击热区的组件</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		&copy; 2023 <a href="/">Nicong</a> &#183; <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备19157804号</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a>
+		</p>
+		<p><a href="https://webify.cloudbase.net/" target="_blank">CloudBase Webify</a> 提供网站托管服务</p>
+	</footer>
+
+
+
+	<script src="/js/bundle.min.580988ed2982bcbb74a1773c7abea97b43e4c43b9324e10cda0813ec6ec4bb67.js" integrity="sha256-WAmI7SmCvLt0oXc8er6pe0PkxDuTJOEM2ggT7G7Eu2c=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

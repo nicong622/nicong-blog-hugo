@@ -7,8 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 29 Jun 2022 15:26:39 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Nov 2023 11:30:50 +0800</lastBuildDate>
     <atom:link href="/tags/js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于Fabric.js实现一个可以在图片上创建多个点击热区的组件</title>
+      <link>/posts/fabric-use-case/</link>
+      <pubDate>Fri, 24 Nov 2023 11:30:50 +0800</pubDate>
+      <guid>/posts/fabric-use-case/</guid>
+      <description>需求描述 前段时间接到一个需求，需要在管理后台的页面装修模块里增加一个组件。组件的主体就是一张图片，通过在图片中任意位置拖动鼠标可以创建一个矩形选区，该选区就是一个可点击的区域，所以还需要配置点击该区域后的页面跳转路径。可以创建多个选区，但选区不能重叠，也不能超出图片的边界。这个组件在用户端渲染出来后，用户可以通过点击该组件的不同区域跳转到对应的页面。
+需求分析 实现这个组件的思路比较简单。先创建一个 canvas，同时用自定义的图片填充这个 canvas，然后创建选区。创建完选区后需要保存到服务端的主要数据包括图片的链接、每个选区的尺寸、选区左上角的坐标、选区的跳转链接。之后在用户端再根据这些数据在图片上创建透明的点击区域即可。
+这里的重点在于如何通过拖动鼠标的方式创建可点击区域。
+其实这个交互在一般的画板应用中都会看到，就是创建矩形的功能。原理也比较简单，就是监听鼠标事件。在 mouse:down 的时候记录下当前鼠标位置的坐标，然后在 mouse:up 的时候再获取一次当前坐标。有了这两组坐标就可以创建一个矩形了。当然，为了用户体验，一般还需要通过监听 mousemove 事件在拖动鼠标的时候实时渲染一个过渡状态的选区，让用户感知到当前选区的实际位置与大小。
+市面上有不少库实现了类似功能，我选用了 Fabric.js。
+最终结果 需求实现 创建 canvas 既然是要在图片上创建点击区域，自然就要先创建一个与图片宽高“一样”的 canvas。但是由于运营实际上传的图片尺寸可能非常大，不可能在创建选区的时候直接按图片原尺寸创建 canvas，所以需要给定一个最大宽度，然后按图片的宽高比例进行缩放得到实际的 canvas 宽高。
+一种实现方案是在页面里创建一个看不见的 img 元素并设置它的最大宽度和高度，加载完成后就可以通过查询这个 img 元素的宽高从而得到图片缩放后的实际宽高。也可以监听 img 元素的 load 事件，获取图片原始宽高然后根据设定的最大宽高计算得到缩放后的实际宽高。
+const BORDER_WIDTH = 3; const bgImg = new fabric.Image(document.getElementById(&amp;#34;bgImg&amp;#34;)); bgImg.scale(this.canvasWidth / this.imgWidth); const canvas = new fabric.Canvas(&amp;#34;canvas&amp;#34;, { backgroundImage: bgImg, selectionColor: &amp;#34;rgba(255, 255, 255, 0)&amp;#34;, // 鼠标框选区域背景颜色 selectionLineWidth: BORDER_WIDTH, // 鼠标框选区域边框宽度 selectionBorderColor: ACTIVE_COLOR, // 鼠标框选区域边框颜色 }); 创建选区 创建选区主要是监听 canvas 对象上的 mouse:down 和 mouse:up 事件。</description>
+    </item>
     <item>
       <title>如何选择用 Map 还是 Object</title>
       <link>/posts/map_or_object/</link>
